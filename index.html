@@ -528,16 +528,17 @@
         .poker-card {
             width: 200px;
             height: 280px;
-            margin: 10px;
+            margin: 2px;
             display: inline-block;
             flex-shrink: 0;
+            box-sizing: border-box;
         }
         
         .card-display {
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
-            gap: 15px;
+            gap: 2px;
             margin: 20px 0;
             flex-wrap: nowrap !important;
             flex-direction: row !important;
@@ -551,6 +552,14 @@
             display: inline-block !important;
             float: none !important;
             vertical-align: top !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Asegurar que todas las cartas tengan el mismo tamaño */
+        .poker-card > div {
+            width: 100% !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
         }
         
         @media (max-width: 768px) {
@@ -561,15 +570,15 @@
             .card-display {
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
-                gap: 10px !important;
+                gap: 6px !important;
                 justify-content: center !important;
                 align-items: center !important;
             }
             
             .poker-card {
-                width: 120px !important;
-                height: 168px !important;
-                margin: 5px !important;
+                width: 140px !important;
+                height: 196px !important;
+                margin: 3px !important;
                 flex-shrink: 0 !important;
                 display: inline-block !important;
             }
@@ -577,13 +586,71 @@
         
         @media (max-width: 480px) {
             .poker-card {
-                width: 100px !important;
-                height: 140px !important;
-                margin: 3px !important;
+                width: 120px !important;
+                height: 168px !important;
+                margin: 2px !important;
             }
             
             .card-display {
-                gap: 8px !important;
+                gap: 4px !important;
+            }
+        }
+        
+        /* Estilos responsive para la tabla de resultados detallados */
+        @media (max-width: 768px) {
+            #detailed-card-results table {
+                font-size: 0.8rem !important;
+                width: 100% !important;
+                min-width: 300px !important;
+            }
+            
+            #detailed-card-results th,
+            #detailed-card-results td {
+                padding: 6px 4px !important;
+                font-size: 0.75rem !important;
+            }
+            
+            #detailed-card-results .poker-card {
+                width: 40px !important;
+                height: 56px !important;
+                margin: 2px !important;
+            }
+            
+            #detailed-card-results .poker-card > div {
+                font-size: 0.8rem !important;
+            }
+            
+            #detailed-card-results .poker-card > div > div:first-child {
+                font-size: 0.7rem !important;
+                margin-bottom: 2px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #detailed-card-results table {
+                font-size: 0.7rem !important;
+                min-width: 250px !important;
+            }
+            
+            #detailed-card-results th,
+            #detailed-card-results td {
+                padding: 4px 2px !important;
+                font-size: 0.65rem !important;
+            }
+            
+            #detailed-card-results .poker-card {
+                width: 35px !important;
+                height: 49px !important;
+                margin: 1px !important;
+            }
+            
+            #detailed-card-results .poker-card > div {
+                font-size: 0.7rem !important;
+            }
+            
+            #detailed-card-results .poker-card > div > div:first-child {
+                font-size: 0.6rem !important;
+                margin-bottom: 1px !important;
             }
         }
     </style>
@@ -1162,7 +1229,10 @@
                     </div>
                 `;
             } else {
-                // Fallback si no se encuentra la imagen
+                // Fallback si no se encuentra la imagen - usar el mismo tamaño que las cartas de símbolos
+                const isMobile = window.innerWidth <= 768;
+                const mainFontSize = isMobile ? '2.5rem' : '4rem';
+                
                 return `
                     <div style="
                         width: 100%; 
@@ -1173,7 +1243,7 @@
                         align-items: center;
                         justify-content: center;
                         color: ${suitColor};
-                        font-size: 4rem;
+                        font-size: ${mainFontSize};
                         font-weight: bold;
                     ">${value}</div>
                 `;
@@ -1220,7 +1290,10 @@
                     </div>
                 `;
             } else {
-                // Fallback si no se encuentra la imagen
+                // Fallback si no se encuentra la imagen - usar el mismo tamaño que las cartas de símbolos
+                const isMobile = window.innerWidth <= 768;
+                const mainFontSize = isMobile ? '2.5rem' : '4rem';
+                
                 return `
                     <div style="
                         width: 100%; 
@@ -1231,7 +1304,7 @@
                         align-items: center;
                         justify-content: center;
                         color: ${suitColor};
-                        font-size: 3rem;
+                        font-size: ${mainFontSize};
                         font-weight: bold;
                     ">${numValue}</div>
                 `;
@@ -1240,6 +1313,9 @@
 
                  // Función para generar carta simple (fallback) usando imágenes reales
          function generateSimpleCardImage(value, suitSymbol, suitColor) {
+             const isMobile = window.innerWidth <= 768;
+             const mainFontSize = isMobile ? '2.5rem' : '4rem';
+             
              return `
                  <div style="
                      width: 100%; 
@@ -1250,7 +1326,7 @@
                      align-items: center;
                      justify-content: center;
                      color: ${suitColor};
-                     font-size: 3rem;
+                     font-size: ${mainFontSize};
                      font-weight: bold;
                  ">${value}</div>
              `;
@@ -1309,6 +1385,7 @@
             cardsToShow.forEach((card, index) => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'poker-card';
+                cardElement.style.cssText = 'width: 200px; height: 280px; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;';
                 
                 if (gameMode === 'symbols') {
                     // Modo símbolos - mostrar símbolos Unicode
@@ -1354,21 +1431,22 @@
                         case 'clubs': suitSymbol = '♣'; suitColor = '#333'; break;
                     }
                     
-                    cardElement.innerHTML = generateCardPattern(value, suitSymbol, suitColor);
-                }
-                
-                            cardDisplay.appendChild(cardElement);
+                                    cardElement.innerHTML = generateCardPattern(value, suitSymbol, suitColor);
+            }
+            
+            cardDisplay.appendChild(cardElement);
         });
         
         // Forzar comportamiento horizontal en móviles
         if (window.innerWidth <= 768) {
+            const gap = window.innerWidth <= 480 ? '2px' : '4px';
             cardDisplay.style.cssText = `
                 display: flex !important;
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
                 justify-content: center !important;
                 align-items: center !important;
-                gap: 10px !important;
+                gap: ${gap} !important;
                 overflow-x: auto !important;
             `;
         }
@@ -2033,10 +2111,19 @@
                     const suit = card.replace(/[A-Z0-9]/g, '');
                     const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
                     
+                    // Detectar si estamos en móvil para ajustar el tamaño
+                    const isMobile = window.innerWidth <= 768;
+                    const isSmallMobile = window.innerWidth <= 480;
+                    const cardWidth = isSmallMobile ? '35px' : isMobile ? '40px' : '60px';
+                    const cardHeight = isSmallMobile ? '49px' : isMobile ? '56px' : '80px';
+                    const mainFontSize = isSmallMobile ? '0.7rem' : isMobile ? '0.8rem' : '1.5rem';
+                    const numberFontSize = isSmallMobile ? '0.6rem' : isMobile ? '0.7rem' : '1.2rem';
+                    const marginBottom = isSmallMobile ? '1px' : isMobile ? '2px' : '5px';
+                    
                     cardImageHTML = `
                         <div style="
-                            width: 60px; 
-                            height: 80px; 
+                            width: ${cardWidth}; 
+                            height: ${cardHeight}; 
                             background: white;
                             border-radius: 8px;
                             display: flex;
@@ -2044,13 +2131,13 @@
                             align-items: center;
                             justify-content: center;
                             color: ${suitColor};
-                            font-size: 1.5rem;
+                            font-size: ${mainFontSize};
                             font-weight: bold;
                             margin: 0 auto;
                             border: 1px solid #ddd;
                         ">
-                            <div style="font-size: 1.2rem; margin-bottom: 5px;">${number}</div>
-                            <div style="font-size: 1.5rem;">${suit}</div>
+                            <div style="font-size: ${numberFontSize}; margin-bottom: ${marginBottom};">${number}</div>
+                            <div style="font-size: ${mainFontSize};">${suit}</div>
                         </div>
                     `;
                 } else {
@@ -2071,11 +2158,17 @@
                     const imageKey = `custom_${value}_${suit}`;
                     const imageSrc = CARD_IMAGES_BASE64[imageKey];
                     
+                    // Detectar si estamos en móvil para ajustar el tamaño
+                    const isMobile = window.innerWidth <= 768;
+                    const isSmallMobile = window.innerWidth <= 480;
+                    const cardWidth = isSmallMobile ? '35px' : isMobile ? '40px' : '60px';
+                    const cardHeight = isSmallMobile ? '49px' : isMobile ? '56px' : '80px';
+                    
                     if (imageSrc) {
                         cardImageHTML = `
                             <div style="
-                                width: 60px; 
-                                height: 80px; 
+                                width: ${cardWidth}; 
+                                height: ${cardHeight}; 
                                 background: white;
                                 border-radius: 8px;
                                 overflow: hidden;
@@ -2098,17 +2191,18 @@
                         `;
                     } else {
                         // Fallback si no se encuentra la imagen
+                        const fallbackFontSize = isSmallMobile ? '0.7rem' : isMobile ? '0.8rem' : '1.5rem';
                         cardImageHTML = `
                             <div style="
-                                width: 60px; 
-                                height: 80px; 
+                                width: ${cardWidth}; 
+                                height: ${cardHeight}; 
                                 background: white;
                                 border-radius: 8px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
                                 color: ${suitColor};
-                                font-size: 1.5rem;
+                                font-size: ${fallbackFontSize};
                                 font-weight: bold;
                                 margin: 0 auto;
                                 border: 1px solid #ddd;
