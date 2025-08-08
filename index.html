@@ -548,6 +548,11 @@
             
             .card-display {
                 font-size: 2rem;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 10px;
+                justify-content: center;
+                align-items: center;
             }
             
             .cards-grid {
@@ -556,8 +561,10 @@
             }
             
             .poker-card {
-                width: 150px;
-                height: 210px;
+                width: 120px;
+                height: 168px;
+                margin: 5px;
+                flex-shrink: 0;
             }
             
             .card-corner {
@@ -566,6 +573,18 @@
             
             .card-suit {
                 font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .poker-card {
+                width: 100px;
+                height: 140px;
+                margin: 3px;
+            }
+            
+            .card-display {
+                gap: 8px;
             }
         }
     </style>
@@ -1298,6 +1317,12 @@
                     const suit = card.replace(/[A-Z0-9]/g, '');
                     const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
                     
+                    // Detectar si estamos en móvil
+                    const isMobile = window.innerWidth <= 768;
+                    const mainFontSize = isMobile ? '2.5rem' : '4rem';
+                    const numberFontSize = isMobile ? '2rem' : '3rem';
+                    const marginBottom = isMobile ? '5px' : '10px';
+                    
                     cardElement.innerHTML = `
                         <div style="
                             width: 100%; 
@@ -1309,11 +1334,11 @@
                             align-items: center;
                             justify-content: center;
                             color: ${suitColor};
-                            font-size: 4rem;
+                            font-size: ${mainFontSize};
                             font-weight: bold;
                         ">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">${number}</div>
-                            <div style="font-size: 4rem;">${suit}</div>
+                            <div style="font-size: ${numberFontSize}; margin-bottom: ${marginBottom};">${number}</div>
+                            <div style="font-size: ${mainFontSize};">${suit}</div>
                         </div>
                     `;
                 } else {
