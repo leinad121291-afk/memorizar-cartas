@@ -530,15 +530,27 @@
             height: 280px;
             margin: 10px;
             display: inline-block;
+            flex-shrink: 0;
         }
         
         .card-display {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
             gap: 15px;
             margin: 20px 0;
-            flex-wrap: wrap;
+            flex-wrap: nowrap !important;
+            flex-direction: row !important;
+            overflow-x: auto;
+            min-height: 300px;
+            width: 100%;
+        }
+        
+        /* Forzar comportamiento horizontal en todos los dispositivos */
+        .card-display > .poker-card {
+            display: inline-block !important;
+            float: none !important;
+            vertical-align: top !important;
         }
         
         @media (max-width: 768px) {
@@ -547,44 +559,31 @@
             }
             
             .card-display {
-                font-size: 2rem;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                gap: 10px;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .cards-grid {
-                gap: 10px;
-                grid-template-columns: repeat(2, 1fr);
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                gap: 10px !important;
+                justify-content: center !important;
+                align-items: center !important;
             }
             
             .poker-card {
-                width: 120px;
-                height: 168px;
-                margin: 5px;
-                flex-shrink: 0;
-            }
-            
-            .card-corner {
-                font-size: 1.2rem;
-            }
-            
-            .card-suit {
-                font-size: 1.5rem;
+                width: 120px !important;
+                height: 168px !important;
+                margin: 5px !important;
+                flex-shrink: 0 !important;
+                display: inline-block !important;
             }
         }
         
         @media (max-width: 480px) {
             .poker-card {
-                width: 100px;
-                height: 140px;
-                margin: 3px;
+                width: 100px !important;
+                height: 140px !important;
+                margin: 3px !important;
             }
             
             .card-display {
-                gap: 8px;
+                gap: 8px !important;
             }
         }
     </style>
@@ -1358,8 +1357,21 @@
                     cardElement.innerHTML = generateCardPattern(value, suitSymbol, suitColor);
                 }
                 
-                cardDisplay.appendChild(cardElement);
-            });
+                            cardDisplay.appendChild(cardElement);
+        });
+        
+        // Forzar comportamiento horizontal en móviles
+        if (window.innerWidth <= 768) {
+            cardDisplay.style.cssText = `
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 10px !important;
+                overflow-x: auto !important;
+            `;
+        }
             
             // Actualizar indicador de progreso
             document.getElementById('progress').textContent = `Cartas ${startIndex + 1}-${endIndex} de ${cardSequence.length}`;
