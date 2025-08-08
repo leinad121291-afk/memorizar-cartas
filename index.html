@@ -277,6 +277,13 @@
             margin-right: auto;
         }
         
+        @media (max-width: 768px) {
+            .cards-grid {
+                gap: 8px;
+                max-width: 100%;
+            }
+        }
+        
 
 
         .card-input-row {
@@ -566,7 +573,8 @@
         
         @media (max-width: 768px) {
             .game-container {
-                padding: 20px;
+                padding: 15px;
+                max-width: 95%;
             }
             
             .card-display {
@@ -578,11 +586,23 @@
             }
             
             .poker-card {
-                width: 140px !important;
-                height: 196px !important;
+                width: 160px !important;
+                height: 224px !important;
                 margin: 3px !important;
                 flex-shrink: 0 !important;
                 display: inline-block !important;
+            }
+            
+            .card-number-select {
+                width: 60px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+            
+            .suit-select {
+                width: 60px;
+                height: 35px;
+                font-size: 1.2rem;
             }
         }
         
