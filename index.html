@@ -14,7 +14,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -210,7 +210,7 @@
         }
 
         .button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -524,6 +524,23 @@
             width: 80px;
         }
 
+        /* Estilos para las cartas en fase de memorización */
+        .poker-card {
+            width: 200px;
+            height: 280px;
+            margin: 10px;
+            display: inline-block;
+        }
+        
+        .card-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
         @media (max-width: 768px) {
             .game-container {
                 padding: 20px;
@@ -539,8 +556,8 @@
             }
             
             .poker-card {
-                width: 120px;
-                height: 160px;
+                width: 150px;
+                height: 210px;
             }
             
             .card-corner {
@@ -608,9 +625,29 @@
                  <p id="deck-info" style="font-size: 0.9rem; color: #666; margin-top: 5px;">Total disponible: 52 cartas únicas</p>
              </div>
 
+            <!-- Configuración de Visualización -->
+            <div class="section">
+                <h3 class="section-title">2. Configuración de Visualización</h3>
+                <p>Elige cómo quieres ver las cartas durante la memorización:</p>
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; background: white; min-width: 200px;">
+                        <input type="radio" id="pairs-mode" name="display-mode" value="pairs" checked>
+                        <label for="pairs-mode" style="font-weight: bold; color: #333;">Parejas (2 cartas por página)</label>
+                        <span style="font-size: 0.9rem; color: #666;">(Recomendado)</span>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; background: white; min-width: 200px;">
+                        <input type="radio" id="single-mode" name="display-mode" value="single">
+                        <label for="single-mode" style="font-weight: bold; color: #333;">Individual (1 carta por página)</label>
+                        <span style="font-size: 0.9rem; color: #666;">(Más fácil)</span>
+                    </div>
+                </div>
+                <p id="display-info" style="font-size: 0.9rem; color: #666; margin-top: 10px;">Verás las cartas en parejas de 2 por página.</p>
+            </div>
+
             <!-- Configuración de Temporizadores -->
             <div class="section">
-                <h3 class="section-title">2. Configuración de Temporizadores</h3>
+                <h3 class="section-title">3. Configuración de Temporizadores</h3>
                 
                 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
@@ -623,7 +660,7 @@
             
             <!-- Configuración de Rondas -->
             <div class="section">
-                <h3 class="section-title">3. Configuración de Rondas</h3>
+                <h3 class="section-title">4. Configuración de Rondas</h3>
                 <p>Elige cuántas rondas quieres jugar:</p>
                 <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
                     <input type="number" id="rounds-input" class="card-input" min="1" max="100" value="" placeholder="10">
@@ -634,7 +671,7 @@
 
             <!-- Configuración de Autoavance -->
             <div class="section">
-                <h3 class="section-title">4. Configuración de Tiempo de Memorización</h3>
+                <h3 class="section-title">5. Configuración de Tiempo de Memorización</h3>
                 
                 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
@@ -680,7 +717,7 @@
                     position: absolute;
                     left: 30px;
                     top: 80px;
-                    background: #007bff;
+                    background: #e74c3c;
                     color: white;
                     padding: 15px;
                     border-radius: 50%;
@@ -809,7 +846,7 @@
             <div id="round-progress">
                 <p>Ronda <span id="round-number">1</span> de <span id="total-rounds">10</span></p>
                 <div style="width: 100%; height: 20px; background: #e9ecef; border-radius: 10px; margin: 15px 0; overflow: hidden;">
-                    <div style="height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: width 0.3s ease; width: 0%;" id="round-progress-fill"></div>
+                    <div style="height: 100%; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); transition: width 0.3s ease; width: 0%;" id="round-progress-fill"></div>
                 </div>
             </div>
             <div>
@@ -906,6 +943,9 @@
          let totalRounds = 10;
          let roundScores = [];
          let totalScore = 0;
+         
+         // Variables para modo de visualización
+         let displayMode = 'pairs'; // 'pairs' o 'single'
 
                  // Cartas de poker disponibles (con símbolos para mostrar, letras para input)
          const pokerCards = [
@@ -1086,9 +1126,7 @@
                         width: 100%; 
                         height: 100%; 
                         background: white;
-                        border-radius: 8px;
-                        border: 1px solid #d1d5db;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        border-radius: 12px;
                         overflow: hidden;
                         display: flex;
                         align-items: center;
@@ -1100,7 +1138,7 @@
                                  width: 100%; 
                                  height: 100%; 
                                  object-fit: contain;
-                                 border-radius: 7px;
+                                 border-radius: 11px;
                              "
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
                     </div>
@@ -1112,14 +1150,12 @@
                         width: 100%; 
                         height: 100%; 
                         background: white;
-                        border-radius: 8px;
-                        border: 1px solid #d1d5db;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        border-radius: 12px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         color: ${suitColor};
-                        font-size: 3rem;
+                        font-size: 4rem;
                         font-weight: bold;
                     ">${value}</div>
                 `;
@@ -1148,9 +1184,7 @@
                         width: 100%; 
                         height: 100%; 
                         background: white;
-                        border-radius: 8px;
-                        border: 1px solid #d1d5db;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        border-radius: 12px;
                         overflow: hidden;
                         display: flex;
                         align-items: center;
@@ -1162,7 +1196,7 @@
                                  width: 100%; 
                                  height: 100%; 
                                  object-fit: contain;
-                                 border-radius: 7px;
+                                 border-radius: 11px;
                              "
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
                     </div>
@@ -1174,14 +1208,12 @@
                         width: 100%; 
                         height: 100%; 
                         background: white;
-                        border-radius: 8px;
-                        border: 1px solid #d1d5db;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        border-radius: 12px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         color: ${suitColor};
-                        font-size: 2rem;
+                        font-size: 3rem;
                         font-weight: bold;
                     ">${numValue}</div>
                 `;
@@ -1195,14 +1227,12 @@
                      width: 100%; 
                      height: 100%; 
                      background: white;
-                     border-radius: 8px;
-                     border: 1px solid #d1d5db;
-                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                     border-radius: 12px;
                      display: flex;
                      align-items: center;
                      justify-content: center;
                      color: ${suitColor};
-                     font-size: 2rem;
+                     font-size: 3rem;
                      font-weight: bold;
                  ">${value}</div>
              `;
@@ -1252,9 +1282,10 @@
             
             cardDisplay.innerHTML = '';
             
-            // Calcular qué cartas mostrar (2 por página)
+            // Calcular qué cartas mostrar según el modo de visualización
             const startIndex = currentCardIndex;
-            const endIndex = Math.min(startIndex + 2, cardSequence.length);
+            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
+            const endIndex = Math.min(startIndex + cardsPerPage, cardSequence.length);
             const cardsToShow = cardSequence.slice(startIndex, endIndex);
             
             cardsToShow.forEach((card, index) => {
@@ -1272,19 +1303,17 @@
                             width: 100%; 
                             height: 100%; 
                             background: white;
-                            border-radius: 8px;
-                            border: 1px solid #d1d5db;
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            border-radius: 12px;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
                             justify-content: center;
                             color: ${suitColor};
-                            font-size: 3rem;
+                            font-size: 4rem;
                             font-weight: bold;
                         ">
-                            <div style="font-size: 2rem;">${number}</div>
-                            <div style="font-size: 3rem;">${suit}</div>
+                            <div style="font-size: 3rem; margin-bottom: 10px;">${number}</div>
+                            <div style="font-size: 4rem;">${suit}</div>
                         </div>
                     `;
                 } else {
@@ -1313,20 +1342,42 @@
             // Actualizar botones de navegación
             document.getElementById('prev-btn').disabled = startIndex === 0;
             document.getElementById('next-btn').disabled = endIndex >= cardSequence.length;
+            
+            // Mostrar indicador de mazo solo en la primera página de cada mazo
+            const deckIndicator = document.getElementById('deck-indicator');
+            const currentDeckIndicator = document.getElementById('current-deck-indicator');
+            
+            if (cardsMode === 'decks' && selectedDecks > 1) {
+                // Calcular qué mazo estamos mostrando
+                const currentDeck = Math.floor(startIndex / 52) + 1;
+                const isFirstPageOfDeck = (startIndex % 52) === 0;
+                
+                if (isFirstPageOfDeck && currentDeck <= selectedDecks) {
+                    currentDeckIndicator.textContent = currentDeck;
+                    deckIndicator.style.display = 'flex';
+                } else {
+                    deckIndicator.style.display = 'none';
+                }
+            } else {
+                // Ocultar el indicador en las demás páginas del mazo
+                deckIndicator.style.display = 'none';
+            }
         }
 
         // Función para navegar a la página anterior
         function previousCards() {
+            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
             if (currentCardIndex > 0) {
-                currentCardIndex = Math.max(0, currentCardIndex - 2);
+                currentCardIndex = Math.max(0, currentCardIndex - cardsPerPage);
                 displayCards();
             }
         }
 
         // Función para navegar a la página siguiente
         function nextCards() {
-            if (currentCardIndex + 2 < cardSequence.length) {
-                currentCardIndex = Math.min(cardSequence.length - 2, currentCardIndex + 2);
+            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
+            if (currentCardIndex + cardsPerPage < cardSequence.length) {
+                currentCardIndex = Math.min(cardSequence.length - cardsPerPage, currentCardIndex + cardsPerPage);
                 displayCards();
             }
         }
@@ -1355,13 +1406,15 @@
             if (specificMode) {
                 cardsMode = 'specific';
                 selectedCards = parseInt(cardsInput.value) || 5;
-                selectedInfo.textContent = `Memorizarás ${selectedCards} cartas específicas (2 cartas por página)`;
+                const displayText = displayMode === 'pairs' ? '2 cartas por página' : '1 carta por página';
+                selectedInfo.textContent = `Memorizarás ${selectedCards} cartas específicas (${displayText})`;
                 deckInfo.textContent = 'Total disponible: 52 cartas únicas';
             } else {
                 cardsMode = 'decks';
                 selectedDecks = parseInt(decksInput.value) || 1;
                 selectedCards = selectedDecks * 52;
-                selectedInfo.textContent = `Memorizarás ${selectedDecks} baraja(s) completa(s) (${selectedCards} cartas total)`;
+                const displayText = displayMode === 'pairs' ? '2 cartas por página' : '1 carta por página';
+                selectedInfo.textContent = `Memorizarás ${selectedDecks} baraja(s) completa(s) (${selectedCards} cartas total) (${displayText})`;
                 deckInfo.textContent = `Total: ${selectedCards} cartas (${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''})`;
             }
         }
@@ -1373,6 +1426,20 @@
             
             totalRounds = parseInt(roundsInput.value) || 10;
             roundsInfo.textContent = `Jugarás ${totalRounds} rondas en total`;
+        }
+
+        // Función para actualizar información de visualización
+        function updateDisplayInfo() {
+            const pairsMode = document.getElementById('pairs-mode').checked;
+            const displayInfo = document.getElementById('display-info');
+            
+            if (pairsMode) {
+                displayMode = 'pairs';
+                displayInfo.textContent = 'Verás las cartas en parejas de 2 por página.';
+            } else {
+                displayMode = 'single';
+                displayInfo.textContent = 'Verás las cartas de forma individual, 1 por página.';
+            }
         }
 
         // Función para actualizar resumen de configuración
@@ -1436,6 +1503,7 @@
         function startGame() {
             // Actualizar configuración con valores actuales
             updateCardsInfo();
+            updateDisplayInfo();
             updateRoundsInfo();
             
             // Validar configuración
@@ -1476,7 +1544,8 @@
             document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
             const memorizationInfo = document.getElementById('memorization-info');
             if (currentMode === 'auto-advance') {
-                const totalPages = Math.ceil(cardSequence.length / 2);
+                const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
+                const totalPages = Math.ceil(cardSequence.length / cardsPerPage);
                 memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
             } else {
                 memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar.`;
@@ -1554,7 +1623,8 @@
                     clearInterval(timerInterval);
                     if (currentMode === 'auto-advance') {
                         // Autoavance - pasar a siguiente página
-                        if (currentCardIndex + 2 < cardSequence.length) {
+                        const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
+                        if (currentCardIndex + cardsPerPage < cardSequence.length) {
                             nextCards();
                             timer = autoAdvanceTime;
                             startTimer();
@@ -1912,10 +1982,105 @@
                 const row = document.createElement('tr');
                 row.style.cssText = isCardCorrect ? 'background: #d4edda;' : 'background: #f8d7da;';
                 
-                // Columna 1: Carta original
+                // Columna 1: Carta original con imagen
                 const cardCell = document.createElement('td');
-                cardCell.textContent = `Carta ${i + 1}`;
                 cardCell.style.cssText = 'padding: 8px; text-align: center; border: 1px solid #dee2e6; font-weight: bold;';
+                
+                // Crear imagen de la carta
+                const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+                let cardImageHTML = '';
+                
+                if (gameMode === 'symbols') {
+                    // Modo símbolos - mostrar símbolos Unicode
+                    const number = card.replace(/[♠♥♦♣]/g, '');
+                    const suit = card.replace(/[A-Z0-9]/g, '');
+                    const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
+                    
+                    cardImageHTML = `
+                        <div style="
+                            width: 60px; 
+                            height: 80px; 
+                            background: white;
+                            border-radius: 8px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            color: ${suitColor};
+                            font-size: 1.5rem;
+                            font-weight: bold;
+                            margin: 0 auto;
+                            border: 1px solid #ddd;
+                        ">
+                            <div style="font-size: 1.2rem; margin-bottom: 5px;">${number}</div>
+                            <div style="font-size: 1.5rem;">${suit}</div>
+                        </div>
+                    `;
+                } else {
+                    // Modo cartas - mostrar imágenes reales
+                    const { suit, value } = parseRealCard(card);
+                    
+                    // Mapear palos a símbolos para determinar color
+                    let suitSymbol = '';
+                    let suitColor = '#333';
+                    switch(suit) {
+                        case 'spades': suitSymbol = '♠'; suitColor = '#333'; break;
+                        case 'hearts': suitSymbol = '♥'; suitColor = '#dc3545'; break;
+                        case 'diamonds': suitSymbol = '♦'; suitColor = '#dc3545'; break;
+                        case 'clubs': suitSymbol = '♣'; suitColor = '#333'; break;
+                    }
+                    
+                    // Crear clave para buscar la imagen
+                    const imageKey = `custom_${value}_${suit}`;
+                    const imageSrc = CARD_IMAGES_BASE64[imageKey];
+                    
+                    if (imageSrc) {
+                        cardImageHTML = `
+                            <div style="
+                                width: 60px; 
+                                height: 80px; 
+                                background: white;
+                                border-radius: 8px;
+                                overflow: hidden;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                margin: 0 auto;
+                                border: 1px solid #ddd;
+                            ">
+                                <img src="${imageSrc}" 
+                                     alt="${value} of ${suit}" 
+                                     style="
+                                         width: 100%; 
+                                         height: 100%; 
+                                         object-fit: contain;
+                                         border-radius: 7px;
+                                     "
+                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 0.8rem;\'>Error</div>'">
+                            </div>
+                        `;
+                    } else {
+                        // Fallback si no se encuentra la imagen
+                        cardImageHTML = `
+                            <div style="
+                                width: 60px; 
+                                height: 80px; 
+                                background: white;
+                                border-radius: 8px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: ${suitColor};
+                                font-size: 1.5rem;
+                                font-weight: bold;
+                                margin: 0 auto;
+                                border: 1px solid #ddd;
+                            ">${value}</div>
+                        `;
+                    }
+                }
+                
+                cardCell.innerHTML = cardImageHTML;
                 row.appendChild(cardCell);
                 
                 // Columna 2: Respuesta del usuario
@@ -2250,6 +2415,7 @@
         // Inicialización al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             updateCardsInfo();
+            updateDisplayInfo();
             updateSummary();
             updateProgressDisplay();
             
@@ -2301,6 +2467,19 @@
             document.getElementById('auto-advance-mode').addEventListener('change', function() {
                 updateSummary();
                 updateModeDescription();
+            });
+            
+            // Event listeners para modo de visualización
+            document.getElementById('pairs-mode').addEventListener('change', function() {
+                updateDisplayInfo();
+                updateCardsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('single-mode').addEventListener('change', function() {
+                updateDisplayInfo();
+                updateCardsInfo();
+                updateSummary();
             });
         });
     </script>
