@@ -276,6 +276,8 @@
             margin-left: auto;
             margin-right: auto;
         }
+        
+
 
         .card-input-row {
             display: flex;
@@ -794,6 +796,7 @@
         <div id="memorization-phase" class="hidden">
             <h2 class="phase-title">Fase de Memorización</h2>
             <div class="timer" id="timer">Tiempo restante: 15 segundos</div>
+            <div class="timer" id="elapsed-time" style="color: #1976d2; font-weight: bold;">Tiempo empleado: 0.0 segundos</div>
             
             <!-- Contenedor principal con posición fija para las cartas -->
             <div style="position: relative; margin: 20px 0;">
@@ -1730,9 +1733,11 @@
         // Función para iniciar timer
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
+            const startTime = Date.now();
             
             timerInterval = setInterval(() => {
                 timer -= 0.1;
+                const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(1);
                 
                 if (timer <= 0) {
                     clearInterval(timerInterval);
@@ -1753,6 +1758,7 @@
                     }
                 } else {
                     document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                    document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${elapsedTime} segundos`;
                 }
             }, 100);
         }
@@ -1785,6 +1791,14 @@
             
             // Crear inputs para cada carta
             for (let i = 0; i < cardSequence.length; i++) {
+                // Agregar título del mazo cada 52 cartas (baraja completa)
+                if (i % 52 === 0) {
+                    const mazoTitle = document.createElement('div');
+                    mazoTitle.style.cssText = 'font-weight: bold; font-size: 1.3rem; color: #333; margin: 20px 0 15px 0; text-align: left; width: 100%; grid-column: 1 / -1;';
+                    mazoTitle.textContent = `Mazo ${Math.floor(i / 52) + 1}:`;
+                    container.appendChild(mazoTitle);
+                }
+                
                 const cardRow = document.createElement('div');
                 cardRow.className = 'card-input-row';
                 
@@ -1802,20 +1816,34 @@
                 suitSelect.dataset.cardIndex = i;
                 suitSelect.dataset.inputType = 'suit';
                 
-                // Opciones de palos
+                // Opciones de palos (solo iconos con colores)
                 const suits = [
                     { value: '', text: 'Palo' },
-                    { value: 'P', text: '♠ Picas' },
-                    { value: 'C', text: '♥ Corazones' },
-                    { value: 'D', text: '♦ Diamantes' },
-                    { value: 'T', text: '♣ Tréboles' }
+                    { value: 'P', text: '♠', color: '#333' },
+                    { value: 'C', text: '♥', color: '#dc3545' },
+                    { value: 'D', text: '♦', color: '#dc3545' },
+                    { value: 'T', text: '♣', color: '#333' }
                 ];
                 
                 suits.forEach(suit => {
                     const option = document.createElement('option');
                     option.value = suit.value;
                     option.textContent = suit.text;
+                    if (suit.color) {
+                        option.style.color = suit.color;
+                    }
                     suitSelect.appendChild(option);
+                });
+                
+                // Agregar evento para cambiar el color del texto seleccionado
+                suitSelect.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    const selectedOption = suits.find(suit => suit.value === selectedValue);
+                    if (selectedOption && selectedOption.color) {
+                        this.style.color = selectedOption.color;
+                    } else {
+                        this.style.color = '#333';
+                    }
                 });
                 
                 cardRow.appendChild(numberInput);
