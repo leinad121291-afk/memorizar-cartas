@@ -1434,6 +1434,10 @@
 
         // Función para iniciar el juego
         function startGame() {
+            // Actualizar configuración con valores actuales
+            updateCardsInfo();
+            updateRoundsInfo();
+            
             // Validar configuración
             if (!validateConfiguration()) {
                 return;
@@ -2124,7 +2128,8 @@
             document.getElementById('result-phase').classList.add('hidden');
             document.getElementById('memorization-phase').classList.remove('hidden');
             
-            updateDisplay();
+            // Mostrar cartas
+            displayCards();
             
             // Registrar tiempo de inicio de memorización
             memorizationStartTime = Date.now();
@@ -2247,6 +2252,56 @@
             updateCardsInfo();
             updateSummary();
             updateProgressDisplay();
+            
+            // Event listeners para actualizar configuración en tiempo real
+            document.getElementById('specific-cards-mode').addEventListener('change', function() {
+                updateCardsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('full-decks-mode').addEventListener('change', function() {
+                updateCardsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('cards-input').addEventListener('input', function() {
+                updateCardsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('decks-input').addEventListener('input', function() {
+                updateCardsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('rounds-input').addEventListener('input', function() {
+                updateRoundsInfo();
+                updateSummary();
+            });
+            
+            document.getElementById('memorization-timer').addEventListener('input', function() {
+                updateSummary();
+                updateModeDescription();
+            });
+            
+            document.getElementById('recall-timer').addEventListener('input', function() {
+                updateSummary();
+            });
+            
+            document.getElementById('auto-advance-time').addEventListener('input', function() {
+                updateSummary();
+                updateModeDescription();
+            });
+            
+            document.getElementById('memorization-mode').addEventListener('change', function() {
+                updateSummary();
+                updateModeDescription();
+            });
+            
+            document.getElementById('auto-advance-mode').addEventListener('change', function() {
+                updateSummary();
+                updateModeDescription();
+            });
         });
     </script>
 </body>
