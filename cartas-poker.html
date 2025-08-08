@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas Poker - Con Autoavance</title>
+    <script src="base64_images_data.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .title {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .phase-title {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section-title {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Asegurar que todos los títulos de sección tengan el mismo tamaño */
+        h3.section-title {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Selector aún más específico para garantizar consistencia */
+        .section h3.section-title {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Forzar el tamaño de fuente para todos los títulos de sección */
+        h3[class*="section-title"] {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Selector de máxima especificidad */
+        div.section > h3.section-title {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Selector de máxima especificidad para forzar el tamaño */
+        body div.section h3.section-title {
+            color: #333 !important;
+            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+        }
+        
+        /* Selector ultra específico para todos los elementos h3 en secciones */
+        
+        body * h3.section-title,
+        body h3.section-title,
+        html body h3.section-title {
+            font-size: 1.3rem !important;
+            font-weight: bold !important;
+            color: #333 !important;
+            margin-bottom: 15px !important;
+        }
+
+        .card-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .poker-card {
+            width: 140px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .poker-card svg,
+        .poker-card img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .card-red {
+            color: #dc3545;
+        }
+
+        .card-black {
+            color: #333;
+        }
+
+        .card-input {
+            width: 120px;
+            height: 50px;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            background: #f8f9fa;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .card-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .card-input.correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .card-input.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .card-number-select {
+            width: 80px;
+            height: 45px;
+            border: 3px solid #ddd;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            background: #f8f9fa;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .card-number-select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .card-number-select.correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .card-number-select.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .progress-indicator {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 15px 0;
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .correct-result {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .incorrect-result {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-input-row {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 0px;
+            position: relative;
+            margin: 8px 0;
+        }
+        
+        /* Ajustes para el nuevo sistema de grid */
+        .card-number-select {
+            margin-bottom: 0;
+        }
+        
+        .suit-select {
+            margin-top: 0;
+        }
+ 
+        .card-input {
+            width: 55px;
+            height: 25px;
+            border: 2px solid #ddd;
+            border-radius: 6px 6px 0 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            background: #f8f9fa;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s;
+        }
+ 
+        .suit-select {
+            width: 80px;
+            height: 45px;
+            border: 2px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            font-size: 1.8rem;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .suit-select:focus {
+            outline: none;
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .suit-select.correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .suit-select.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .suit-select option[value="P"] {
+            color: #333;
+        }
+
+        .suit-select option[value="C"] {
+            color: #dc3545;
+        }
+
+        .suit-select option[value="D"] {
+            color: #dc3545;
+        }
+
+        .suit-select option[value="T"] {
+            color: #333;
+        }
+
+        .fullscreen-button {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 40px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para sistema de rondas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-number.correct {
+            color: #28a745;
+        }
+
+        .stat-number.incorrect {
+            color: #dc3545;
+        }
+
+        .stat-number.neutral {
+            color: #6c757d;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .pie-chart {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#28a745 0deg, #28a745 0deg, #e9ecef 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .pie-chart-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chart-label {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rounds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .round-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid #e9ecef;
+        }
+
+        .round-item.correct {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .round-item.incorrect {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        /* Estilos para configuración de tiempo en resultados */
+        .mode-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .mode-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .mode-radio {
+            margin: 0;
+        }
+
+        .timer-select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 120px;
+        }
+
+        .small-input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px;
+            }
+            
+            .card-display {
+                font-size: 2rem;
+            }
+            
+            .cards-grid {
+                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .poker-card {
+                width: 120px;
+                height: 160px;
+            }
+            
+            .card-corner {
+                font-size: 1.2rem;
+            }
+            
+            .card-suit {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <button class="fullscreen-button" id="fullscreen-btn" onclick="toggleFullscreen()" title="Pantalla Completa">⛶</button>
+        <h1 class="title">Cartas Poker</h1>
+        
+        <!-- Fase de Configuración -->
+        <div id="setup-phase">
+            <h2 class="phase-title">Configuración del Juego</h2>
+            
+                         <!-- Cartas a Memorizar -->
+             <div class="section">
+                 <h3 class="section-title">1. Configuración de Cartas</h3>
+                 
+                 <!-- Selección de Modo de Juego -->
+                 <div style="margin-bottom: 25px;">
+                     <p style="font-size: 1.1rem; color: #333; margin-bottom: 15px; font-weight: bold;">Elige el modo de juego:</p>
+                     <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                         <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; background: white; min-width: 200px;">
+                             <input type="radio" id="symbols-mode" name="game-mode" value="symbols" checked>
+                             <label for="symbols-mode" style="font-weight: bold; color: #333;">Modo Símbolos</label>
+                             <span style="font-size: 0.9rem; color: #666;">(♠♥♦♣)</span>
+                         </div>
+                         
+                         <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; background: white; min-width: 200px;">
+                             <input type="radio" id="cards-mode" name="game-mode" value="cards">
+                             <label for="cards-mode" style="font-weight: bold; color: #333;">Modo Cartas</label>
+                             <span style="font-size: 0.9rem; color: #666;">(Imágenes reales)</span>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <!-- Opciones de configuración -->
+                 <div style="margin-bottom: 20px;">
+                     <p>Elige el tipo de memorización:</p>
+                     <div style="display: flex; justify-content: center; gap: 20px; margin: 15px 0; flex-wrap: wrap;">
+                         <div style="display: flex; align-items: center; gap: 10px;">
+                             <input type="radio" id="specific-cards-mode" name="cards-mode" value="specific" checked>
+                             <label for="specific-cards-mode">Número específico de cartas:</label>
+                             <input type="number" id="cards-input" class="card-input" min="1" max="52" value="" placeholder="5" style="width: 80px;">
+                             <span style="font-size: 1.1rem; color: #333;">cartas</span>
+                         </div>
+                         
+                         <div style="display: flex; align-items: center; gap: 10px;">
+                             <input type="radio" id="full-decks-mode" name="cards-mode" value="decks">
+                             <label for="full-decks-mode">Barajas completas:</label>
+                             <input type="number" id="decks-input" class="card-input" min="1" max="10" value="" placeholder="1" style="width: 80px;">
+                             <span style="font-size: 1.1rem; color: #333;">barajas</span>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <p id="selected-info">Memorizarás 5 cartas específicas (2 cartas por página)</p>
+                 <p id="deck-info" style="font-size: 0.9rem; color: #666; margin-top: 5px;">Total disponible: 52 cartas únicas</p>
+             </div>
+
+            <!-- Configuración de Temporizadores -->
+            <div class="section">
+                <h3 class="section-title">2. Configuración de Temporizadores</h3>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                                        <label for="recall-timer">Tiempo para recall (segundos):</label>
+                <input type="number" id="recall-timer" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;" min="1" max="3600" step="0.1" value="" placeholder="30">
+                <div id="recall-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Configuración de Rondas -->
+            <div class="section">
+                <h3 class="section-title">3. Configuración de Rondas</h3>
+                <p>Elige cuántas rondas quieres jugar:</p>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
+                    <input type="number" id="rounds-input" class="card-input" min="1" max="100" value="" placeholder="10">
+                    <span style="font-size: 1.1rem; color: #333;">rondas</span>
+                </div>
+                <p id="rounds-info">Jugarás 10 rondas en total</p>
+            </div>
+
+            <!-- Configuración de Autoavance -->
+            <div class="section">
+                <h3 class="section-title">4. Configuración de Tiempo de Memorización</h3>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                        <input type="radio" id="memorization-mode" name="time-mode" value="memorization" checked>
+                        <label for="memorization-mode">Tiempo para memorización (segundos):</label>
+                        <input type="number" id="memorization-timer" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;" min="1" max="999999" step="0.1" value="" placeholder="15">
+                        <div id="memorization-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                        <input type="radio" id="auto-advance-mode" name="time-mode" value="auto-advance">
+                        <label for="auto-advance-mode">Autoavance (segundos):</label>
+                        <input type="number" id="auto-advance-time" style="font-size: 1rem; padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; text-align: center; width: 80px; margin: 0 10px;" min="0.1" max="60" step="0.1" value="" placeholder="3">
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                    <span id="mode-description">El juego usará el tiempo de memorización configurado.</span>
+                </p>
+            </div>
+
+            <!-- Resumen de Configuración -->
+            <div style="background: #e3f2fd; border-radius: 10px; padding: 20px; margin: 20px 0; border: 2px solid #bbdefb;" id="config-summary">
+                <h3>Resumen de Configuración</h3>
+                <p id="summary-cards">Cartas: 5</p>
+                <p id="summary-rounds">Rondas: 10</p>
+                <p id="summary-timers">Temporizadores: Memorización 15s, Recall 30s</p>
+                <p id="summary-mode">Modo: Tiempo de memorización</p>
+            </div>
+            
+            <button class="button" onclick="startGame()">Comenzar Juego</button>
+        </div>
+
+        <!-- Fase de Memorización -->
+        <div id="memorization-phase" class="hidden">
+            <h2 class="phase-title">Fase de Memorización</h2>
+            <div class="timer" id="timer">Tiempo restante: 15 segundos</div>
+            
+            <!-- Contenedor principal con posición fija para las cartas -->
+            <div style="position: relative; margin: 20px 0;">
+                <!-- Indicador de mazo simplificado -->
+                <div id="deck-indicator" style="
+                    position: absolute;
+                    left: 30px;
+                    top: 80px;
+                    background: #007bff;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 50%;
+                    font-weight: bold;
+                    font-size: 1.8rem;
+                    width: 60px;
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+                    display: none;
+                    z-index: 10;
+                ">
+                    <span id="current-deck-indicator">1</span>
+                </div>
+                
+                <!-- Contenedor de cartas en posición original -->
+                <div style="width: 100%;">
+            <div class="card-display" id="card-display"></div>
+            <div class="progress-indicator" id="progress">Cartas 1-2 de 5</div>
+            <div style="margin: 20px 0;">
+                <button class="button" id="prev-btn" onclick="previousCards()" disabled>← Anterior</button>
+                <button class="button" id="next-btn" onclick="nextCards()">Siguiente →</button>
+            </div>
+            <p id="memorization-info">Memoriza estas cartas. Tienes 15 segundos.</p>
+            <div style="margin: 30px 0;">
+                <button class="button" id="finish-memorization-btn" onclick="finishMemorization()">Terminar Memorización</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fase de Escritura -->
+        <div id="input-phase" class="hidden">
+            <h2 class="phase-title">Escribe las Cartas</h2>
+            <div class="timer" id="recall-timer-display">Tiempo restante: 30 segundos</div>
+                             <p>Escribe las cartas que memorizaste:</p>
+                 <p style="font-size: 0.9rem; color: #666; margin: 10px 0;">
+                     <strong>Formato:</strong> Escribe la carta (ej: As, Rey, 10) y selecciona el palo del desplegable
+                 </p>
+                 <div id="cards-input-container" class="cards-grid"></div>
+            <div>
+                <button class="button" onclick="verifyCardAnswers()" id="verify-btn">Verificar Respuesta</button>
+                <button class="button" onclick="showCardsAgain()" id="show-again-btn">Ver de Nuevo</button>
+            </div>
+        </div>
+
+        <!-- Fase de Resultado -->
+        <div id="result-phase" class="hidden">
+            <h2 class="phase-title">Resultado Ronda <span id="current-round-display">1</span></h2>
+            <div id="result-message"></div>
+            
+            <!-- Resultado de la Ronda Actual -->
+            <div class="section">
+                <h3 class="section-title">Resultado Ronda <span id="current-round-number">1</span></h3>
+                
+                <!-- Estadísticas de la ronda -->
+                <div class="stats-grid" id="round-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Porcentaje de Acierto</div>
+                        <div class="stat-number neutral" id="round-accuracy">0%</div>
+                        <div style="font-size: 0.9rem; color: #666;">cartas correctas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Estado</div>
+                        <div class="stat-number neutral" id="round-status">Pendiente</div>
+                        <div style="font-size: 0.9rem; color: #666;">de la ronda</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progresión de Rondas -->
+            <div class="section">
+                <h3 class="section-title">Progresión de Rondas</h3>
+                
+                <!-- Lista simple de porcentajes por ronda -->
+                <div id="rounds-percentage-list" style="margin: 20px 0; text-align: center;">
+                    <!-- Aquí se mostrarán los porcentajes de cada ronda -->
+                </div>
+                
+                <!-- Estadísticas totales -->
+                <div class="stats-grid" id="progress-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Rondas Correctas</div>
+                        <div class="stat-number neutral" id="current-score">0</div>
+                        <div style="font-size: 0.9rem; color: #666;">de <span id="current-round">1</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Promedio Precisión</div>
+                        <div class="stat-number neutral" id="current-percentage">0%</div>
+                        <div style="font-size: 0.9rem; color: #666;">de cartas correctas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Mejor Racha</div>
+                        <div class="stat-number neutral" id="current-streak">0</div>
+                        <div style="font-size: 0.9rem; color: #666;">consecutivas</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Configuración de tiempo para siguiente ronda -->
+            <div class="section">
+                <h3 class="section-title">Configuración para Siguiente Ronda</h3>
+                
+                <div class="mode-selector">
+                    <div class="mode-option">
+                        <input type="radio" id="result-memorization-mode" name="result-time-mode" value="memorization" class="mode-radio" checked>
+                        <label for="result-memorization-mode">Tiempo para memorización (segundos):</label>
+                        <input type="number" id="result-memorization-timer" class="timer-select" min="1" max="999999" step="0.1" value="" placeholder="15">
+                        <div id="result-memorization-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
+                    </div>
+                    
+                    <div class="mode-option">
+                        <input type="radio" id="result-auto-advance-mode" name="result-time-mode" value="auto-advance" class="mode-radio">
+                        <label for="result-auto-advance-mode">Autoavance (segundos):</label>
+                        <input type="number" id="result-auto-advance-time" class="small-input" min="0.1" max="60" step="0.1" value="" placeholder="3">
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                    <span id="result-mode-description">El juego usará el tiempo de memorización configurado.</span>
+                </p>
+            </div>
+            
+            <div id="round-progress">
+                <p>Ronda <span id="round-number">1</span> de <span id="total-rounds">10</span></p>
+                <div style="width: 100%; height: 20px; background: #e9ecef; border-radius: 10px; margin: 15px 0; overflow: hidden;">
+                    <div style="height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: width 0.3s ease; width: 0%;" id="round-progress-fill"></div>
+                </div>
+            </div>
+            <div>
+                <button class="button" onclick="nextRound()" id="next-round-btn">Siguiente Ronda</button>
+                <button class="button" onclick="resetGame()" id="new-game-btn">Nuevo Juego</button>
+                <button class="button" onclick="goToMenu()" id="menu-btn" style="display: none;">Menú</button>
+            </div>
+        </div>
+        
+        <!-- Fase de Resultados Finales -->
+        <div id="final-results-phase" class="hidden">
+            <h2 class="phase-title">¡Juego Completado!</h2>
+            
+            <!-- Gráficas circulares principales -->
+            <div class="chart-container">
+                <div>
+                    <div class="pie-chart" id="final-accuracy-chart">
+                        <div class="pie-chart-text">0%</div>
+                    </div>
+                    <div class="chart-label">Precisión Final</div>
+                </div>
+                <div>
+                    <div class="pie-chart" id="final-score-chart">
+                        <div class="pie-chart-text">0/10</div>
+                    </div>
+                    <div class="chart-label">Progreso</div>
+                </div>
+                <div>
+                    <div class="pie-chart" id="final-streak-chart">
+                        <div class="pie-chart-text">0</div>
+                    </div>
+                    <div class="chart-label">Mejor Racha</div>
+                </div>
+            </div>
+            
+            <!-- Estadísticas finales -->
+            <div class="section">
+                <h3 class="section-title">Estadísticas Finales</h3>
+                <div class="stats-grid" id="final-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Puntuación Total</div>
+                        <div class="stat-number neutral" id="final-score">0/10</div>
+                        <div style="font-size: 0.9rem; color: #666;">rondas correctas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Porcentaje Final</div>
+                        <div class="stat-number neutral" id="final-percentage">0%</div>
+                        <div style="font-size: 0.9rem; color: #666;">de precisión</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Mejor Racha</div>
+                        <div class="stat-number neutral" id="final-streak">0</div>
+                        <div style="font-size: 0.9rem; color: #666;">consecutivas</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desglose de rondas -->
+            <div class="section">
+                <h3 class="section-title">Desglose por Rondas</h3>
+                <div class="rounds-grid" id="final-rounds-breakdown"></div>
+            </div>
+            
+            <div>
+                <button class="button" onclick="resetGame()" id="final-new-game-btn">Nuevo Juego</button>
+                <button class="button" onclick="goToMenu()" id="final-menu-btn">Menú</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                 // Variables del juego
+         let gameState = 'setup';
+         let selectedCards = 5;
+         let selectedDecks = 1;
+         let cardsMode = 'specific'; // 'specific' o 'decks'
+         let cardSequence = [];
+         let currentCardIndex = 0;
+         let timer = 0;
+         let memorizationTime = 15;
+         let recallTime = 30;
+         let timerInterval;
+         let recallTimerInterval;
+         let memorizationStartTime = 0;
+         let actualMemorizationTime = 0;
+         
+         // Variables para autoavance
+         let autoAdvanceEnabled = false;
+         let autoAdvanceTime = 3;
+         let currentMode = 'memorization';
+         
+         // Variables para sistema de rondas
+         let currentRound = 1;
+         let totalRounds = 10;
+         let roundScores = [];
+         let totalScore = 0;
+
+                 // Cartas de poker disponibles (con símbolos para mostrar, letras para input)
+         const pokerCards = [
+             'A♠', 'A♥', 'A♦', 'A♣',
+             'K♠', 'K♥', 'K♦', 'K♣',
+             'Q♠', 'Q♥', 'Q♦', 'Q♣',
+             'J♠', 'J♥', 'J♦', 'J♣',
+             '10♠', '10♥', '10♦', '10♣',
+             '9♠', '9♥', '9♦', '9♣',
+             '8♠', '8♥', '8♦', '8♣',
+             '7♠', '7♥', '7♦', '7♣',
+             '6♠', '6♥', '6♦', '6♣',
+             '5♠', '5♥', '5♦', '5♣',
+             '4♠', '4♥', '4♦', '4♣',
+             '3♠', '3♥', '3♦', '3♣',
+             '2♠', '2♥', '2♦', '2♣'
+         ];
+
+        // Cartas con imágenes reales (formato: [palo]_[valor])
+        const realCards = [
+            'spades_A', 'hearts_A', 'diamonds_A', 'clubs_A',
+            'spades_K', 'hearts_K', 'diamonds_K', 'clubs_K',
+            'spades_Q', 'hearts_Q', 'diamonds_Q', 'clubs_Q',
+            'spades_J', 'hearts_J', 'diamonds_J', 'clubs_J',
+            'spades_10', 'hearts_10', 'diamonds_10', 'clubs_10',
+            'spades_9', 'hearts_9', 'diamonds_9', 'clubs_9',
+            'spades_8', 'hearts_8', 'diamonds_8', 'clubs_8',
+            'spades_7', 'hearts_7', 'diamonds_7', 'clubs_7',
+            'spades_6', 'hearts_6', 'diamonds_6', 'clubs_6',
+            'spades_5', 'hearts_5', 'diamonds_5', 'clubs_5',
+            'spades_4', 'hearts_4', 'diamonds_4', 'clubs_4',
+            'spades_3', 'hearts_3', 'diamonds_3', 'clubs_3',
+            'spades_2', 'hearts_2', 'diamonds_2', 'clubs_2'
+        ];
+
+        // Función para convertir carta con símbolos a formato de input
+        function cardToInputFormat(card) {
+            return card.replace('♠', 'P').replace('♥', 'C').replace('♦', 'D').replace('♣', 'T');
+        }
+
+        // Función para convertir input a carta con símbolos
+        function inputToCardFormat(input) {
+            return input.replace('P', '♠').replace('C', '♥').replace('D', '♦').replace('T', '♣');
+        }
+
+        // Función para normalizar valores del usuario (1 = A, 11 = J, 12 = Q, 13 = K)
+        function normalizeUserValue(userValue) {
+            const value = userValue.toLowerCase().trim();
+            
+            // Mapear valores numéricos a letras
+            switch(value) {
+                case '1': return 'a';
+                case '11': return 'j';
+                case '12': return 'q';
+                case '13': return 'k';
+                default: return value;
+            }
+        }
+        
+        // Función para convertir códigos de palos a iconos
+        function suitCodeToIcon(suitCode) {
+            switch(suitCode) {
+                case 'P': return '♠';
+                case 'C': return '♥';
+                case 'D': return '♦';
+                case 'T': return '♣';
+                default: return suitCode;
+            }
+        }
+
+        // Función para obtener valores esperados de una carta (número y palo)
+        function getExpectedUserValueFromImage(card) {
+            // Obtener el modo de juego seleccionado
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            
+            if (gameMode === 'symbols') {
+                // Modo símbolos - extraer de símbolos Unicode
+                const number = card.replace(/[♠♥♦♣]/g, ''); // Remover símbolos para obtener número
+                const suit = card.replace(/[A-Z0-9]/g, ''); // Remover letras/números para obtener palo
+                
+                // Mapear símbolos a códigos de palo
+                let suitCode = '';
+                switch(suit) {
+                    case '♠': suitCode = 'P'; break; // Picas
+                    case '♥': suitCode = 'C'; break; // Corazones
+                    case '♦': suitCode = 'D'; break; // Diamantes
+                    case '♣': suitCode = 'T'; break; // Tréboles
+                    default: suitCode = suit;
+                }
+                
+                return {
+                    number: number,
+                    suit: suitCode
+                };
+            } else {
+                // Modo cartas - usar función para cartas reales
+                return getExpectedUserValueFromRealCard(card);
+            }
+        }
+
+        // Función para extraer información de una carta con imagen real
+        function parseRealCard(cardName) {
+            // Formato: [palo]_[valor]
+            const parts = cardName.split('_');
+            if (parts.length >= 2) {
+                const suit = parts[0];
+                const value = parts[1];
+                return { suit, value };
+            }
+            return { suit: 'spades', value: 'A' };
+        }
+
+        // Función para obtener la ruta de imagen de una carta real
+        function getRealCardImagePath(cardName) {
+            return `images/cartas_reales/${cardName}.png`;
+        }
+
+        // Función para convertir carta real a formato de input
+        function realCardToInputFormat(cardName) {
+            const { suit, value } = parseRealCard(cardName);
+            
+            // Mapear palos a códigos
+            let suitCode = '';
+            switch(suit) {
+                case 'spades': suitCode = 'P'; break;
+                case 'hearts': suitCode = 'C'; break;
+                case 'diamonds': suitCode = 'D'; break;
+                case 'clubs': suitCode = 'T'; break;
+                default: suitCode = 'P';
+            }
+            
+            return { number: value, suit: suitCode };
+        }
+
+        // Función para obtener valores esperados de una carta real
+        function getExpectedUserValueFromRealCard(cardName) {
+            return realCardToInputFormat(cardName);
+        }
+
+        // Función para generar el patrón de una carta según su valor usando imágenes reales
+        function generateCardPattern(value, suitSymbol, suitColor) {
+            const displayValue = value.toUpperCase();
+            
+            // Cartas especiales (A, K, Q, J)
+            if (['A', 'K', 'Q', 'J'].includes(displayValue)) {
+                return generateSpecialCardImage(displayValue, suitSymbol, suitColor);
+            }
+            
+            // Cartas numéricas (2-10)
+            const numValue = parseInt(value);
+            if (numValue >= 2 && numValue <= 10) {
+                return generateNumberCardImage(numValue, suitSymbol, suitColor);
+            }
+            
+            // Fallback para valores desconocidos
+            return generateSimpleCardImage(displayValue, suitSymbol, suitColor);
+        }
+
+        // Función para generar cartas especiales (A, K, Q, J) usando imágenes reales
+        function generateSpecialCardImage(value, suitSymbol, suitColor) {
+            // Mapear palos a nombres de archivo
+            let suitName = '';
+            switch(suitSymbol) {
+                case '♠': suitName = 'spades'; break;
+                case '♥': suitName = 'hearts'; break;
+                case '♦': suitName = 'diamonds'; break;
+                case '♣': suitName = 'clubs'; break;
+                default: suitName = 'spades';
+            }
+            
+            // Crear clave para buscar la imagen
+            const imageKey = `custom_${value}_${suitName}`;
+            const imageSrc = CARD_IMAGES_BASE64[imageKey];
+            
+            if (imageSrc) {
+                return `
+                    <div style="
+                        width: 100%; 
+                        height: 100%; 
+                        background: white;
+                        border-radius: 8px;
+                        border: 1px solid #d1d5db;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    ">
+                        <img src="${imageSrc}" 
+                             alt="${value} of ${suitName}" 
+                             style="
+                                 width: 100%; 
+                                 height: 100%; 
+                                 object-fit: contain;
+                                 border-radius: 7px;
+                             "
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
+                    </div>
+                `;
+            } else {
+                // Fallback si no se encuentra la imagen
+                return `
+                    <div style="
+                        width: 100%; 
+                        height: 100%; 
+                        background: white;
+                        border-radius: 8px;
+                        border: 1px solid #d1d5db;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: ${suitColor};
+                        font-size: 3rem;
+                        font-weight: bold;
+                    ">${value}</div>
+                `;
+            }
+        }
+
+        // Función para generar cartas numéricas (2-10) usando imágenes reales
+        function generateNumberCardImage(numValue, suitSymbol, suitColor) {
+            // Mapear palos a nombres de archivo
+            let suitName = '';
+            switch(suitSymbol) {
+                case '♠': suitName = 'spades'; break;
+                case '♥': suitName = 'hearts'; break;
+                case '♦': suitName = 'diamonds'; break;
+                case '♣': suitName = 'clubs'; break;
+                default: suitName = 'spades';
+            }
+            
+            // Crear clave para buscar la imagen
+            const imageKey = `custom_${numValue}_${suitName}`;
+            const imageSrc = CARD_IMAGES_BASE64[imageKey];
+            
+            if (imageSrc) {
+                return `
+                    <div style="
+                        width: 100%; 
+                        height: 100%; 
+                        background: white;
+                        border-radius: 8px;
+                        border: 1px solid #d1d5db;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    ">
+                        <img src="${imageSrc}" 
+                             alt="${numValue} of ${suitName}" 
+                             style="
+                                 width: 100%; 
+                                 height: 100%; 
+                                 object-fit: contain;
+                                 border-radius: 7px;
+                             "
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
+                    </div>
+                `;
+            } else {
+                // Fallback si no se encuentra la imagen
+                return `
+                    <div style="
+                        width: 100%; 
+                        height: 100%; 
+                        background: white;
+                        border-radius: 8px;
+                        border: 1px solid #d1d5db;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: ${suitColor};
+                        font-size: 2rem;
+                        font-weight: bold;
+                    ">${numValue}</div>
+                `;
+            }
+        }
+
+        // Función para generar carta simple (fallback) usando imágenes reales
+        function generateSimpleCardImage(value, suitSymbol, suitColor) {
+            return `
+                <div style="
+                    width: 100%; 
+                    height: 100%; 
+                    background: white;
+                    border-radius: 8px;
+                    border: 1px solid #d1d5db;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: ${suitColor};
+                    font-size: 2rem;
+                    font-weight: bold;
+                ">${value}</div>
+            `;
+        }
+
+                 // Generar secuencia de cartas aleatorias según el modo seleccionado
+         function generateCardSequence() {
+             cardSequence = [];
+             
+             // Obtener el modo de juego seleccionado
+             const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+             
+             // Seleccionar el array de cartas según el modo
+             let cardsArray;
+             if (gameMode === 'symbols') {
+                 cardsArray = pokerCards;
+             } else {
+                 cardsArray = realCards;
+             }
+             
+             if (cardsMode === 'specific') {
+                 // Modo: número específico de cartas
+                 const shuffledCards = [...cardsArray].sort(() => Math.random() - 0.5);
+                 for (let i = 0; i < selectedCards; i++) {
+                     cardSequence.push(shuffledCards[i]);
+                 }
+             } else {
+                 // Modo: barajas completas
+                 let allCards = [];
+                 for (let deck = 0; deck < selectedDecks; deck++) {
+                     allCards = allCards.concat([...cardsArray]);
+                 }
+                 
+                 // Mezclar todas las cartas
+                 const shuffledCards = allCards.sort(() => Math.random() - 0.5);
+                 
+                 // Seleccionar todas las cartas de las barajas
+                 for (let i = 0; i < allCards.length; i++) {
+                     cardSequence.push(shuffledCards[i]);
+                 }
+             }
+         }
+
+                 // Configurar modo de juego
+         document.getElementById('symbols-mode').addEventListener('change', function() {
+             if (this.checked) {
+                 updateCardsInfo();
+                 updateSummary();
+             }
+         });
+         
+         document.getElementById('cards-mode').addEventListener('change', function() {
+             if (this.checked) {
+                 updateCardsInfo();
+                 updateSummary();
+             }
+         });
+         
+                 // Configurar modo de cartas
+         document.getElementById('specific-cards-mode').addEventListener('change', function() {
+             if (this.checked) {
+                 cardsMode = 'specific';
+                 updateCardsInfo();
+                 updateSummary();
+             }
+         });
+         
+         document.getElementById('full-decks-mode').addEventListener('change', function() {
+             if (this.checked) {
+                 cardsMode = 'decks';
+                 updateCardsInfo();
+                 updateSummary();
+             }
+         });
+         
+                 // Configurar entrada de cartas específicas
+        document.getElementById('cards-input').addEventListener('blur', function() {
+            if (!this.value || this.value === '') {
+                this.value = '5';
+                selectedCards = 5;
+                updateCardsInfo();
+                updateSummary();
+                return;
+            }
+        });
+        
+        document.getElementById('cards-input').addEventListener('input', function() {
+            if (this.value === '') {
+                selectedCards = 0;
+                updateCardsInfo();
+                updateSummary();
+                return;
+            }
+            
+            selectedCards = parseInt(this.value) || 0;
+            if (selectedCards < 1) selectedCards = 1;
+            if (selectedCards > 52) selectedCards = 52;
+            this.value = selectedCards;
+            
+            updateCardsInfo();
+            updateSummary();
+        });
+         
+                 // Configurar entrada de barajas
+        document.getElementById('decks-input').addEventListener('blur', function() {
+            if (!this.value || this.value === '') {
+                this.value = '1';
+                selectedDecks = 1;
+                updateCardsInfo();
+                updateSummary();
+                return;
+            }
+        });
+        
+        document.getElementById('decks-input').addEventListener('input', function() {
+            if (this.value === '') {
+                selectedDecks = 0;
+                updateCardsInfo();
+                updateSummary();
+                return;
+            }
+            
+            selectedDecks = parseInt(this.value) || 0;
+            if (selectedDecks < 1) selectedDecks = 1;
+            if (selectedDecks > 10) selectedDecks = 10;
+            this.value = selectedDecks;
+            
+            updateCardsInfo();
+            updateSummary();
+        });
+         
+                 // Función para actualizar información de cartas
+        function updateCardsInfo() {
+            // Obtener el modo de juego seleccionado
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+            
+            if (cardsMode === 'specific') {
+                if (selectedCards === 0) {
+                    document.getElementById('selected-info').textContent = `Escribe cuántas cartas quieres memorizar (modo ${modeText})`;
+                    document.getElementById('deck-info').textContent = `Total disponible: 52 cartas únicas`;
+                } else {
+                    const pages = Math.ceil(selectedCards / 2);
+                    document.getElementById('selected-info').textContent = `Memorizarás ${selectedCards} cartas específicas (${pages} páginas) - Modo ${modeText}`;
+                    document.getElementById('deck-info').textContent = `Total disponible: 52 cartas únicas`;
+                }
+            } else {
+                if (selectedDecks === 0) {
+                    document.getElementById('selected-info').textContent = `Escribe cuántas barajas quieres memorizar (modo ${modeText})`;
+                    document.getElementById('deck-info').textContent = `Total disponible: 52 cartas únicas`;
+                } else {
+                    const totalCards = selectedDecks * 52;
+                    const pages = Math.ceil(totalCards / 2);
+                    document.getElementById('selected-info').textContent = `Memorizarás ${totalCards} cartas de ${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} (${pages} páginas) - Modo ${modeText}`;
+                    document.getElementById('deck-info').textContent = `Total disponible: ${totalCards} cartas únicas`;
+                }
+            }
+        }
+
+        // Función para convertir segundos a minutos y segundos
+        function formatTimeDisplay(seconds) {
+            if (seconds < 60) {
+                return `${seconds} segundos`;
+            } else {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.round(seconds % 60);
+                if (remainingSeconds === 0) {
+                    return `${minutes} minuto${minutes > 1 ? 's' : ''}`;
+                } else {
+                    return `${minutes} minuto${minutes > 1 ? 's' : ''} y ${remainingSeconds} segundo${remainingSeconds > 1 ? 's' : ''}`;
+                }
+            }
+        }
+
+        // Configurar entrada de número de rondas
+        document.getElementById('rounds-input').addEventListener('blur', function() {
+            if (!this.value || this.value === '') {
+                this.value = '10';
+                totalRounds = 10;
+                document.getElementById('rounds-info').textContent = `Jugarás ${totalRounds} rondas en total`;
+                updateSummary();
+                return;
+            }
+        });
+        
+        document.getElementById('rounds-input').addEventListener('input', function() {
+            if (this.value === '') {
+                totalRounds = 0;
+                document.getElementById('rounds-info').textContent = 'Escribe cuántas rondas quieres jugar';
+                updateSummary();
+                return;
+            }
+            
+            totalRounds = parseInt(this.value) || 0;
+            if (totalRounds < 0) totalRounds = 0;
+            if (totalRounds > 100) totalRounds = 100;
+            
+            if (totalRounds === 0) {
+                document.getElementById('rounds-info').textContent = 'Escribe cuántas rondas quieres jugar';
+            } else {
+                document.getElementById('rounds-info').textContent = `Jugarás ${totalRounds} rondas en total`;
+            }
+            updateSummary();
+        });
+
+        // Configurar modo de tiempo
+        document.getElementById('memorization-mode').addEventListener('change', function() {
+            if (this.checked) {
+                currentMode = 'memorization';
+                autoAdvanceEnabled = false;
+                updateModeDescription();
+                updateSummary();
+            }
+        });
+
+        document.getElementById('auto-advance-mode').addEventListener('change', function() {
+            if (this.checked) {
+                currentMode = 'auto-advance';
+                autoAdvanceEnabled = true;
+                updateModeDescription();
+                updateSummary();
+            }
+        });
+
+                 // Configurar tiempo de autoavance
+         document.getElementById('auto-advance-time').addEventListener('input', function() {
+             autoAdvanceTime = parseFloat(this.value) || 3;
+             updateSummary();
+             updateModeDescription();
+         });
+         
+         // Configurar tiempo de memorización
+         document.getElementById('memorization-timer').addEventListener('blur', function() {
+             if (!this.value || this.value === '') {
+                 this.value = '15';
+                 memorizationTime = 15;
+                 updateSummary();
+                 updateModeDescription();
+                 return;
+             }
+         });
+         
+         document.getElementById('memorization-timer').addEventListener('input', function() {
+             if (this.value === '') {
+                 memorizationTime = 0;
+                 updateSummary();
+                 updateModeDescription();
+                 
+                 // Ocultar conversión
+                 const conversionDiv = document.getElementById('memorization-time-conversion');
+                 conversionDiv.style.display = 'none';
+                 return;
+             }
+             
+             memorizationTime = parseFloat(this.value) || 0;
+             updateSummary();
+             updateModeDescription();
+             
+             // Mostrar conversión de tiempo
+             const conversionDiv = document.getElementById('memorization-time-conversion');
+             if (memorizationTime > 60) {
+                 conversionDiv.textContent = `(${formatTimeDisplay(memorizationTime)})`;
+                 conversionDiv.style.display = 'block';
+             } else {
+                 conversionDiv.style.display = 'none';
+             }
+         });
+         
+         // Configurar tiempo de recall
+         document.getElementById('recall-timer').addEventListener('blur', function() {
+             if (!this.value || this.value === '') {
+                 this.value = '30';
+                 recallTime = 30;
+                 updateSummary();
+                 updateModeDescription();
+                 return;
+             }
+         });
+         
+         document.getElementById('recall-timer').addEventListener('input', function() {
+             if (this.value === '') {
+                 recallTime = 0;
+                 updateSummary();
+                 updateModeDescription();
+                 
+                 // Ocultar conversión
+                 const conversionDiv = document.getElementById('recall-time-conversion');
+                 conversionDiv.style.display = 'none';
+                 return;
+             }
+             
+             recallTime = parseFloat(this.value) || 0;
+             updateSummary();
+             updateModeDescription();
+             
+             // Mostrar conversión de tiempo
+             const conversionDiv = document.getElementById('recall-time-conversion');
+             if (recallTime > 60) {
+                 conversionDiv.textContent = `(${formatTimeDisplay(recallTime)})`;
+                 conversionDiv.style.display = 'block';
+             } else {
+                 conversionDiv.style.display = 'none';
+             }
+                  });
+         
+         // Configurar tiempo de autoavance
+         document.getElementById('auto-advance-time').addEventListener('blur', function() {
+             if (!this.value || this.value === '') {
+                 this.value = '3';
+                 autoAdvanceTime = 3;
+                 updateSummary();
+                 updateModeDescription();
+                 return;
+             }
+         });
+         
+         document.getElementById('auto-advance-time').addEventListener('input', function() {
+             if (this.value === '') {
+                 autoAdvanceTime = 0;
+                 updateSummary();
+                 updateModeDescription();
+                 return;
+             }
+             
+             autoAdvanceTime = parseFloat(this.value) || 0;
+             updateSummary();
+             updateModeDescription();
+         });
+         
+         // Actualizar descripción del modo
+        function updateModeDescription() {
+            const description = document.getElementById('mode-description');
+            if (currentMode === 'memorization') {
+                if (memorizationTime > 0) {
+                    description.textContent = `El juego usará el tiempo de memorización configurado (${memorizationTime.toFixed(1)} segundos).`;
+                } else {
+                    description.textContent = `El juego usará el tiempo de memorización configurado (escribe un tiempo).`;
+                }
+            } else {
+                const pages = Math.ceil(selectedCards / 2);
+                if (autoAdvanceTime > 0) {
+                    const totalTime = pages * autoAdvanceTime;
+                    description.textContent = `El juego avanzará automáticamente cada ${autoAdvanceTime.toFixed(1)} segundos por página (${totalTime.toFixed(1)} segundos total).`;
+                } else {
+                    description.textContent = `El juego avanzará automáticamente cada (escribe tiempo) segundos por página.`;
+                }
+            }
+        }
+
+                 // Actualizar resumen
+                 function updateSummary() {
+            let totalCards, pages;
+            
+            // Obtener el modo de juego seleccionado
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const modeText = gameMode === 'symbols' ? 'Símbolos' : 'Cartas reales';
+            
+            if (cardsMode === 'specific') {
+                if (selectedCards === 0) {
+                    document.getElementById('summary-cards').textContent = `Cartas: (escribe un número) - Modo ${modeText}`;
+                } else {
+                    totalCards = selectedCards;
+                    pages = Math.ceil(selectedCards / 2);
+                    document.getElementById('summary-cards').textContent = `Cartas: ${selectedCards} específicas (${pages} páginas) - Modo ${modeText}`;
+                }
+            } else {
+                if (selectedDecks === 0) {
+                    document.getElementById('summary-cards').textContent = `Cartas: (escribe un número) - Modo ${modeText}`;
+                } else {
+                    totalCards = selectedDecks * 52;
+                    pages = Math.ceil(totalCards / 2);
+                    document.getElementById('summary-cards').textContent = `Cartas: ${totalCards} de ${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} (${pages} páginas) - Modo ${modeText}`;
+                }
+            }
+             
+                              // Manejar rondas vacías
+                 if (totalRounds > 0) {
+                     document.getElementById('summary-rounds').textContent = `Rondas: ${totalRounds}`;
+                 } else {
+                     document.getElementById('summary-rounds').textContent = `Rondas: (escribe un número)`;
+                 }
+                 
+                 // Manejar temporizadores vacíos
+                 const memorizationText = memorizationTime > 0 ? `${memorizationTime.toFixed(1)}s` : '(escribe tiempo)';
+                 const recallText = recallTime > 0 ? `${recallTime.toFixed(1)}s` : '(escribe tiempo)';
+                 document.getElementById('summary-timers').textContent = `Temporizadores: Memorización ${memorizationText}, Recall ${recallText}`;
+                 
+                 if (currentMode === 'memorization') {
+                     const modeText = memorizationTime > 0 ? `(${memorizationTime.toFixed(1)}s)` : '(escribe tiempo)';
+                     document.getElementById('summary-mode').textContent = `Modo: Tiempo de memorización ${modeText}`;
+                 } else {
+                     const autoAdvanceText = autoAdvanceTime > 0 ? `${autoAdvanceTime.toFixed(1)}s` : '(escribe tiempo)';
+                     const totalTime = pages * autoAdvanceTime;
+                     const totalText = totalTime > 0 ? `${totalTime.toFixed(1)}s` : '(calculando...)';
+                     document.getElementById('summary-mode').textContent = `Modo: Autoavance (${autoAdvanceText} por página, ${totalText} total)`;
+                 }
+         }
+
+                 // Inicializar resumen
+         updateCardsInfo();
+         updateSummary();
+         updateModeDescription();
+        
+        // Event listener para navegación con teclado
+        document.addEventListener('keydown', function(event) {
+            // Solo permitir navegación con teclado durante la fase de memorización
+            if (gameState === 'memorization') {
+                if (event.code === 'ArrowLeft' || event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    previousCards();
+                } else if (event.code === 'ArrowRight' || event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    nextCards();
+                }
+            }
+        });
+
+                 // Iniciar juego
+                 function startGame() {
+            if (cardsMode === 'specific') {
+                if (selectedCards <= 0 || selectedCards > 52) {
+                    alert('Por favor, escribe un número válido de cartas (1-52) antes de comenzar el juego.');
+                    return;
+                }
+            } else {
+                if (selectedDecks <= 0 || selectedDecks > 10) {
+                    alert('Por favor, escribe un número válido de barajas (1-10) antes de comenzar el juego.');
+                    return;
+                }
+            }
+             
+             if (totalRounds <= 0) {
+                 alert('Por favor, escribe cuántas rondas quieres jugar antes de comenzar el juego.');
+                 return;
+             }
+             
+             if (currentMode === 'memorization' && memorizationTime <= 0) {
+                 alert('Por favor, escribe el tiempo de memorización antes de comenzar el juego.');
+                 return;
+             }
+             
+             if (currentMode === 'auto-advance' && autoAdvanceTime <= 0) {
+                 alert('Por favor, escribe el tiempo de autoavance antes de comenzar el juego.');
+                 return;
+             }
+             
+             if (recallTime <= 0) {
+                 alert('Por favor, escribe el tiempo de recall antes de comenzar el juego.');
+                 return;
+             }
+            
+                                              // Reiniciar variables de rondas
+                 currentRound = 1;
+                 roundScores = [];
+                 totalScore = 0;
+                 
+                 // Limpiar precisiones de rondas
+                 if (window.roundAccuracies) {
+                     window.roundAccuracies = [];
+                 }
+            
+            generateCardSequence();
+            currentCardIndex = 0;
+            gameState = 'memorization';
+            
+            if (currentMode === 'auto-advance') {
+                timer = autoAdvanceTime;
+            } else {
+                timer = memorizationTime;
+            }
+            
+            document.getElementById('setup-phase').classList.add('hidden');
+            document.getElementById('memorization-phase').classList.remove('hidden');
+            
+            updateDisplay();
+            
+            // Registrar tiempo de inicio de memorización
+            memorizationStartTime = Date.now();
+            
+            document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+            
+            const memorizationInfo = document.getElementById('memorization-info');
+            if (currentMode === 'auto-advance') {
+                const totalPages = Math.ceil(cardSequence.length / 2);
+                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+            } else {
+                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+            }
+            
+            startTimer();
+        }
+
+        // Actualizar pantalla de memorización
+        function updateDisplay() {
+            const display = document.getElementById('card-display');
+            const progress = document.getElementById('progress');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (cardSequence.length === 0) {
+                display.textContent = 'No hay cartas para mostrar';
+                return;
+            }
+            
+            let cardsToShow = [];
+            let cardsInThisPage = 0;
+            
+            if (currentCardIndex + 2 >= cardSequence.length && cardSequence.length % 2 === 1) {
+                cardsInThisPage = 1;
+            } else {
+                cardsInThisPage = 2;
+            }
+            
+            for (let i = 0; i < cardsInThisPage && currentCardIndex + i < cardSequence.length; i++) {
+                cardsToShow.push(cardSequence[currentCardIndex + i]);
+            }
+            
+            // Limpiar display
+            display.innerHTML = '';
+            
+            // Añadir aviso de cambio de mazo si es necesario
+            if (selectedDecks > 1) {
+                const currentDeck = Math.floor(currentCardIndex / 52) + 1;
+                
+                // Solo mostrar el indicador en la primera carta de cada mazo
+                if (currentCardIndex % 52 === 0) {
+                    // Mostrar el indicador de mazo a la izquierda
+                    const deckIndicator = document.getElementById('deck-indicator');
+                    const currentDeckIndicator = document.getElementById('current-deck-indicator');
+                    
+                    if (deckIndicator && currentDeckIndicator) {
+                        currentDeckIndicator.textContent = currentDeck;
+                        deckIndicator.style.display = 'block';
+                    }
+                } else {
+                    // Ocultar el indicador en las demás páginas del mazo
+                    const deckIndicator = document.getElementById('deck-indicator');
+                    if (deckIndicator) {
+                        deckIndicator.style.display = 'none';
+                    }
+                }
+            } else {
+                // Si solo hay un mazo, ocultar el indicador
+                const deckIndicator = document.getElementById('deck-indicator');
+                if (deckIndicator) {
+                    deckIndicator.style.display = 'none';
+                }
+            }
+            
+            // Crear cartas visuales
+            cardsToShow.forEach(card => {
+                const cardElement = createPokerCard(card);
+                display.appendChild(cardElement);
+            });
+            
+            progress.textContent = `Cartas ${currentCardIndex + 1}-${currentCardIndex + cardsInThisPage} de ${cardSequence.length}`;
+            
+            const prevShouldBeDisabled = currentCardIndex === 0;
+            const nextShouldBeDisabled = currentCardIndex + cardsInThisPage >= cardSequence.length;
+            
+            prevBtn.disabled = prevShouldBeDisabled;
+            nextBtn.disabled = nextShouldBeDisabled;
+        }
+
+        // Crear carta de poker visual con diseño minimalista
+        function createPokerCard(card) {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'poker-card';
+            
+            // Obtener el modo de juego seleccionado
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            
+            if (gameMode === 'symbols') {
+                // Modo símbolos - usar símbolos Unicode
+                const number = card.replace(/[♠♥♦♣]/g, '');
+                const suit = card.match(/[♠♥♦♣]/)[0];
+                
+                // Determinar color basado en el palo
+                const isRed = suit === '♥' || suit === '♦';
+                const textColor = isRed ? '#dc3545' : '#333';
+                
+                // Crear carta con diseño minimalista
+                cardElement.innerHTML = `
+                    <div style="
+                        width: 100%; 
+                        height: 100%; 
+                        display: flex; 
+                        flex-direction: column; 
+                        justify-content: center; 
+                        align-items: center; 
+                        padding: 15px 10px;
+                        background: white;
+                        border-radius: 8px;
+                    ">
+                        <div style="
+                            font-size: 2.2rem; 
+                            font-weight: bold; 
+                            color: ${textColor};
+                            margin-bottom: 0px;
+                            font-family: 'Arial', sans-serif;
+                        ">${number}</div>
+                        <div style="
+                            font-size: 3.5rem; 
+                            color: ${textColor};
+                            font-family: 'Arial', sans-serif;
+                            margin-top: -5px;
+                        ">${suit}</div>
+                    </div>
+                `;
+            } else {
+                // Modo cartas - dibujar cartas realistas con HTML/CSS
+                const { suit, value } = parseRealCard(card);
+                
+                // Mapear palos a símbolos Unicode
+                let suitSymbol = '';
+                let suitColor = '#333';
+                switch(suit) {
+                    case 'spades': suitSymbol = '♠'; suitColor = '#333'; break;
+                    case 'hearts': suitSymbol = '♥'; suitColor = '#dc3545'; break;
+                    case 'diamonds': suitSymbol = '♦'; suitColor = '#dc3545'; break;
+                    case 'clubs': suitSymbol = '♣'; suitColor = '#333'; break;
+                    default: suitSymbol = '♠'; suitColor = '#333';
+                }
+                
+                // Generar el patrón de la carta según el valor
+                const cardPattern = generateCardPattern(value, suitSymbol, suitColor);
+                
+                // Crear carta con diseño SVG
+                cardElement.innerHTML = cardPattern;
+            }
+            
+            return cardElement;
+        }
+
+        // Navegación
+        function previousCards() {
+            if (currentCardIndex > 0) {
+                currentCardIndex = Math.max(0, currentCardIndex - 2);
+                updateDisplay();
+                
+                if (currentMode === 'auto-advance') {
+                    clearInterval(timerInterval);
+                    timer = autoAdvanceTime;
+                    document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                    startTimer();
+                }
+            }
+        }
+
+        function nextCards() {
+            if (currentCardIndex + 2 < cardSequence.length) {
+                currentCardIndex += 2;
+                updateDisplay();
+                
+                if (currentMode === 'auto-advance') {
+                    clearInterval(timerInterval);
+                    timer = autoAdvanceTime;
+                    document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                    startTimer();
+                }
+            }
+        }
+
+                 // Timer para fase de memorización
+         function startTimer() {
+             timerInterval = setInterval(() => {
+                 timer -= 0.1;
+                 document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                 
+                 if (timer <= 0) {
+                     if (currentMode === 'auto-advance') {
+                         advanceToNextPage();
+                     } else {
+                         finishMemorization();
+                     }
+                 }
+             }, 100);
+         }
+
+        // Avanzar a la siguiente página en modo autoavance
+        function advanceToNextPage() {
+            const totalPages = Math.ceil(cardSequence.length / 2);
+            const currentPage = Math.floor(currentCardIndex / 2) + 1;
+            
+            if (currentPage < totalPages) {
+                currentCardIndex += 2;
+                updateDisplay();
+                
+                timer = autoAdvanceTime;
+                document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                
+                const memorizationInfo = document.getElementById('memorization-info');
+                memorizationInfo.textContent = `Página ${currentPage + 1} de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+            } else {
+                finishMemorization();
+            }
+        }
+
+        // Terminar memorización
+        function finishMemorization() {
+            clearInterval(timerInterval);
+            
+            // Calcular tiempo real de memorización
+            actualMemorizationTime = ((Date.now() - memorizationStartTime) / 1000).toFixed(1);
+            
+            gameState = 'input';
+            document.getElementById('memorization-phase').classList.add('hidden');
+            document.getElementById('input-phase').classList.remove('hidden');
+            
+            generateCardsGrid();
+            
+            // Mostrar tiempo real de memorización en la fase de input
+            document.getElementById('recall-timer-display').insertAdjacentHTML('afterend', `<div id="memorization-time-info" style="font-size:1.1rem;color:#1976d2;margin:10px 0 0 0;">Tiempo de memorización: <b>${actualMemorizationTime}</b> segundos</div>`);
+            
+            // Guardar el tiempo de memorización para la ronda actual inmediatamente
+            if (!window.roundMemTimes) window.roundMemTimes = [];
+            while (window.roundMemTimes.length < currentRound) {
+                window.roundMemTimes.push(null);
+            }
+            window.roundMemTimes[currentRound - 1] = actualMemorizationTime;
+            
+            startRecallTimer();
+        }
+
+                // Generar cuadrícula de cartas organizada por mazos con patrón correcto
+        function generateCardsGrid() {
+            const container = document.getElementById('cards-input-container');
+            container.innerHTML = '';
+            
+            // Función auxiliar para crear inputs de cartas con el patrón correcto
+            function createCardInputsForRange(startIndex, endIndex, parentContainer) {
+                const cardsInRange = endIndex - startIndex;
+                const cardsPerRow = 5;
+                const totalRows = Math.ceil(cardsInRange / cardsPerRow);
+                
+                // Crear el contenedor con grid para organizar las filas
+                const gridContainer = document.createElement('div');
+                gridContainer.style.cssText = `
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    grid-template-rows: repeat(${totalRows * 2}, auto);
+                    gap: 8px 15px;
+                    margin-bottom: 30px;
+                    width: 100%;
+                    align-items: end;
+                `;
+                
+                // Crear inputs por filas: primero números, luego palos
+                for (let row = 0; row < totalRows; row++) {
+                    const startCardInRow = startIndex + (row * cardsPerRow);
+                    const endCardInRow = Math.min(startCardInRow + cardsPerRow, endIndex);
+                    
+                    // Primera pasada: crear todos los inputs de números para esta fila
+                    for (let cardIndex = startCardInRow; cardIndex < endCardInRow; cardIndex++) {
+                        const numberInput = document.createElement('input');
+                        numberInput.type = 'text';
+                        numberInput.className = 'card-number-select';
+                        numberInput.placeholder = 'A, K, Q, J, 10, 9...';
+                        numberInput.maxLength = 6;
+                        numberInput.value = '';
+                        numberInput.dataset.cardIndex = cardIndex;
+                        
+                        // Posicionar en la fila de números (fila par)
+                        numberInput.style.gridColumn = `${(cardIndex - startCardInRow) + 1}`;
+                        numberInput.style.gridRow = `${(row * 2) + 1}`;
+                        
+                        gridContainer.appendChild(numberInput);
+                    }
+                    
+                    // Segunda pasada: crear todos los selects de palos para esta fila
+                    for (let cardIndex = startCardInRow; cardIndex < endCardInRow; cardIndex++) {
+                        const suitSelect = document.createElement('select');
+                        suitSelect.className = 'suit-select';
+                        suitSelect.dataset.cardIndex = cardIndex;
+                        
+                        // Opción por defecto
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = 'Palo';
+                        suitSelect.appendChild(defaultOption);
+                        
+                        // Opciones de palos
+                        const suits = [
+                            { symbol: '♠', letter: 'P', color: '#333' },
+                            { symbol: '♥', letter: 'C', color: '#dc3545' },
+                            { symbol: '♦', letter: 'D', color: '#dc3545' },
+                            { symbol: '♣', letter: 'T', color: '#333' }
+                        ];
+                        
+                        suits.forEach(suit => {
+                            const option = document.createElement('option');
+                            option.value = suit.letter;
+                            option.textContent = suit.symbol;
+                            option.style.color = suit.color;
+                            suitSelect.appendChild(option);
+                        });
+                        
+                        // Agregar evento para cambiar el color del texto seleccionado
+                        suitSelect.addEventListener('change', function() {
+                            const selectedValue = this.value;
+                            const selectedOption = suits.find(suit => suit.letter === selectedValue);
+                            if (selectedOption) {
+                                this.style.color = selectedOption.color;
+                            } else {
+                                this.style.color = '#333';
+                            }
+                        });
+                        
+                        // Posicionar en la fila de palos (fila impar)
+                        suitSelect.style.gridColumn = `${(cardIndex - startCardInRow) + 1}`;
+                        suitSelect.style.gridRow = `${(row * 2) + 2}`;
+                        
+                        gridContainer.appendChild(suitSelect);
+                    }
+                }
+                
+                parentContainer.appendChild(gridContainer);
+            }
+            
+            if (selectedDecks > 1) {
+                // Múltiples mazos - crear título y contenedor para cada mazo
+                container.style.cssText = `
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    margin: 20px 0;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                `;
+                
+                for (let deck = 0; deck < selectedDecks; deck++) {
+                    // Crear título del mazo
+                    const deckTitle = document.createElement('div');
+                    deckTitle.style.cssText = `
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        color: #333;
+                        text-align: center;
+                        margin: 20px 0 10px 0;
+                        padding: 10px;
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        border: 2px solid #e9ecef;
+                    `;
+                    deckTitle.textContent = `Mazo ${deck + 1}`;
+                    container.appendChild(deckTitle);
+                    
+                    // Crear contenedor para este mazo
+                    const deckContainer = document.createElement('div');
+                    container.appendChild(deckContainer);
+                    
+                    // Añadir cartas de este mazo (52 cartas por mazo)
+                    const startIndex = deck * 52;
+                    const endIndex = Math.min(startIndex + 52, cardSequence.length);
+                    
+                    createCardInputsForRange(startIndex, endIndex, deckContainer);
+                }
+            } else {
+                // Un solo mazo
+                container.style.cssText = `
+                    margin: 20px 0;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                `;
+                
+                createCardInputsForRange(0, cardSequence.length, container);
+            }
+        }
+
+                 // Timer para fase de recall
+         function startRecallTimer() {
+             let recallTimeLeft = recallTime;
+             document.getElementById('recall-timer-display').textContent = `Tiempo restante: ${recallTimeLeft.toFixed(1)} segundos`;
+             
+             recallTimerInterval = setInterval(() => {
+                 recallTimeLeft -= 0.1;
+                 document.getElementById('recall-timer-display').textContent = `Tiempo restante: ${recallTimeLeft.toFixed(1)} segundos`;
+                 
+                 if (recallTimeLeft <= 0) {
+                     clearInterval(recallTimerInterval);
+                     checkAnswer();
+                 }
+             }, 100);
+         }
+
+        // Mostrar cartas de nuevo
+        function showCardsAgain() {
+            console.log('🔄 Función showCardsAgain iniciada');
+            
+            // Detener timers si están activos
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                console.log('⏹️ Timer de memorización detenido');
+            }
+            if (recallTimerInterval) {
+                clearInterval(recallTimerInterval);
+                console.log('⏹️ Timer de recall detenido');
+            }
+            
+            // Cambiar a fase de memorización
+            document.getElementById('input-phase').classList.add('hidden');
+            document.getElementById('memorization-phase').classList.remove('hidden');
+            
+            // Reiniciar variables
+            currentCardIndex = 0;
+            
+            // Actualizar display
+            updateDisplay();
+            
+            // Configurar timer según el modo
+            if (currentMode === 'auto-advance') {
+                timer = parseFloat(autoAdvanceTime) || 3;
+                const totalPages = Math.ceil(cardSequence.length / 2);
+                const memorizationInfo = document.getElementById('memorization-info');
+                memorizationInfo.textContent = `Página 1 de ${totalPages}. Avanzará automáticamente en ${timer.toFixed(1)} segundos.`;
+            } else {
+            timer = memorizationTime;
+                const memorizationInfo = document.getElementById('memorization-info');
+                memorizationInfo.textContent = `Memoriza estas cartas. Tienes ${timer.toFixed(1)} segundos.`;
+            }
+            
+            document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+            
+            // Registrar tiempo de inicio de memorización
+            memorizationStartTime = Date.now();
+            
+            // Iniciar timer
+            startTimer();
+            
+            console.log('✅ Función showCardsAgain completada');
+        }
+
+        // Función completamente nueva para verificar respuestas
+        function verifyCardAnswers() {
+            // Detener timers
+            if (timerInterval) clearInterval(timerInterval);
+            if (recallTimerInterval) clearInterval(recallTimerInterval);
+            
+            // Sistema simple: leer directamente de los inputs
+            const userResponses = [];
+            const numberInputs = document.querySelectorAll('.card-number-select');
+            const suitSelects = document.querySelectorAll('.suit-select');
+            
+            console.log('=== ELEMENTOS ENCONTRADOS ===');
+            console.log('numberInputs encontrados:', numberInputs.length);
+            console.log('suitSelects encontrados:', suitSelects.length);
+            console.log('cardSequence.length:', cardSequence.length);
+            
+            // Leer valores de los inputs
+            console.log('=== LEYENDO INPUTS ===');
+            for (let i = 0; i < cardSequence.length; i++) {
+                const numberInput = numberInputs[i];
+                const suitSelect = suitSelects[i];
+                
+                if (numberInput && suitSelect) {
+                    const userNumber = numberInput.value || '';
+                    const userSuit = suitSelect.value || '';
+                    
+                    console.log(`Carta ${i + 1}: número="${userNumber}", palo="${userSuit}"`);
+                    
+                    userResponses.push({
+                        number: userNumber,
+                        suit: userSuit,
+                        cardIndex: i
+                    });
+                }
+            }
+            
+            // Guardar respuestas
+            window.userCardResponses = userResponses;
+            console.log('=== RESPUESTAS GUARDADAS ===');
+            console.log(window.userCardResponses);
+            
+            // Verificar respuestas
+            let correctCards = 0;
+            let allCardsComplete = true;
+            
+            // Limpiar clases anteriores
+            numberInputs.forEach(input => input.classList.remove('correct', 'incorrect'));
+            suitSelects.forEach(select => select.classList.remove('correct', 'incorrect'));
+            
+            for (let i = 0; i < cardSequence.length; i++) {
+                const card = cardSequence[i];
+                const userResponse = userResponses.find(r => r.cardIndex === i);
+                const numberInput = numberInputs[i];
+                const suitSelect = suitSelects[i];
+                
+                if (!userResponse || !numberInput || !suitSelect) continue;
+                
+                const userNumber = userResponse.number.toLowerCase();
+                const userSuit = userResponse.suit;
+                const expectedValue = getExpectedUserValueFromImage(card);
+                
+                // Normalizar el valor del usuario
+                const normalizedUserNumber = normalizeUserValue(userNumber);
+                
+                // Verificar si la carta está completa
+                if (!userNumber || !userSuit) {
+                    allCardsComplete = false;
+                    numberInput.classList.add('incorrect');
+                    suitSelect.classList.add('incorrect');
+                } else {
+                    // Verificar si la respuesta es correcta
+                    const isNumberCorrect = normalizedUserNumber === expectedValue.number.toLowerCase();
+                    const isSuitCorrect = userSuit === expectedValue.suit;
+                    const isCardCorrect = isNumberCorrect && isSuitCorrect;
+                    
+                    if (isCardCorrect) {
+                    correctCards++;
+                        numberInput.classList.add('correct');
+                        suitSelect.classList.add('correct');
+                    } else {
+                        numberInput.classList.add('incorrect');
+                        suitSelect.classList.add('incorrect');
+                    }
+                }
+            }
+            
+            // Calcular precisión
+            const roundAccuracy = cardSequence.length > 0 ? Math.round((correctCards / cardSequence.length) * 100) : 0;
+            const isRoundPerfect = correctCards === cardSequence.length;
+            
+            console.log(`\n=== RESULTADOS ===`);
+            console.log(`Cartas correctas: ${correctCards}/${cardSequence.length}`);
+            console.log(`Precisión: ${roundAccuracy}%`);
+            console.log(`Ronda perfecta: ${isRoundPerfect}`);
+            
+            // Guardar puntuación de la ronda
+            const roundScore = isRoundPerfect ? 1 : 0;
+            roundScores.push(roundScore);
+            totalScore += roundScore;
+            
+            // Guardar precisión de la ronda
+            if (!window.roundAccuracies) window.roundAccuracies = [];
+            window.roundAccuracies.push(roundAccuracy);
+            
+            // Guardar tiempo real de memorización para la ronda actual
+            if (!window.roundMemTimes) window.roundMemTimes = [];
+            window.roundMemTimes.push(actualMemorizationTime);
+            
+            // Cambiar a fase de resultados
+            document.getElementById('input-phase').classList.add('hidden');
+            document.getElementById('result-phase').classList.remove('hidden');
+            
+            // Actualizar información de la ronda
+            document.getElementById('current-round-display').textContent = currentRound;
+            document.getElementById('round-number').textContent = currentRound;
+            document.getElementById('total-rounds').textContent = totalRounds;
+            
+            // Actualizar barra de progreso
+            const progressPercentage = (currentRound / totalRounds) * 100;
+            document.getElementById('round-progress-fill').style.width = progressPercentage + '%';
+            
+            // Mostrar botones según si es la última ronda
+            if (currentRound === totalRounds) {
+                document.getElementById('next-round-btn').style.display = 'none';
+                document.getElementById('new-game-btn').style.display = 'none';
+                document.getElementById('menu-btn').style.display = 'inline-block';
+            } else {
+                document.getElementById('next-round-btn').style.display = 'inline-block';
+                document.getElementById('new-game-btn').style.display = 'inline-block';
+                document.getElementById('menu-btn').style.display = 'none';
+            }
+            
+            document.getElementById('result-phase').classList.remove('hidden');
+            
+            const resultMessage = document.getElementById('result-message');
+            
+            if (isRoundPerfect) {
+                resultMessage.className = 'result-message correct-result';
+                resultMessage.innerHTML = '¡Correcto! 🎉';
+            } else {
+                resultMessage.className = 'result-message incorrect-result';
+                if (!allCardsComplete) {
+                    resultMessage.innerHTML = 'Incompleto ❌<br><small>Debes completar todas las cartas</small>';
+                } else {
+                    resultMessage.innerHTML = 'Incorrecto ❌<br><small>Algunas cartas no coinciden</small>';
+                }
+            }
+            
+            // Añadir el tiempo real de memorización
+            resultMessage.innerHTML += `<br><span style='font-size:1.1rem;color:#1976d2;'>Tiempo de memorización: <b>${actualMemorizationTime}</b> segundos</span>`;
+            
+            // Crear y mostrar resultados detallados de las cartas
+            showDetailedCardResults();
+            
+            // Actualizar visualización de progreso de rondas
+            updateRoundResult(roundAccuracy);
+            updateProgressDisplay();
+            
+            // Inicializar configuración de tiempo para la siguiente ronda
+            initializeResultTimeConfig();
+        }
+         
+                 // Función completamente nueva para mostrar resultados
+        function showDetailedCardResults() {
+            const resultContainer = document.getElementById('result-phase');
+            
+            // Buscar o crear contenedor para resultados detallados
+            let detailedResultsContainer = document.getElementById('detailed-card-results');
+            if (!detailedResultsContainer) {
+                detailedResultsContainer = document.createElement('div');
+                detailedResultsContainer.id = 'detailed-card-results';
+                detailedResultsContainer.style.cssText = 'margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; border: 2px solid #e9ecef;';
+                
+                // Insertar después de las estadísticas de la ronda
+                const roundStatsGrid = document.getElementById('round-stats-grid');
+                if (roundStatsGrid && roundStatsGrid.parentNode) {
+                    roundStatsGrid.parentNode.insertBefore(detailedResultsContainer, roundStatsGrid.nextSibling);
+                } else {
+                    resultContainer.appendChild(detailedResultsContainer);
+                }
+            }
+            
+            // Limpiar contenido anterior
+            detailedResultsContainer.innerHTML = '';
+            
+            // Crear título
+            const title = document.createElement('h3');
+            title.textContent = 'Resultados Detallados de las Cartas';
+            title.style.cssText = 'color: #333; margin-bottom: 15px; text-align: center;';
+            detailedResultsContainer.appendChild(title);
+            
+            // Crear tabla de resultados
+            const table = document.createElement('table');
+            table.style.cssText = 'width: 100%; border-collapse: collapse; margin-top: 10px;';
+            
+            // Crear encabezado de tabla
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            headerRow.style.cssText = 'background: #007bff; color: white;';
+            
+            const headers = ['Carta', 'Tu Respuesta', 'Respuesta Correcta', 'Estado'];
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                th.style.cssText = 'padding: 10px; text-align: center; border: 1px solid #dee2e6;';
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Crear cuerpo de tabla
+            const tbody = document.createElement('tbody');
+            
+            // Leer respuestas guardadas
+            const userResponses = window.userCardResponses || [];
+            console.log('=== LEYENDO RESPUESTAS PARA RESULTADOS ===');
+            console.log('userResponses:', userResponses);
+            
+            for (let i = 0; i < cardSequence.length; i++) {
+                const card = cardSequence[i];
+                const userResponse = userResponses.find(r => r.cardIndex === i);
+                
+                if (!userResponse) {
+                    console.log(`❌ No se encontró respuesta para carta ${i + 1}`);
+                    continue;
+                }
+                
+                // Usar valores guardados exactamente como se guardaron
+                const userNumberRaw = userResponse.number || '';
+                const userNumber = userNumberRaw.toLowerCase();
+                const userSuit = userResponse.suit || '';
+                const expectedValue = getExpectedUserValueFromImage(card);
+                
+                // Normalizar para mostrar en resultados
+                const normalizedUserNumber = normalizeUserValue(userNumberRaw);
+                
+                console.log(`Carta ${i + 1}: ${card} | Usuario: "${userNumberRaw}${userSuit}" | Normalizado: "${normalizedUserNumber}${userSuit}" | Esperado: "${expectedValue.number}${expectedValue.suit}"`);
+                
+                // Crear fila
+                const row = document.createElement('tr');
+                row.style.cssText = 'border-bottom: 1px solid #e9ecef;';
+                
+                // Carta original con formato
+                const tdCard = document.createElement('td');
+                const cardNumber = expectedValue.number;
+                const cardSuitIcon = suitCodeToIcon(expectedValue.suit);
+                const cardSuitColor = (expectedValue.suit === 'C' || expectedValue.suit === 'D') ? '#dc3545' : '#333';
+                const cardFormatted = `<span style="color: ${cardSuitColor};">${cardNumber}${cardSuitIcon}</span>`;
+                tdCard.innerHTML = cardFormatted;
+                tdCard.style.cssText = 'padding: 8px; text-align: center; font-weight: bold; font-size: 1.2rem;';
+                row.appendChild(tdCard);
+                
+                // Respuesta del usuario
+                const tdUser = document.createElement('td');
+                let userResponseText = 'Sin respuesta';
+                let hasResponse = false;
+                
+                if (userNumberRaw && userSuit && userSuit !== '') {
+                    // Mostrar el valor normalizado en la tabla con icono
+                    const displayNumber = normalizedUserNumber.toUpperCase();
+                    const suitIcon = suitCodeToIcon(userSuit);
+                    const suitColor = (userSuit === 'C' || userSuit === 'D') ? '#dc3545' : '#333';
+                    userResponseText = `<span style="color: ${suitColor};">${displayNumber}${suitIcon}</span>`;
+                    hasResponse = true;
+                } else if (userNumberRaw && userNumberRaw !== '') {
+                    const displayNumber = normalizedUserNumber.toUpperCase();
+                    userResponseText = `${displayNumber} (sin palo)`;
+                    hasResponse = true;
+                } else if (userSuit && userSuit !== '') {
+                    const suitIcon = suitCodeToIcon(userSuit);
+                    const suitColor = (userSuit === 'C' || userSuit === 'D') ? '#dc3545' : '#333';
+                    userResponseText = `<span style="color: ${suitColor};">${suitIcon}</span> (sin número)`;
+                    hasResponse = true;
+                }
+                
+                tdUser.innerHTML = userResponseText;
+                tdUser.style.cssText = 'padding: 8px; text-align: center;';
+                if (!hasResponse) {
+                    tdUser.style.color = '#6c757d';
+                    tdUser.style.fontStyle = 'italic';
+                }
+                row.appendChild(tdUser);
+                
+                // Respuesta correcta
+                const tdCorrect = document.createElement('td');
+                const correctSuitIcon = suitCodeToIcon(expectedValue.suit);
+                const correctSuitColor = (expectedValue.suit === 'C' || expectedValue.suit === 'D') ? '#dc3545' : '#333';
+                const correctResponse = `<span style="color: ${correctSuitColor};">${expectedValue.number}${correctSuitIcon}</span>`;
+                tdCorrect.innerHTML = correctResponse;
+                tdCorrect.style.cssText = 'padding: 8px; text-align: center; font-weight: bold;';
+                row.appendChild(tdCorrect);
+                
+                // Estado
+                const tdStatus = document.createElement('td');
+                tdStatus.style.cssText = 'padding: 8px; text-align: center; font-weight: bold;';
+                
+                if (!hasResponse) {
+                    tdStatus.textContent = '❌ Sin respuesta';
+                    tdStatus.style.color = '#dc3545';
+                } else if (!userNumberRaw || !userSuit || userSuit === '') {
+                    tdStatus.textContent = '❌ Incompleta';
+                    tdStatus.style.color = '#dc3545';
+                } else {
+                    const isNumberCorrect = normalizedUserNumber === expectedValue.number.toLowerCase();
+                    const isSuitCorrect = userSuit === expectedValue.suit;
+                    const isCorrect = isNumberCorrect && isSuitCorrect;
+                    
+                    if (isCorrect) {
+                        tdStatus.textContent = '✅ Correcta';
+                        tdStatus.style.color = '#28a745';
+                    } else {
+                        tdStatus.textContent = '❌ Incorrecta';
+                        tdStatus.style.color = '#dc3545';
+                    }
+                }
+                row.appendChild(tdStatus);
+                
+                tbody.appendChild(row);
+            }
+            
+            table.appendChild(tbody);
+            detailedResultsContainer.appendChild(table);
+            
+            // Añadir leyenda
+            const legend = document.createElement('div');
+            legend.style.cssText = 'margin-top: 15px; padding: 10px; background: #e9ecef; border-radius: 5px; font-size: 0.9rem;';
+            legend.innerHTML = `
+                <strong>Leyenda:</strong><br>
+                • <strong style="color: #333;">♠</strong> = Picas | <strong style="color: #dc3545;">♥</strong> = Corazones | <strong style="color: #dc3545;">♦</strong> = Diamantes | <strong style="color: #333;">♣</strong> = Tréboles<br>
+                • <strong>Números:</strong> A, K, Q, J, 10, 9, 8, 7, 6, 5, 4, 3, 2
+            `;
+            detailedResultsContainer.appendChild(legend);
+        }
+         
+         // Función para inicializar configuración de tiempo en fase de resultado
+         function initializeResultTimeConfig() {
+             const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+             const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+             const resultMemorizationMode = document.getElementById('result-memorization-mode');
+             const resultAutoAdvanceMode = document.getElementById('result-auto-advance-mode');
+             
+             if (resultMemorizationTimer) {
+                 resultMemorizationTimer.value = memorizationTime.toString();
+             }
+             if (resultAutoAdvanceTime) {
+                 resultAutoAdvanceTime.value = autoAdvanceTime.toString();
+             }
+             
+             // Configurar el modo correcto
+             if (currentMode === 'memorization') {
+                 if (resultMemorizationMode) resultMemorizationMode.checked = true;
+                 if (resultAutoAdvanceMode) resultAutoAdvanceMode.checked = false;
+             } else {
+                 if (resultMemorizationMode) resultMemorizationMode.checked = false;
+                 if (resultAutoAdvanceMode) resultAutoAdvanceMode.checked = true;
+             }
+             
+             // Actualizar descripción
+             updateResultModeDescription();
+         }
+         
+         // Función para pasar a la siguiente ronda
+        function nextRound() {
+            // Obtener configuración de tiempo para la siguiente ronda
+            const resultMemorizationMode = document.getElementById('result-memorization-mode');
+            const resultAutoAdvanceMode = document.getElementById('result-auto-advance-mode');
+            const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+            const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+            
+            // Actualizar configuración de tiempo según lo seleccionado en la fase de resultado
+            if (resultMemorizationMode && resultMemorizationMode.checked) {
+                currentMode = 'memorization';
+                autoAdvanceEnabled = false;
+                if (resultMemorizationTimer && resultMemorizationTimer.value) {
+                    memorizationTime = parseFloat(resultMemorizationTimer.value);
+                }
+            } else if (resultAutoAdvanceMode && resultAutoAdvanceMode.checked) {
+                currentMode = 'auto-advance';
+                autoAdvanceEnabled = true;
+                if (resultAutoAdvanceTime && resultAutoAdvanceTime.value) {
+                    autoAdvanceTime = parseFloat(resultAutoAdvanceTime.value);
+                }
+            }
+            
+            currentRound++;
+            
+            if (currentRound > totalRounds) {
+                // Mostrar resultados finales
+                showFinalResults();
+            } else {
+                // Iniciar nueva ronda
+                startNewRound();
+            }
+        }
+        
+        // Configurar event listeners para configuración de tiempo en fase de resultado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar modo de memorización en resultados
+            const resultMemorizationMode = document.getElementById('result-memorization-mode');
+            if (resultMemorizationMode) {
+                resultMemorizationMode.addEventListener('change', function() {
+                    if (this.checked) {
+                        updateResultModeDescription();
+                    }
+                });
+            }
+            
+            // Configurar modo de autoavance en resultados
+            const resultAutoAdvanceMode = document.getElementById('result-auto-advance-mode');
+            if (resultAutoAdvanceMode) {
+                resultAutoAdvanceMode.addEventListener('change', function() {
+                    if (this.checked) {
+                        updateResultModeDescription();
+                    }
+                });
+            }
+            
+            // Configurar temporizador de memorización en resultados
+            const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+            if (resultMemorizationTimer) {
+                resultMemorizationTimer.addEventListener('blur', function() {
+                    if (!this.value || this.value === '') {
+                        this.value = memorizationTime.toString();
+                        updateResultModeDescription();
+                        return;
+                    }
+                });
+                
+                resultMemorizationTimer.addEventListener('input', function() {
+                    if (this.value === '') {
+                        updateResultModeDescription();
+                        
+                        // Ocultar conversión
+                        const conversionDiv = document.getElementById('result-memorization-time-conversion');
+                        conversionDiv.style.display = 'none';
+                        return;
+                    }
+                    
+                    const time = parseFloat(this.value) || 0;
+                    updateResultModeDescription();
+                    
+                    // Mostrar conversión de tiempo
+                    const conversionDiv = document.getElementById('result-memorization-time-conversion');
+                    if (time > 60) {
+                        conversionDiv.textContent = `(${formatTimeDisplay(time)})`;
+                        conversionDiv.style.display = 'block';
+                    } else {
+                        conversionDiv.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Configurar tiempo de autoavance en resultados
+            const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+            if (resultAutoAdvanceTime) {
+                resultAutoAdvanceTime.addEventListener('blur', function() {
+                    if (!this.value || this.value === '') {
+                        this.value = autoAdvanceTime.toString();
+                        updateResultModeDescription();
+                        return;
+                    }
+                });
+                
+                resultAutoAdvanceTime.addEventListener('input', function() {
+                    if (this.value === '') {
+                        updateResultModeDescription();
+                        return;
+                    }
+                    
+                    updateResultModeDescription();
+                });
+            }
+        });
+        
+        // Función para actualizar descripción del modo en resultados
+        function updateResultModeDescription() {
+            const description = document.getElementById('result-mode-description');
+            const resultMemorizationMode = document.getElementById('result-memorization-mode');
+            const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+            const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+            
+            if (resultMemorizationMode && resultMemorizationMode.checked) {
+                const time = resultMemorizationTimer ? parseFloat(resultMemorizationTimer.value) : 0;
+                if (time > 0) {
+                    description.textContent = `El juego usará el tiempo de memorización configurado (${time.toFixed(1)} segundos).`;
+                } else {
+                    description.textContent = `El juego usará el tiempo de memorización configurado (escribe un tiempo).`;
+                }
+            } else {
+                const time = resultAutoAdvanceTime ? parseFloat(resultAutoAdvanceTime.value) : 0;
+                const pages = Math.ceil(selectedCards / 2);
+                if (time > 0) {
+                    const totalTime = pages * time;
+                    description.textContent = `El juego avanzará automáticamente cada ${time.toFixed(1)} segundos por página (${totalTime.toFixed(1)} segundos total).`;
+                } else {
+                    description.textContent = `El juego avanzará automáticamente cada (escribe tiempo) segundos por página.`;
+                }
+            }
+        }
+        
+        // Función para calcular la mejor racha
+        function calculateBestStreak() {
+            let currentStreak = 0;
+            let bestStreak = 0;
+            
+            roundScores.forEach(score => {
+                if (score === 1) {
+                    currentStreak++;
+                    bestStreak = Math.max(bestStreak, currentStreak);
+                } else {
+                    currentStreak = 0;
+                }
+            });
+            
+            return bestStreak;
+        }
+        
+        // Función para actualizar la visualización de progreso
+        function updateProgressDisplay() {
+            const percentageList = document.getElementById('rounds-percentage-list');
+            const currentScoreEl = document.getElementById('current-score');
+            const currentRoundEl = document.getElementById('current-round');
+            const currentPercentageEl = document.getElementById('current-percentage');
+            const currentStreakEl = document.getElementById('current-streak');
+            
+            if (!percentageList) return;
+            
+            // Limpiar contenedor
+            percentageList.innerHTML = '';
+            
+            // Crear lista simple de porcentajes por ronda
+            for (let i = 1; i <= totalRounds; i++) {
+                const roundDiv = document.createElement('div');
+                roundDiv.style.cssText = 'margin: 10px 0; padding: 10px; border-radius: 8px; font-weight: bold;';
+                
+                if (i <= window.roundAccuracies.length) {
+                    // Ronda completada
+                    const accuracy = window.roundAccuracies[i - 1];
+                    const isCorrect = accuracy === 100;
+                    roundDiv.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+                    roundDiv.style.color = isCorrect ? '#155724' : '#721c24';
+                    roundDiv.style.border = `2px solid ${isCorrect ? '#c3e6cb' : '#f5c6cb'}`;
+                    roundDiv.innerHTML = `Ronda ${i}: ${accuracy}% ${isCorrect ? '(Correcto)' : '(Incorrecto)'}<br>`;
+                    // Mostrar tiempo real de memorización si existe
+                    if (window.roundMemTimes && window.roundMemTimes[i-1]) {
+                        roundDiv.innerHTML += `<span style='font-size:1rem;color:#1976d2;'>🕒 ${window.roundMemTimes[i-1]} segundos</span>`;
+                    }
+                } else if (i === currentRound) {
+                    // Ronda actual
+                    roundDiv.style.backgroundColor = '#e9ecef';
+                    roundDiv.style.color = '#6c757d';
+                    roundDiv.style.border = '2px solid #dee2e6';
+                    roundDiv.innerHTML = `Ronda ${i}: En progreso`;
+                    // Mostrar tiempo real de memorización si existe para la ronda actual
+                    if (window.roundMemTimes && window.roundMemTimes[i-1]) {
+                        roundDiv.innerHTML += `<br><span style='font-size:1rem;color:#1976d2;'>🕒 ${window.roundMemTimes[i-1]} segundos</span>`;
+                    }
+                } else {
+                    // Ronda futura
+                    roundDiv.style.backgroundColor = '#f8f9fa';
+                    roundDiv.style.color = '#6c757d';
+                    roundDiv.style.border = '2px solid #dee2e6';
+                    roundDiv.textContent = `Ronda ${i}: Pendiente`;
+                }
+                
+                percentageList.appendChild(roundDiv);
+            }
+            
+            // Calcular estadísticas
+            const completedRounds = roundScores.length;
+            
+            // Calcular precisión total como promedio de las precisiones de cada ronda
+            let totalAccuracy = 0;
+            if (window.roundAccuracies && window.roundAccuracies.length > 0) {
+                const totalAccuracySum = window.roundAccuracies.reduce((sum, acc) => sum + acc, 0);
+                totalAccuracy = Math.round(totalAccuracySum / window.roundAccuracies.length);
+            }
+            
+            const percentage = completedRounds > 0 ? Math.round((totalScore / completedRounds) * 100) : 0;
+            const bestStreak = calculateBestStreak();
+            
+            // Actualizar elementos de estadísticas
+            if (currentScoreEl) {
+                currentScoreEl.textContent = totalScore;
+                currentScoreEl.className = `stat-number ${percentage >= 80 ? 'correct' : percentage >= 50 ? 'neutral' : 'incorrect'}`;
+            }
+            if (currentRoundEl) currentRoundEl.textContent = currentRound;
+            if (currentPercentageEl) {
+                currentPercentageEl.textContent = totalAccuracy + '%';
+                currentPercentageEl.className = `stat-number ${totalAccuracy >= 80 ? 'correct' : totalAccuracy >= 50 ? 'neutral' : 'incorrect'}`;
+            }
+            if (currentStreakEl) {
+                currentStreakEl.textContent = bestStreak;
+                currentStreakEl.className = `stat-number ${bestStreak >= 3 ? 'correct' : bestStreak >= 1 ? 'neutral' : 'incorrect'}`;
+            }
+        }
+        
+        // Función para mostrar el resultado individual de cada ronda
+        function updateRoundResult(roundAccuracy) {
+            const roundNumber = document.getElementById('current-round-number');
+            const roundAccuracyEl = document.getElementById('round-accuracy');
+            const roundStatus = document.getElementById('round-status');
+            
+            if (roundNumber) roundNumber.textContent = currentRound;
+            
+            // Actualizar porcentaje de acierto
+            if (roundAccuracyEl) {
+                roundAccuracyEl.textContent = roundAccuracy + '%';
+                roundAccuracyEl.className = `stat-number ${roundAccuracy === 100 ? 'correct' : 'incorrect'}`;
+            }
+            
+            // Actualizar estado (solo Correcto o Incorrecto)
+            if (roundStatus) {
+                const isCorrect = roundAccuracy === 100;
+                roundStatus.textContent = isCorrect ? 'Correcto' : 'Incorrecto';
+                roundStatus.className = `stat-number ${isCorrect ? 'correct' : 'incorrect'}`;
+            }
+        }
+        
+        // Función para ir al menú principal
+        function goToMenu() {
+            resetGame();
+        }
+        
+        // Función para iniciar una nueva ronda
+        function startNewRound() {
+            gameState = 'memorization';
+            currentCardIndex = 0;
+            
+            generateCardSequence();
+            
+            if (currentMode === 'auto-advance') {
+                timer = autoAdvanceTime;
+            } else {
+                timer = memorizationTime;
+            }
+            
+            document.getElementById('result-phase').classList.add('hidden');
+            document.getElementById('memorization-phase').classList.remove('hidden');
+            
+            updateDisplay();
+            
+            document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+            
+            const memorizationInfo = document.getElementById('memorization-info');
+            if (currentMode === 'auto-advance') {
+                const totalPages = Math.ceil(cardSequence.length / 2);
+                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos.`;
+            } else {
+                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos.`;
+            }
+            
+            // Registrar tiempo de inicio de memorización
+            memorizationStartTime = Date.now();
+            
+            startTimer();
+        }
+        
+        // Función para mostrar resultados finales
+        function showFinalResults() {
+            document.getElementById('result-phase').classList.add('hidden');
+            document.getElementById('final-results-phase').classList.remove('hidden');
+            
+            const correctRounds = roundScores.filter(score => score === 1).length;
+            const percentage = Math.round((totalScore / totalRounds) * 100);
+            const bestStreak = calculateBestStreak();
+            
+            // Calcular precisión total como promedio de las precisiones de cada ronda
+            let totalAccuracy = 0;
+            if (window.roundAccuracies && window.roundAccuracies.length > 0) {
+                const totalAccuracySum = window.roundAccuracies.reduce((sum, acc) => sum + acc, 0);
+                totalAccuracy = Math.round(totalAccuracySum / window.roundAccuracies.length);
+            }
+            
+            // Actualizar gráficas circulares
+            updatePieChart('final-accuracy-chart', totalAccuracy, '#28a745');
+            updatePieChart('final-score-chart', percentage, '#007bff');
+            updatePieChart('final-streak-chart', bestStreak, '#ffc107');
+            
+            // Actualizar estadísticas finales
+            document.getElementById('final-score').textContent = `${totalScore}/${totalRounds}`;
+            document.getElementById('final-percentage').textContent = totalAccuracy + '%';
+            document.getElementById('final-streak').textContent = bestStreak;
+            
+            // Generar desglose de rondas
+            generateFinalRoundsBreakdown();
+        }
+        
+        // Función para actualizar gráficas circulares
+        function updatePieChart(chartId, percentage, color) {
+            const chart = document.getElementById(chartId);
+            const text = chart.querySelector('.pie-chart-text');
+            
+            if (percentage > 0) {
+                const degrees = (percentage / 100) * 360;
+                chart.style.background = `conic-gradient(${color} 0deg, ${color} ${degrees}deg, #e9ecef ${degrees}deg)`;
+            } else {
+                chart.style.background = '#e9ecef';
+            }
+            
+            text.textContent = percentage + (chartId.includes('accuracy') || chartId.includes('score') ? '%' : '');
+        }
+        
+        // Función para generar desglose final de rondas
+        function generateFinalRoundsBreakdown() {
+            const roundsBreakdown = document.getElementById('final-rounds-breakdown');
+            roundsBreakdown.innerHTML = '';
+            
+            roundScores.forEach((score, index) => {
+                const roundItem = document.createElement('div');
+                roundItem.className = `round-item ${score === 1 ? 'correct' : 'incorrect'}`;
+                
+                const accuracy = window.roundAccuracies[index] || 0;
+                const memTime = window.roundMemTimes ? window.roundMemTimes[index] : null;
+                
+                roundItem.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 5px;">Ronda ${index + 1}</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 5px;">${accuracy}%</div>
+                    <div style="font-size: 0.9rem; color: #666;">${score === 1 ? 'Correcto' : 'Incorrecto'}</div>
+                    ${memTime ? `<div style="font-size: 0.8rem; color: #1976d2; margin-top: 5px;">🕒 ${memTime}s</div>` : ''}
+                `;
+                
+                roundsBreakdown.appendChild(roundItem);
+            });
+        }
+
+                 // Reiniciar juego
+                 function resetGame() {
+            gameState = 'setup';
+            currentCardIndex = 0;
+            timer = 0;
+            cardSequence = [];
+            
+            // Reiniciar valores por defecto
+            selectedCards = 0;
+            selectedDecks = 0;
+            cardsMode = 'specific';
+            memorizationTime = 0;
+            recallTime = 0;
+            autoAdvanceTime = 0;
+            totalRounds = 0;
+            
+            // Reiniciar arrays de seguimiento de rondas
+            roundScores = [];
+            totalScore = 0;
+            if (window.roundAccuracies) { window.roundAccuracies = []; }
+            if (window.roundMemTimes) { window.roundMemTimes = []; }
+            
+            document.getElementById('cards-input').value = '';
+            document.getElementById('decks-input').value = '';
+            document.getElementById('specific-cards-mode').checked = true;
+            document.getElementById('full-decks-mode').checked = false;
+            document.getElementById('memorization-timer').value = '';
+            document.getElementById('recall-timer').value = '';
+            document.getElementById('auto-advance-time').value = '';
+                        document.getElementById('rounds-input').value = '';
+            
+            // Ocultar conversiones de tiempo
+            document.getElementById('memorization-time-conversion').style.display = 'none';
+            document.getElementById('recall-time-conversion').style.display = 'none';
+            
+            // Actualizar información
+            updateCardsInfo();
+            updateSummary();
+             
+             document.getElementById('result-phase').classList.add('hidden');
+             document.getElementById('final-results-phase').classList.add('hidden');
+             document.getElementById('setup-phase').classList.remove('hidden');
+             
+             if (timerInterval) clearInterval(timerInterval);
+             if (recallTimerInterval) clearInterval(recallTimerInterval);
+         }
+
+        // Función para alternar pantalla completa
+        function toggleFullscreen() {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+                
+                fullscreenBtn.textContent = '⛶';
+                fullscreenBtn.title = 'Salir Pantalla Completa';
+                fullscreenBtn.classList.add('fullscreen');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                
+                fullscreenBtn.textContent = '⛶';
+                fullscreenBtn.title = 'Pantalla Completa';
+                fullscreenBtn.classList.remove('fullscreen');
+            }
+        }
+        
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCardsInfo();
+            updateSummary();
+            updateProgressDisplay();
+        });
+    </script>
+</body>
+</html> 
+</html> 
