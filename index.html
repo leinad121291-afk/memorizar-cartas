@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Cartas Poker - Con Autoavance</title>
     <script src="base64_images_data.js"></script>
     <style>
@@ -119,8 +119,8 @@
         }
 
         .poker-card {
-            width: 140px;
-            height: 200px;
+            width: 200px;
+            height: 280px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -332,6 +332,16 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            /* Eliminar estilos nativos del navegador móvil */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Asegurar que no haya botones nativos */
+            background-image: none;
+            /* Mejorar la experiencia táctil */
+            touch-action: manipulation;
+            /* Eliminar zoom en iOS */
+            font-size: 16px;
         }
 
         .suit-select:focus {
@@ -367,6 +377,66 @@
 
         .suit-select option[value="T"] {
             color: #333;
+        }
+        
+        /* Eliminar completamente cualquier botón nativo en móviles */
+        .suit-select::-ms-expand {
+            display: none;
+        }
+        
+        .suit-select::-webkit-select-placeholder {
+            color: #666;
+        }
+        
+        /* Asegurar que no haya flechas o botones nativos */
+        .suit-select {
+            background-image: none !important;
+            background: white !important;
+        }
+        
+        /* Estilos específicos para iOS */
+        @supports (-webkit-touch-callout: none) {
+            .suit-select {
+                -webkit-appearance: none !important;
+                appearance: none !important;
+                background-image: none !important;
+                border-radius: 0 0 8px 8px !important;
+            }
+        }
+        
+        /* Estilos específicos para Android */
+        @supports not (-webkit-touch-callout: none) {
+            .suit-select {
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                background-image: none !important;
+            }
+        }
+        
+        /* Estilos adicionales para eliminar cualquier botón nativo */
+        .suit-select {
+            /* Eliminar flecha nativa en todos los navegadores */
+            background: white !important;
+            background-image: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            /* Asegurar que el texto sea legible */
+            font-size: 16px !important;
+            /* Mejorar experiencia táctil */
+            touch-action: manipulation;
+            /* Eliminar cualquier padding nativo */
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        /* Estilos para las opciones del selector */
+        .suit-select option {
+            background: white !important;
+            color: inherit !important;
+            font-size: 16px !important;
+            padding: 8px !important;
         }
 
         .fullscreen-button {
@@ -554,6 +624,9 @@
             overflow-x: auto;
             min-height: 300px;
             width: 100%;
+            /* Asegurar que las cartas siempre se mantengan en horizontal */
+            max-width: 100vw;
+            padding: 0 10px;
         }
         
         /* Forzar comportamiento horizontal en todos los dispositivos */
@@ -562,6 +635,9 @@
             float: none !important;
             vertical-align: top !important;
             box-sizing: border-box !important;
+            /* Asegurar que nunca se apilen verticalmente */
+            flex-shrink: 0 !important;
+            flex-grow: 0 !important;
         }
         
         /* Asegurar que todas las cartas tengan el mismo tamaño */
@@ -580,15 +656,17 @@
             .card-display {
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
-                gap: 6px !important;
+                gap: 8px !important;
                 justify-content: center !important;
                 align-items: center !important;
+                min-height: 320px !important;
+                padding: 0 5px !important;
             }
             
             .poker-card {
-                width: 160px !important;
-                height: 224px !important;
-                margin: 3px !important;
+                width: 220px !important;
+                height: 308px !important;
+                margin: 4px !important;
                 flex-shrink: 0 !important;
                 display: inline-block !important;
             }
@@ -603,20 +681,79 @@
                 width: 60px;
                 height: 35px;
                 font-size: 1.2rem;
+                /* Mejorar experiencia móvil */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-image: none;
+                touch-action: manipulation;
+                /* Asegurar que el texto sea legible */
+                font-size: 16px;
+                /* Eliminar cualquier padding nativo */
+                padding: 0;
+                margin: 0;
             }
         }
         
         @media (max-width: 480px) {
             .poker-card {
-                width: 120px !important;
-                height: 168px !important;
+                width: 160px !important;
+                height: 224px !important;
+                margin: 3px !important;
+            }
+            
+            .card-display {
+                gap: 6px !important;
+                min-height: 240px !important;
+                padding: 0 3px !important;
+            }
+            
+            /* Asegurar que las cartas siempre se mantengan en horizontal */
+            .card-display > .poker-card {
+                min-width: 160px !important;
+                max-width: 160px !important;
+            }
+        }
+        
+        /* Estilos para pantallas muy pequeñas */
+        @media (max-width: 360px) {
+            .poker-card {
+                width: 140px !important;
+                height: 196px !important;
                 margin: 2px !important;
             }
             
             .card-display {
                 gap: 4px !important;
+                min-height: 200px !important;
+                padding: 0 2px !important;
+            }
+            
+            .card-display > .poker-card {
+                min-width: 140px !important;
+                max-width: 140px !important;
             }
         }
+            
+            /* Mejorar selectores en pantallas muy pequeñas */
+            .suit-select {
+                width: 50px;
+                height: 30px;
+                font-size: 14px;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-image: none;
+                touch-action: manipulation;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .card-number-select {
+                width: 50px;
+                height: 30px;
+                font-size: 14px;
+            }
         
         /* Estilos responsive para la tabla de resultados detallados */
         @media (max-width: 768px) {
@@ -633,8 +770,8 @@
             }
             
             #detailed-card-results .poker-card {
-                width: 40px !important;
-                height: 56px !important;
+                width: 50px !important;
+                height: 70px !important;
                 margin: 2px !important;
             }
             
@@ -661,8 +798,8 @@
             }
             
             #detailed-card-results .poker-card {
-                width: 35px !important;
-                height: 49px !important;
+                width: 45px !important;
+                height: 63px !important;
                 margin: 1px !important;
             }
             
@@ -807,6 +944,7 @@
                 <p id="summary-rounds">Rondas: 10</p>
                 <p id="summary-timers">Temporizadores: Memorización 15s, Recall 30s</p>
                 <p id="summary-mode">Modo: Tiempo de memorización</p>
+                <p id="summary-randomization" style="color: #1976d2; font-weight: bold; margin-top: 10px;">🎲 Cada ronda tendrá cartas completamente diferentes y aleatorias</p>
             </div>
             
             <button class="button" onclick="startGame()">Comenzar Juego</button>
@@ -1355,41 +1493,123 @@
              `;
          }
 
+        // Función para mezclar array de forma más aleatoria (Fisher-Yates shuffle)
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Función para verificar integridad de las cartas
+        function verifyCardIntegrity() {
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const sourceArray = gameMode === 'symbols' ? pokerCards : realCards;
+            
+            // Verificar que tenemos exactamente 52 cartas únicas en el mazo base
+            const uniqueSourceCards = new Set(sourceArray);
+            if (uniqueSourceCards.size !== 52) {
+                console.error('ERROR: El mazo base no tiene 52 cartas únicas');
+                console.log('Cartas duplicadas en mazo base:', sourceArray.filter((item, index) => sourceArray.indexOf(item) !== index));
+                return false;
+            }
+            
+            console.log(`✅ Mazo base verificado: ${uniqueSourceCards.size} cartas únicas`);
+            return true;
+        }
+
         // Función para generar secuencia de cartas
         function generateCardSequence() {
             cardSequence = [];
             
+            // Verificar integridad del mazo base
+            if (!verifyCardIntegrity()) {
+                console.error('No se puede generar secuencia debido a errores en el mazo base');
+                return;
+            }
+            
             if (cardsMode === 'specific') {
-                // Generar cartas específicas
+                // Generar cartas específicas - sin repetición
                 const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
                 
                 if (gameMode === 'symbols') {
                     // Modo símbolos - usar pokerCards
-                    const shuffled = [...pokerCards].sort(() => Math.random() - 0.5);
+                    const shuffled = shuffleArray(pokerCards);
                     cardSequence = shuffled.slice(0, selectedCards);
                 } else {
                     // Modo cartas - usar realCards
-                    const shuffled = [...realCards].sort(() => Math.random() - 0.5);
+                    const shuffled = shuffleArray(realCards);
                     cardSequence = shuffled.slice(0, selectedCards);
                 }
             } else {
-                // Generar barajas completas
+                // Generar barajas completas - cada baraja mezclada independientemente
                 const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
                 
                 if (gameMode === 'symbols') {
-                    // Repetir pokerCards según el número de barajas
+                    // Crear barajas mezcladas independientemente
                     for (let i = 0; i < selectedDecks; i++) {
-                        cardSequence = cardSequence.concat([...pokerCards]);
+                        const shuffledDeck = shuffleArray(pokerCards);
+                        cardSequence = cardSequence.concat(shuffledDeck);
                     }
                 } else {
-                    // Repetir realCards según el número de barajas
+                    // Crear barajas mezcladas independientemente
                     for (let i = 0; i < selectedDecks; i++) {
-                        cardSequence = cardSequence.concat([...realCards]);
+                        const shuffledDeck = shuffleArray(realCards);
+                        cardSequence = cardSequence.concat(shuffledDeck);
                     }
                 }
             }
             
-            console.log('Secuencia generada:', cardSequence);
+            // Verificar que no hay repeticiones en el modo específico
+            if (cardsMode === 'specific') {
+                const uniqueCards = new Set(cardSequence);
+                if (uniqueCards.size !== cardSequence.length) {
+                    console.error('ERROR: Se detectaron cartas repetidas en modo específico');
+                    console.log('Cartas repetidas:', cardSequence.filter((item, index) => cardSequence.indexOf(item) !== index));
+                } else {
+                    console.log(`✅ Modo específico: ${uniqueCards.size} cartas únicas sin repeticiones`);
+                }
+            }
+            
+            // Verificar que cada baraja completa tiene exactamente 52 cartas únicas
+            if (cardsMode === 'decks') {
+                let allDecksValid = true;
+                for (let i = 0; i < selectedDecks; i++) {
+                    const startIndex = i * 52;
+                    const endIndex = startIndex + 52;
+                    const deckCards = cardSequence.slice(startIndex, endIndex);
+                    const uniqueDeckCards = new Set(deckCards);
+                    
+                    if (uniqueDeckCards.size !== 52) {
+                        console.error(`❌ ERROR: Baraja ${i + 1} no tiene 52 cartas únicas`);
+                        console.log(`Baraja ${i + 1}:`, deckCards);
+                        allDecksValid = false;
+                    } else {
+                        console.log(`✅ Baraja ${i + 1}: ${uniqueDeckCards.size} cartas únicas`);
+                    }
+                }
+                
+                if (allDecksValid) {
+                    console.log(`✅ Todas las ${selectedDecks} baraja(s) verificadas correctamente`);
+                }
+            }
+            
+            console.log('🎴 Secuencia generada:', cardSequence);
+            console.log('📊 Total de cartas:', cardSequence.length);
+            console.log('🔍 Cartas únicas totales:', new Set(cardSequence).size);
+            
+            // Mostrar información de distribución
+            if (cardsMode === 'decks') {
+                console.log(`📦 Distribución: ${selectedDecks} baraja(s) de 52 cartas cada una`);
+                for (let i = 0; i < selectedDecks; i++) {
+                    const startIndex = i * 52;
+                    const endIndex = startIndex + 52;
+                    const deckCards = cardSequence.slice(startIndex, endIndex);
+                    console.log(`   Baraja ${i + 1}: ${deckCards.length} cartas`);
+                }
+            }
         }
 
         // Función para mostrar cartas en la fase de memorización
@@ -1408,19 +1628,16 @@
             cardsToShow.forEach((card, index) => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'poker-card';
-                cardElement.style.cssText = 'width: 200px; height: 280px; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;';
+                
+                // Usar tamaños centralizados
+                const cardSizes = getCardSizes('main');
+                cardElement.style.cssText = `width: ${cardSizes.width}; height: ${cardSizes.height}; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
                 
                 if (gameMode === 'symbols') {
                     // Modo símbolos - mostrar símbolos Unicode
                     const number = card.replace(/[♠♥♦♣]/g, '');
                     const suit = card.replace(/[A-Z0-9]/g, '');
                     const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
-                    
-                    // Detectar si estamos en móvil
-                    const isMobile = window.innerWidth <= 768;
-                    const mainFontSize = isMobile ? '2.5rem' : '4rem';
-                    const numberFontSize = isMobile ? '2rem' : '3rem';
-                    const marginBottom = isMobile ? '5px' : '10px';
                     
                     cardElement.innerHTML = `
                         <div style="
@@ -1433,11 +1650,11 @@
                             align-items: center;
                             justify-content: center;
                             color: ${suitColor};
-                            font-size: ${mainFontSize};
+                            font-size: ${cardSizes.fontSize};
                             font-weight: bold;
                         ">
-                            <div style="font-size: ${numberFontSize}; margin-bottom: ${marginBottom};">${number}</div>
-                            <div style="font-size: ${mainFontSize};">${suit}</div>
+                            <div style="font-size: ${cardSizes.numberFontSize}; margin-bottom: ${cardSizes.marginBottom};">${number}</div>
+                            <div style="font-size: ${cardSizes.fontSize};">${suit}</div>
                         </div>
                     `;
                 } else {
@@ -1462,7 +1679,10 @@
         
         // Forzar comportamiento horizontal en móviles
         if (window.innerWidth <= 768) {
-            const gap = window.innerWidth <= 480 ? '2px' : '4px';
+            const gap = window.innerWidth <= 480 ? '6px' : '8px';
+            const minHeight = window.innerWidth <= 480 ? '240px' : '320px';
+            const padding = window.innerWidth <= 480 ? '3px' : '5px';
+            
             cardDisplay.style.cssText = `
                 display: flex !important;
                 flex-direction: row !important;
@@ -1471,6 +1691,9 @@
                 align-items: center !important;
                 gap: ${gap} !important;
                 overflow-x: auto !important;
+                min-height: ${minHeight} !important;
+                padding: 0 ${padding} !important;
+                max-width: 100vw !important;
             `;
         }
             
@@ -1586,6 +1809,7 @@
             const summaryRounds = document.getElementById('summary-rounds');
             const summaryTimers = document.getElementById('summary-timers');
             const summaryMode = document.getElementById('summary-mode');
+            const summaryRandomization = document.getElementById('summary-randomization');
             
             // Actualizar información de cartas
             if (cardsMode === 'specific') {
@@ -1610,6 +1834,16 @@
             } else {
                 const autoAdvanceTime = parseFloat(document.getElementById('auto-advance-time').value) || 3;
                 summaryMode.textContent = `Modo: Autoavance (${autoAdvanceTime}s por página)`;
+            }
+            
+            // Actualizar información de aleatorización
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+            
+            if (cardsMode === 'specific') {
+                summaryRandomization.textContent = `🎲 Cada ronda tendrá ${selectedCards} cartas diferentes en modo ${modeText} (sin repeticiones)`;
+            } else {
+                summaryRandomization.textContent = `🎲 Cada ronda tendrá ${selectedDecks} baraja(s) mezclada(s) independientemente en modo ${modeText}`;
             }
         }
 
@@ -1678,15 +1912,29 @@
             // Registrar tiempo de inicio
             memorizationStartTime = Date.now();
             
+            // Mostrar información de aleatorización
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+            console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
+            if (cardsMode === 'decks') {
+                console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
+            }
+            
             // Actualizar información
             document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
             const memorizationInfo = document.getElementById('memorization-info');
+            
+            // Agregar información sobre aleatorización
+            const randomInfo = cardsMode === 'decks' ? 
+                `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
+                '(cartas seleccionadas aleatoriamente)';
+            
             if (currentMode === 'auto-advance') {
                 const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
                 const totalPages = Math.ceil(cardSequence.length / cardsPerPage);
-                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
             } else {
-                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
             }
             
             // Iniciar timer
@@ -1804,6 +2052,50 @@
             startRecallTimer();
         }
 
+        // Función para detectar si estamos en móvil
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   window.innerWidth <= 768;
+        }
+        
+        // Función centralizada para obtener tamaños de cartas consistentes
+        function getCardSizes(context = 'main') {
+            const isMobile = window.innerWidth <= 768;
+            const isSmallMobile = window.innerWidth <= 480;
+            
+            switch(context) {
+                case 'main':
+                    // Tamaño principal para memorización
+                    return {
+                        width: '200px',
+                        height: '280px',
+                        fontSize: isMobile ? '2.5rem' : '4rem',
+                        numberFontSize: isMobile ? '2rem' : '3rem',
+                        marginBottom: isMobile ? '5px' : '10px'
+                    };
+                case 'mobile':
+                    // Tamaño para móviles en memorización
+                    return {
+                        width: isSmallMobile ? '160px' : '220px',
+                        height: isSmallMobile ? '224px' : '308px',
+                        fontSize: isSmallMobile ? '2.2rem' : '3rem',
+                        numberFontSize: isSmallMobile ? '1.8rem' : '2.4rem',
+                        marginBottom: isSmallMobile ? '4px' : '6px'
+                    };
+                case 'table':
+                    // Tamaño para tabla de resultados
+                    return {
+                        width: isSmallMobile ? '45px' : isMobile ? '50px' : '60px',
+                        height: isSmallMobile ? '63px' : isMobile ? '70px' : '80px',
+                        fontSize: isSmallMobile ? '0.7rem' : isMobile ? '0.8rem' : '1.5rem',
+                        numberFontSize: isSmallMobile ? '0.6rem' : isMobile ? '0.7rem' : '1.2rem',
+                        marginBottom: isSmallMobile ? '1px' : isMobile ? '2px' : '5px'
+                    };
+                default:
+                    return getCardSizes('main');
+            }
+        }
+        
         // Función para configurar inputs de cartas
         function setupCardInputs() {
             const container = document.getElementById('cards-input-container');
@@ -1838,7 +2130,7 @@
                 
                 // Opciones de palos (solo iconos con colores)
                 const suits = [
-                    { value: '', text: 'Palo' },
+                    { value: '', text: 'Palo', color: '#666' },
                     { value: 'P', text: '♠', color: '#333' },
                     { value: 'C', text: '♥', color: '#dc3545' },
                     { value: 'D', text: '♦', color: '#dc3545' },
@@ -1849,9 +2141,10 @@
                     const option = document.createElement('option');
                     option.value = suit.value;
                     option.textContent = suit.text;
-                    if (suit.color) {
-                        option.style.color = suit.color;
-                    }
+                    option.style.color = suit.color;
+                    option.style.backgroundColor = 'white';
+                    option.style.fontSize = '16px';
+                    option.style.padding = '8px';
                     suitSelect.appendChild(option);
                 });
                 
@@ -1862,9 +2155,37 @@
                     if (selectedOption && selectedOption.color) {
                         this.style.color = selectedOption.color;
                     } else {
-                        this.style.color = '#333';
+                        this.style.color = '#666';
                     }
                 });
+                
+                // Mejorar experiencia móvil - eliminar cualquier comportamiento nativo problemático
+                if (isMobileDevice()) {
+                    // Aplicar estilos específicos para móvil
+                    suitSelect.style.webkitAppearance = 'none';
+                    suitSelect.style.appearance = 'none';
+                    suitSelect.style.backgroundImage = 'none';
+                    suitSelect.style.fontSize = '16px';
+                    
+                    suitSelect.addEventListener('touchstart', function(e) {
+                        // Prevenir zoom y comportamientos no deseados
+                        e.preventDefault();
+                    }, { passive: false });
+                    
+                    suitSelect.addEventListener('click', function(e) {
+                        // Asegurar que el selector se abra correctamente
+                        this.focus();
+                        // Pequeño delay para asegurar que se abra el selector nativo
+                        setTimeout(() => {
+                            this.click();
+                        }, 10);
+                    });
+                } else {
+                    suitSelect.addEventListener('click', function(e) {
+                        // Asegurar que el selector se abra correctamente
+                        this.focus();
+                    });
+                }
                 
                 cardRow.appendChild(numberInput);
                 cardRow.appendChild(suitSelect);
@@ -2162,8 +2483,8 @@
                     // Detectar si estamos en móvil para ajustar el tamaño
                     const isMobile = window.innerWidth <= 768;
                     const isSmallMobile = window.innerWidth <= 480;
-                    const cardWidth = isSmallMobile ? '35px' : isMobile ? '40px' : '60px';
-                    const cardHeight = isSmallMobile ? '49px' : isMobile ? '56px' : '80px';
+                    const cardWidth = isSmallMobile ? '45px' : isMobile ? '50px' : '60px';
+                    const cardHeight = isSmallMobile ? '63px' : isMobile ? '70px' : '80px';
                     const mainFontSize = isSmallMobile ? '0.7rem' : isMobile ? '0.8rem' : '1.5rem';
                     const numberFontSize = isSmallMobile ? '0.6rem' : isMobile ? '0.7rem' : '1.2rem';
                     const marginBottom = isSmallMobile ? '1px' : isMobile ? '2px' : '5px';
@@ -2209,8 +2530,8 @@
                     // Detectar si estamos en móvil para ajustar el tamaño
                     const isMobile = window.innerWidth <= 768;
                     const isSmallMobile = window.innerWidth <= 480;
-                    const cardWidth = isSmallMobile ? '35px' : isMobile ? '40px' : '60px';
-                    const cardHeight = isSmallMobile ? '49px' : isMobile ? '56px' : '80px';
+                    const cardWidth = isSmallMobile ? '45px' : isMobile ? '50px' : '60px';
+                    const cardHeight = isSmallMobile ? '63px' : isMobile ? '70px' : '80px';
                     
                     if (imageSrc) {
                         cardImageHTML = `
@@ -2456,7 +2777,8 @@
                 return;
             }
             
-            // Generar nueva secuencia de cartas
+            // Generar nueva secuencia de cartas completamente diferente
+            console.log(`=== GENERANDO SECUENCIA PARA RONDA ${currentRound} ===`);
             generateCardSequence();
             currentCardIndex = 0;
             gameState = 'memorization';
@@ -2478,14 +2800,28 @@
             // Registrar tiempo de inicio de memorización
             memorizationStartTime = Date.now();
             
+            // Mostrar información de aleatorización
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+            console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
+            if (cardsMode === 'decks') {
+                console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
+            }
+            
             document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
             
             const memorizationInfo = document.getElementById('memorization-info');
+            
+            // Agregar información sobre aleatorización
+            const randomInfo = cardsMode === 'decks' ? 
+                `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
+                '(cartas seleccionadas aleatoriamente)';
+            
             if (currentMode === 'auto-advance') {
                 const totalPages = Math.ceil(cardSequence.length / 2);
-                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
             } else {
-                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar.`;
+                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
             }
             
             startTimer();
@@ -2658,6 +2994,15 @@
             document.getElementById('single-mode').addEventListener('change', function() {
                 updateDisplayInfo();
                 updateCardsInfo();
+                updateSummary();
+            });
+            
+            // Event listeners para modo de juego
+            document.getElementById('symbols-mode').addEventListener('change', function() {
+                updateSummary();
+            });
+            
+            document.getElementById('cards-mode').addEventListener('change', function() {
                 updateSummary();
             });
         });
