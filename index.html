@@ -656,7 +656,7 @@
             .card-display {
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
-                gap: 2px !important;
+                gap: 0px !important;
                 justify-content: center !important;
                 align-items: center !important;
                 min-height: 320px !important;
@@ -664,8 +664,8 @@
             }
             
             .poker-card {
-                width: 200px !important;
-                height: 280px !important;
+                width: 185px !important;
+                height: 265px !important;
                 margin: 4px !important;
                 flex-shrink: 0 !important;
                 display: inline-block !important;
@@ -690,13 +690,13 @@
         
         @media (max-width: 480px) {
             .poker-card {
-                width: 145px !important;
-                height: 203px !important;
+                width: 130px !important;
+                height: 188px !important;
                 margin: 3px !important;
             }
             
             .card-display {
-                gap: 1px !important;
+                gap: 0px !important;
                 min-height: 240px !important;
                 padding: 0 6px !important;
             }
@@ -711,8 +711,8 @@
         /* Estilos para pantallas muy pequeñas */
         @media (max-width: 360px) {
             .poker-card {
-                width: 125px !important;
-                height: 175px !important;
+                width: 110px !important;
+                height: 160px !important;
                 margin: 2px !important;
             }
             
@@ -2147,7 +2147,20 @@
                     }
                 });
                 
-                // Permitir comportamiento normal del select en todos los dispositivos
+                // Evento para selección directa en móviles - tocar para cambiar palo
+                suitSelect.addEventListener('click', function(e) {
+                    // Prevenir que se abra el desplegable
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Cambiar al siguiente palo
+                    const currentIndex = this.selectedIndex;
+                    const nextIndex = (currentIndex + 1) % this.options.length;
+                    this.selectedIndex = nextIndex;
+                    
+                    // Disparar el evento change para actualizar el color
+                    this.dispatchEvent(new Event('change'));
+                });
                 
                 cardRow.appendChild(numberInput);
                 cardRow.appendChild(suitSelect);
