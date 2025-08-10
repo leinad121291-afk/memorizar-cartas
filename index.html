@@ -364,19 +364,19 @@
         }
 
         .suit-select option[value="P"] {
-            color: #333;
+            color: #333 !important;
         }
 
         .suit-select option[value="C"] {
-            color: #dc3545;
+            color: #dc3545 !important;
         }
 
         .suit-select option[value="D"] {
-            color: #dc3545;
+            color: #dc3545 !important;
         }
 
         .suit-select option[value="T"] {
-            color: #333;
+            color: #333 !important;
         }
         
         /* Eliminar completamente cualquier botón nativo en móviles */
@@ -437,6 +437,46 @@
             color: inherit !important;
             font-size: 16px !important;
             padding: 8px !important;
+        }
+        
+        /* Asegurar que los colores se muestren en móviles */
+        @media (max-width: 768px) {
+            .suit-select option[value="P"] {
+                color: #333 !important;
+                background-color: white !important;
+            }
+            
+            .suit-select option[value="C"] {
+                color: #dc3545 !important;
+                background-color: white !important;
+            }
+            
+            .suit-select option[value="D"] {
+                color: #dc3545 !important;
+                background-color: white !important;
+            }
+            
+            .suit-select option[value="T"] {
+                color: #333 !important;
+                background-color: white !important;
+            }
+            
+            /* Asegurar que el texto seleccionado tenga el color correcto */
+            .suit-select[data-selected="P"] {
+                color: #333 !important;
+            }
+            
+            .suit-select[data-selected="C"] {
+                color: #dc3545 !important;
+            }
+            
+            .suit-select[data-selected="D"] {
+                color: #dc3545 !important;
+            }
+            
+            .suit-select[data-selected="T"] {
+                color: #333 !important;
+            }
         }
 
         .fullscreen-button {
@@ -2133,6 +2173,7 @@
                     option.style.backgroundColor = 'white';
                     option.style.fontSize = '16px';
                     option.style.padding = '8px';
+                    option.style.fontWeight = 'bold';
                     suitSelect.appendChild(option);
                 });
                 
@@ -2147,19 +2188,17 @@
                     }
                 });
                 
-                // Evento para selección directa en móviles - tocar para cambiar palo
-                suitSelect.addEventListener('click', function(e) {
-                    // Prevenir que se abra el desplegable
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Cambiar al siguiente palo
-                    const currentIndex = this.selectedIndex;
-                    const nextIndex = (currentIndex + 1) % this.options.length;
-                    this.selectedIndex = nextIndex;
-                    
-                    // Disparar el evento change para actualizar el color
-                    this.dispatchEvent(new Event('change'));
+                // Evento para actualizar el color cuando se selecciona un palo
+                suitSelect.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    const selectedOption = suits.find(suit => suit.value === selectedValue);
+                    if (selectedOption && selectedOption.color) {
+                        this.style.color = selectedOption.color;
+                        this.setAttribute('data-selected', selectedValue);
+                    } else {
+                        this.style.color = '#666';
+                        this.removeAttribute('data-selected');
+                    }
                 });
                 
                 cardRow.appendChild(numberInput);
@@ -2288,10 +2327,10 @@
             // Mostrar mensaje de resultado
             const resultMessage = document.getElementById('result-message');
             if (accuracy === 100) {
-                resultMessage.textContent = `¡Perfecto! Todas las cartas correctas (${correctCards}/${totalCards})`;
+                resultMessage.innerHTML = `¡Perfecto! Todas las cartas correctas (${correctCards}/${totalCards})<br><span style='font-size:1.1rem;color:#1976d2;'>Tiempo de memorización: <b>${actualMemorizationTime.toFixed(1)}</b> segundos</span>`;
                 resultMessage.className = 'result-message correct-result';
             } else {
-                resultMessage.textContent = `Respuesta parcialmente correcta: ${correctCards}/${totalCards} cartas (${accuracy}%)`;
+                resultMessage.innerHTML = `Respuesta parcialmente correcta: ${correctCards}/${totalCards} cartas (${accuracy}%)<br><span style='font-size:1.1rem;color:#1976d2;'>Tiempo de memorización: <b>${actualMemorizationTime.toFixed(1)}</b> segundos</span>`;
                 resultMessage.className = 'result-message incorrect-result';
             }
             
@@ -2324,8 +2363,11 @@
                 document.getElementById('next-round-btn').onclick = showFinalResults;
             }
             
-                         // Inicializar configuración de tiempo para siguiente ronda
-             initializeResultTimeConfig();
+                                     // Inicializar configuración de tiempo para siguiente ronda
+            initializeResultTimeConfig();
+            
+            // Configurar event listeners para la configuración de resultados
+            setupResultConfiguration();
          }
 
         // Función para mostrar cartas de nuevo
@@ -2601,77 +2643,123 @@
             detailedResultsContainer.appendChild(table);
         }
 
-        // Función para actualizar resultado de ronda
-        function updateRoundResult(accuracy) {
-            const roundsList = document.getElementById('rounds-percentage-list');
+        // Función para mostrar el resultado individual de cada ronda
+        function updateRoundResult(roundAccuracy) {
+            const roundNumber = document.getElementById('current-round-number');
+            const roundAccuracyEl = document.getElementById('round-accuracy');
+            const roundStatus = document.getElementById('round-status');
             
-            // Crear elemento para esta ronda
-            const roundItem = document.createElement('div');
-            roundItem.style.cssText = `
-                display: inline-block;
-                margin: 5px;
-                padding: 8px 12px;
-                border-radius: 20px;
-                font-weight: bold;
-                font-size: 0.9rem;
-                background: ${accuracy === 100 ? '#d4edda' : '#f8d7da'};
-                color: ${accuracy === 100 ? '#155724' : '#721c24'};
-                border: 2px solid ${accuracy === 100 ? '#c3e6cb' : '#f5c6cb'};
-            `;
-            roundItem.textContent = `R${currentRound}: ${accuracy}%`;
+            if (roundNumber) roundNumber.textContent = currentRound;
             
-            roundsList.appendChild(roundItem);
+            // Actualizar porcentaje de acierto
+            if (roundAccuracyEl) {
+                roundAccuracyEl.textContent = roundAccuracy + '%';
+                roundAccuracyEl.className = `stat-number ${roundAccuracy === 100 ? 'correct' : 'incorrect'}`;
+            }
+            
+            // Actualizar estado (solo Correcto o Incorrecto)
+            if (roundStatus) {
+                const isCorrect = roundAccuracy === 100;
+                roundStatus.textContent = isCorrect ? 'Correcto' : 'Incorrecto';
+                roundStatus.className = `stat-number ${isCorrect ? 'correct' : 'incorrect'}`;
+            }
         }
 
-        // Función para actualizar visualización de progreso
-        function updateProgressDisplay() {
-            // Actualizar estadísticas de la ronda actual
-            const roundAccuracy = window.roundAccuracies ? window.roundAccuracies[window.roundAccuracies.length - 1] : 0;
-            const roundStatus = roundAccuracy === 100 ? 'Correcto' : 'Incorrecto';
-            
-            document.getElementById('round-accuracy').textContent = `${roundAccuracy}%`;
-            document.getElementById('round-status').textContent = roundStatus;
-            
-            // Actualizar clases de color
-            const accuracyElement = document.getElementById('round-accuracy');
-            const statusElement = document.getElementById('round-status');
-            
-            accuracyElement.className = `stat-number ${roundAccuracy === 100 ? 'correct' : 'incorrect'}`;
-            statusElement.className = `stat-number ${roundAccuracy === 100 ? 'correct' : 'incorrect'}`;
-            
-            // Actualizar estadísticas totales
-            document.getElementById('current-score').textContent = totalScore;
-            document.getElementById('current-round').textContent = currentRound;
-            
-            // Calcular promedio de precisión
-            const averageAccuracy = window.roundAccuracies && window.roundAccuracies.length > 0 ? 
-                Math.round(window.roundAccuracies.reduce((a, b) => a + b, 0) / window.roundAccuracies.length) : 0;
-            
-            document.getElementById('current-percentage').textContent = `${averageAccuracy}%`;
-            
-            // Calcular mejor racha
+        // Función para calcular la mejor racha
+        function calculateBestStreak() {
             let currentStreak = 0;
             let bestStreak = 0;
             
-            for (let i = roundScores.length - 1; i >= 0; i--) {
-                if (roundScores[i] === 1) {
+            roundScores.forEach(score => {
+                if (score === 1) {
                     currentStreak++;
                     bestStreak = Math.max(bestStreak, currentStreak);
                 } else {
                     currentStreak = 0;
                 }
+            });
+            
+            return bestStreak;
+        }
+        
+        // Función para actualizar la visualización de progreso
+        function updateProgressDisplay() {
+            const percentageList = document.getElementById('rounds-percentage-list');
+            const currentScoreEl = document.getElementById('current-score');
+            const currentRoundEl = document.getElementById('current-round');
+            const currentPercentageEl = document.getElementById('current-percentage');
+            const currentStreakEl = document.getElementById('current-streak');
+            
+            if (!percentageList) return;
+            
+            // Limpiar contenedor
+            percentageList.innerHTML = '';
+            
+            // Crear lista simple de porcentajes por ronda
+            for (let i = 1; i <= totalRounds; i++) {
+                const roundDiv = document.createElement('div');
+                roundDiv.style.cssText = 'margin: 10px 0; padding: 10px; border-radius: 8px; font-weight: bold;';
+                
+                if (i <= window.roundAccuracies.length) {
+                    // Ronda completada
+                    const accuracy = window.roundAccuracies[i - 1];
+                    const isCorrect = accuracy === 100;
+                    roundDiv.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+                    roundDiv.style.color = isCorrect ? '#155724' : '#721c24';
+                    roundDiv.style.border = `2px solid ${isCorrect ? '#c3e6cb' : '#f5c6cb'}`;
+                    roundDiv.innerHTML = `Ronda ${i}: ${accuracy}% ${isCorrect ? '(Correcto)' : '(Incorrecto)'}<br>`;
+                    // Mostrar tiempo real de memorización si existe
+                    if (window.roundMemTimes && window.roundMemTimes[i-1]) {
+                        roundDiv.innerHTML += `<span style='font-size:1rem;color:#1976d2;'>🕒 ${window.roundMemTimes[i-1]} segundos</span>`;
+                    }
+                } else if (i === currentRound) {
+                    // Ronda actual
+                    roundDiv.style.backgroundColor = '#e9ecef';
+                    roundDiv.style.color = '#6c757d';
+                    roundDiv.style.border = '2px solid #dee2e6';
+                    roundDiv.innerHTML = `Ronda ${i}: En progreso`;
+                    // Mostrar tiempo real de memorización si existe para la ronda actual
+                    if (window.roundMemTimes && window.roundMemTimes[i-1]) {
+                        roundDiv.innerHTML += `<br><span style='font-size:1rem;color:#1976d2;'>🕒 ${window.roundMemTimes[i-1]} segundos</span>`;
+                    }
+                } else {
+                    // Ronda futura
+                    roundDiv.style.backgroundColor = '#f8f9fa';
+                    roundDiv.style.color = '#6c757d';
+                    roundDiv.style.border = '2px solid #dee2e6';
+                    roundDiv.textContent = `Ronda ${i}: Pendiente`;
+                }
+                
+                percentageList.appendChild(roundDiv);
             }
             
-            document.getElementById('current-streak').textContent = bestStreak;
+            // Calcular estadísticas
+            const completedRounds = roundScores.length;
             
-            // Actualizar clases de color para estadísticas totales
-            const scoreElement = document.getElementById('current-score');
-            const percentageElement = document.getElementById('current-percentage');
-            const streakElement = document.getElementById('current-streak');
+            // Calcular precisión total como promedio de las precisiones de cada ronda
+            let totalAccuracy = 0;
+            if (window.roundAccuracies && window.roundAccuracies.length > 0) {
+                const totalAccuracySum = window.roundAccuracies.reduce((sum, acc) => sum + acc, 0);
+                totalAccuracy = Math.round(totalAccuracySum / window.roundAccuracies.length);
+            }
             
-            scoreElement.className = `stat-number ${totalScore > 0 ? 'correct' : 'neutral'}`;
-            percentageElement.className = `stat-number ${averageAccuracy > 50 ? 'correct' : 'neutral'}`;
-            streakElement.className = `stat-number ${bestStreak > 0 ? 'correct' : 'neutral'}`;
+            const percentage = completedRounds > 0 ? Math.round((totalScore / completedRounds) * 100) : 0;
+            const bestStreak = calculateBestStreak();
+            
+            // Actualizar elementos de estadísticas
+            if (currentScoreEl) {
+                currentScoreEl.textContent = totalScore;
+                currentScoreEl.className = `stat-number ${percentage >= 80 ? 'correct' : percentage >= 50 ? 'neutral' : 'incorrect'}`;
+            }
+            if (currentRoundEl) currentRoundEl.textContent = currentRound;
+            if (currentPercentageEl) {
+                currentPercentageEl.textContent = totalAccuracy + '%';
+                currentPercentageEl.className = `stat-number ${totalAccuracy >= 80 ? 'correct' : totalAccuracy >= 50 ? 'neutral' : 'incorrect'}`;
+            }
+            if (currentStreakEl) {
+                currentStreakEl.textContent = bestStreak;
+                currentStreakEl.className = `stat-number ${bestStreak >= 3 ? 'correct' : bestStreak >= 1 ? 'neutral' : 'incorrect'}`;
+            }
         }
 
         // Función para inicializar configuración de tiempo en resultados
@@ -2704,6 +2792,45 @@
             updateResultModeDescription();
         }
 
+        // Función para configurar event listeners de resultados
+        function setupResultConfiguration() {
+            // Configurar modo de memorización en resultados
+            const resultMemorizationMode = document.getElementById('result-memorization-mode');
+            if (resultMemorizationMode) {
+                resultMemorizationMode.addEventListener('change', function() {
+                    if (this.checked) {
+                        updateResultModeDescription();
+                    }
+                });
+            }
+            
+            // Configurar modo de autoavance en resultados
+            const resultAutoAdvanceMode = document.getElementById('result-auto-advance-mode');
+            if (resultAutoAdvanceMode) {
+                resultAutoAdvanceMode.addEventListener('change', function() {
+                    if (this.checked) {
+                        updateResultModeDescription();
+                    }
+                });
+            }
+            
+            // Configurar temporizador de memorización en resultados
+            const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+            if (resultMemorizationTimer) {
+                resultMemorizationTimer.addEventListener('input', function() {
+                    updateResultModeDescription();
+                });
+            }
+            
+            // Configurar tiempo de autoavance en resultados
+            const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+            if (resultAutoAdvanceTime) {
+                resultAutoAdvanceTime.addEventListener('input', function() {
+                    updateResultModeDescription();
+                });
+            }
+        }
+        
         // Función para actualizar descripción del modo en resultados
         function updateResultModeDescription() {
             const description = document.getElementById('result-mode-description');
@@ -2809,11 +2936,28 @@
             
             const correctRounds = roundScores.filter(score => score === 1).length;
             const percentage = Math.round((totalScore / totalRounds) * 100);
+            const bestStreak = calculateBestStreak();
             
-            // Actualizar estadísticas finales básicas
+            // Calcular precisión total como promedio de las precisiones de cada ronda
+            let totalAccuracy = 0;
+            if (window.roundAccuracies && window.roundAccuracies.length > 0) {
+                const totalAccuracySum = window.roundAccuracies.reduce((sum, acc) => sum + acc, 0);
+                totalAccuracy = Math.round(totalAccuracySum / window.roundAccuracies.length);
+            }
+            
+            // Actualizar estadísticas finales
             document.getElementById('final-score').textContent = `${totalScore}/${totalRounds}`;
-            document.getElementById('final-percentage').textContent = percentage + '%';
-            document.getElementById('final-streak').textContent = '0'; // Simplificado
+            document.getElementById('final-percentage').textContent = totalAccuracy + '%';
+            document.getElementById('final-streak').textContent = bestStreak;
+            
+            // Actualizar clases de color para estadísticas finales
+            const scoreElement = document.getElementById('final-score');
+            const percentageElement = document.getElementById('final-percentage');
+            const streakElement = document.getElementById('final-streak');
+            
+            scoreElement.className = `stat-number ${percentage >= 80 ? 'correct' : percentage >= 50 ? 'neutral' : 'incorrect'}`;
+            percentageElement.className = `stat-number ${totalAccuracy >= 80 ? 'correct' : totalAccuracy >= 50 ? 'neutral' : 'incorrect'}`;
+            streakElement.className = `stat-number ${bestStreak >= 3 ? 'correct' : bestStreak >= 1 ? 'neutral' : 'incorrect'}`;
             
             console.log('Juego completado!');
         }
