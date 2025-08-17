@@ -782,6 +782,397 @@
                 height: 30px;
                 font-size: 14px;
             }
+
+        /* Estilos para cuadros adaptativos en modo cartas */
+        .card-display.cards-mode {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 20px !important;
+            margin: 20px 0 !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            min-height: 280px !important;
+            height: 280px !important;
+            width: 100% !important;
+            max-width: 100vw !important;
+            padding: 0 20px !important;
+            box-sizing: border-box !important;
+            line-height: 0 !important;
+            font-size: 0 !important;
+        }
+        
+        /* Estilos para cartas en modo cartas - se aplican siempre */
+        .card-display.cards-mode .poker-card {
+            width: 200px !important;
+            height: 280px !important;
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            border-radius: 12px !important;
+            background: white !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+            aspect-ratio: 5/7 !important;
+            contain: layout style paint !important;
+            position: relative !important;
+            isolation: isolate !important;
+        }
+        
+        /* Estilos adicionales para asegurar consistencia en modo individual */
+        .card-display.cards-mode .poker-card:only-child {
+            width: 200px !important;
+            height: 280px !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+        }
+        
+        /* Asegurar que el contenedor mantenga el comportamiento correcto */
+        .card-display.cards-mode {
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        
+        /* Forzar el mismo tamaño para todas las cartas en modo cartas */
+        .card-display.cards-mode .poker-card,
+        .card-display.cards-mode .poker-card:first-child,
+        .card-display.cards-mode .poker-card:last-child,
+        .card-display.cards-mode .poker-card:nth-child(1),
+        .card-display.cards-mode .poker-card:nth-child(2),
+        .card-display.cards-mode .poker-card:nth-child(3),
+        .card-display.cards-mode .poker-card:nth-child(4),
+        .card-display.cards-mode .poker-card:nth-child(5),
+        .card-display.cards-mode .poker-card:nth-child(6),
+        .card-display.cards-mode .poker-card:nth-child(7),
+        .card-display.cards-mode .poker-card:nth-child(8),
+        .card-display.cards-mode .poker-card:nth-child(9),
+        .card-display.cards-mode .poker-card:nth-child(10) {
+            width: 200px !important;
+            height: 280px !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+            flex: 0 0 200px !important;
+            flex-basis: 200px !important;
+            flex-grow: 0 !important;
+            flex-shrink: 0 !important;
+            box-sizing: border-box !important;
+            display: inline-block !important;
+            vertical-align: top !important;
+            contain: layout style paint !important;
+        }
+        
+        /* Forzar que el contenedor interno también tenga el mismo tamaño */
+        .card-display.cards-mode .poker-card > div {
+            width: 200px !important;
+            height: 280px !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+            flex: 0 0 200px !important;
+            flex-basis: 200px !important;
+            flex-grow: 0 !important;
+            flex-shrink: 0 !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        .card-display.cards-mode .poker-card > div {
+            width: 100% !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            border-radius: 12px !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .card-display.cards-mode .poker-card img {
+            width: 200px !important;
+            height: 280px !important;
+            object-fit: fill !important;
+            border-radius: 12px !important;
+            object-position: center !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            transform: scale(1) !important;
+            transform-origin: center center !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            box-sizing: border-box !important;
+            flex-shrink: 0 !important;
+            flex-grow: 0 !important;
+        }
+        
+        /* Forzar que el div contenedor también tenga dimensiones exactas */
+        .card-display.cards-mode .poker-card > div[style*="width: 100%"] {
+            width: 200px !important;
+            height: 280px !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+        }
+        
+        /* Forzar que TODOS los divs contenedores tengan dimensiones exactas */
+        .card-display.cards-mode .poker-card > div {
+            width: 200px !important;
+            height: 280px !important;
+            min-width: 200px !important;
+            min-height: 280px !important;
+            max-width: 200px !important;
+            max-height: 280px !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Responsive para cuadros adaptativos */
+        @media (max-width: 768px) {
+            .card-display.cards-mode {
+                gap: 15px !important;
+                min-height: 252px !important;
+                height: 252px !important;
+                padding: 0 15px !important;
+            }
+            
+            .card-display.cards-mode .poker-card {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+            }
+            
+            .card-display.cards-mode .poker-card:only-child {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+            }
+            
+            .card-display.cards-mode .poker-card,
+            .card-display.cards-mode .poker-card:first-child,
+            .card-display.cards-mode .poker-card:last-child,
+            .card-display.cards-mode .poker-card:nth-child(1),
+            .card-display.cards-mode .poker-card:nth-child(2) {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+                flex: 0 0 180px !important;
+                flex-basis: 180px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+                flex: 0 0 180px !important;
+                flex-basis: 180px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card img {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 180px !important;
+                height: 252px !important;
+                min-width: 180px !important;
+                min-height: 252px !important;
+                max-width: 180px !important;
+                max-height: 252px !important;
+                box-sizing: border-box !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-display.cards-mode {
+                gap: 10px !important;
+                min-height: 210px !important;
+                height: 210px !important;
+                padding: 0 10px !important;
+            }
+            
+            .card-display.cards-mode .poker-card {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+            }
+            
+            .card-display.cards-mode .poker-card:only-child {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+            }
+            
+            .card-display.cards-mode .poker-card,
+            .card-display.cards-mode .poker-card:first-child,
+            .card-display.cards-mode .poker-card:last-child,
+            .card-display.cards-mode .poker-card:nth-child(1),
+            .card-display.cards-mode .poker-card:nth-child(2) {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+                flex: 0 0 150px !important;
+                flex-basis: 150px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+                flex: 0 0 150px !important;
+                flex-basis: 150px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card img {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 150px !important;
+                height: 210px !important;
+                min-width: 150px !important;
+                min-height: 210px !important;
+                max-width: 150px !important;
+                max-height: 210px !important;
+                box-sizing: border-box !important;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .card-display.cards-mode {
+                gap: 8px !important;
+                min-height: 168px !important;
+                height: 168px !important;
+                padding: 0 8px !important;
+            }
+            
+            .card-display.cards-mode .poker-card {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+            }
+            
+            .card-display.cards-mode .poker-card:only-child {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+            }
+            
+            .card-display.cards-mode .poker-card,
+            .card-display.cards-mode .poker-card:first-child,
+            .card-display.cards-mode .poker-card:last-child,
+            .card-display.cards-mode .poker-card:nth-child(1),
+            .card-display.cards-mode .poker-card:nth-child(2) {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+                flex: 0 0 120px !important;
+                flex-basis: 120px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+                flex: 0 0 120px !important;
+                flex-basis: 120px !important;
+                flex-grow: 0 !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .card-display.cards-mode .poker-card img {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+            }
+            
+            .card-display.cards-mode .poker-card > div {
+                width: 120px !important;
+                height: 168px !important;
+                min-width: 120px !important;
+                min-height: 168px !important;
+                max-width: 120px !important;
+                max-height: 168px !important;
+                box-sizing: border-box !important;
+            }
+        }
         
         /* Estilos responsive para la tabla de resultados detallados */
         @media (max-width: 768px) {
@@ -895,6 +1286,9 @@
                  
                  <p id="selected-info">Memorizarás 5 cartas específicas (2 cartas por página)</p>
                  <p id="deck-info" style="font-size: 0.9rem; color: #666; margin-top: 5px;">Total disponible: 52 cartas únicas</p>
+                 <p id="cards-mode-info" style="font-size: 0.9rem; color: #1976d2; margin-top: 10px; font-weight: bold; display: none;">
+                     🖼️ En modo cartas, las imágenes se adaptarán exactamente al tamaño de los cuadros de visualización. Todas las cartas tendrán el mismo tamaño.
+                 </p>
              </div>
 
             <!-- Configuración de Visualización -->
@@ -939,6 +1333,9 @@
                     <span style="font-size: 1.1rem; color: #333;">rondas</span>
                 </div>
                 <p id="rounds-info">Jugarás 10 rondas en total</p>
+                <p id="rounds-config-info" style="font-size: 0.9rem; color: #1976d2; margin-top: 10px; font-weight: bold;">
+                    💡 La configuración de tiempo se mantendrá predeterminada igual que la inicial en todas las rondas, pero podrás modificarla entre rondas si lo deseas. Si seleccionas autoavance, se mantendrá marcado automáticamente.
+                </p>
             </div>
 
             <!-- Configuración de Autoavance -->
@@ -1405,14 +1802,28 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        position: relative;
                     ">
                         <img src="${imageSrc}" 
                              alt="${value} of ${suitName}" 
                              style="
-                                 width: 100%; 
-                                 height: 100%; 
-                                 object-fit: contain;
+                                 width: 200px; 
+                                 height: 280px; 
+                                 object-fit: fill;
                                  border-radius: 11px;
+                                 object-position: center;
+                                 display: block;
+                                 margin: 0;
+                                 padding: 0;
+                                 min-width: 200px;
+                                 min-height: 280px;
+                                 max-width: 200px;
+                                 max-height: 280px;
+                                 image-rendering: -webkit-optimize-contrast;
+                                 image-rendering: crisp-edges;
+                                 position: absolute;
+                                 top: 0;
+                                 left: 0;
                              "
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
                     </div>
@@ -1466,14 +1877,28 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        position: relative;
                     ">
                         <img src="${imageSrc}" 
                              alt="${numValue} of ${suitName}" 
                              style="
-                                 width: 100%; 
-                                 height: 100%; 
-                                 object-fit: contain;
+                                 width: 200px; 
+                                 height: 280px; 
+                                 object-fit: fill;
                                  border-radius: 11px;
+                                 object-position: center;
+                                 display: block;
+                                 margin: 0;
+                                 padding: 0;
+                                 min-width: 200px;
+                                 min-height: 280px;
+                                 max-width: 200px;
+                                 max-height: 280px;
+                                 image-rendering: -webkit-optimize-contrast;
+                                 image-rendering: crisp-edges;
+                                 position: absolute;
+                                 top: 0;
+                                 left: 0;
                              "
                              onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 1.2rem;\'>Error cargando imagen</div>'">
                     </div>
@@ -1647,6 +2072,13 @@
             
             cardDisplay.innerHTML = '';
             
+            // Aplicar clase para modo cartas si es necesario
+            if (gameMode === 'cards') {
+                cardDisplay.classList.add('cards-mode');
+            } else {
+                cardDisplay.classList.remove('cards-mode');
+            }
+            
             // Calcular qué cartas mostrar según el modo de visualización
             const startIndex = currentCardIndex;
             const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
@@ -1657,9 +2089,14 @@
                 const cardElement = document.createElement('div');
                 cardElement.className = 'poker-card';
                 
-                // Usar tamaños centralizados
-                const cardSizes = getCardSizes('main');
-                cardElement.style.cssText = `width: ${cardSizes.width}; height: ${cardSizes.height}; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
+                // Usar tamaños centralizados solo si no es modo cartas
+                if (gameMode !== 'cards') {
+                    const cardSizes = getCardSizes('main');
+                    cardElement.style.cssText = `width: ${cardSizes.width}; height: ${cardSizes.height}; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
+                } else {
+                    // En modo cartas, no aplicar estilos inline para que los estilos CSS tengan prioridad
+                    cardElement.style.cssText = `margin: 0; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
+                }
                 
                 if (gameMode === 'symbols') {
                     // Modo símbolos - mostrar símbolos Unicode
@@ -1730,7 +2167,20 @@
             
             // Actualizar botones de navegación
             document.getElementById('prev-btn').disabled = startIndex === 0;
-            document.getElementById('next-btn').disabled = endIndex >= cardSequence.length;
+            
+            // En la última página, el botón siguiente debe estar disponible para terminar memorización
+            const isLastPage = endIndex >= cardSequence.length;
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = false; // Siempre habilitado
+            
+            // Cambiar el texto del botón en la última página
+            if (isLastPage) {
+                nextBtn.textContent = 'Terminar Memorización →';
+                nextBtn.onclick = finishMemorization;
+            } else {
+                nextBtn.textContent = 'Siguiente →';
+                nextBtn.onclick = nextCards;
+            }
             
             // Mostrar indicador de mazo solo en la primera página de cada mazo
             const deckIndicator = document.getElementById('deck-indicator');
@@ -1768,6 +2218,9 @@
             if (currentCardIndex + cardsPerPage < cardSequence.length) {
                 currentCardIndex = Math.min(cardSequence.length - cardsPerPage, currentCardIndex + cardsPerPage);
                 displayCards();
+            } else {
+                // Si estamos en la última página, terminar memorización
+                finishMemorization();
             }
         }
 
@@ -1791,6 +2244,7 @@
             const decksInput = document.getElementById('decks-input');
             const selectedInfo = document.getElementById('selected-info');
             const deckInfo = document.getElementById('deck-info');
+            const cardsModeInfo = document.getElementById('cards-mode-info');
             
             if (specificMode) {
                 cardsMode = 'specific';
@@ -1806,15 +2260,32 @@
                 selectedInfo.textContent = `Memorizarás ${selectedDecks} baraja(s) completa(s) (${selectedCards} cartas total) (${displayText})`;
                 deckInfo.textContent = `Total: ${selectedCards} cartas (${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''})`;
             }
+            
+            // Mostrar/ocultar mensaje informativo del modo cartas
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            if (gameMode === 'cards') {
+                cardsModeInfo.style.display = 'block';
+            } else {
+                cardsModeInfo.style.display = 'none';
+            }
         }
 
         // Función para actualizar información de rondas
         function updateRoundsInfo() {
             const roundsInput = document.getElementById('rounds-input');
             const roundsInfo = document.getElementById('rounds-info');
+            const roundsConfigInfo = document.getElementById('rounds-config-info');
             
             totalRounds = parseInt(roundsInput.value) || 10;
             roundsInfo.textContent = `Jugarás ${totalRounds} rondas en total`;
+            
+            // Actualizar mensaje informativo según el número de rondas
+            if (totalRounds > 1) {
+                roundsConfigInfo.style.display = 'block';
+                roundsConfigInfo.innerHTML = `💡 La configuración de tiempo se mantendrá predeterminada igual que la inicial en todas las ${totalRounds} rondas, pero podrás modificarla entre rondas si lo deseas. Si seleccionas autoavance, se mantendrá marcado automáticamente.`;
+            } else {
+                roundsConfigInfo.style.display = 'none';
+            }
         }
 
         // Función para actualizar información de visualización
@@ -2425,40 +2896,86 @@
             // Limpiar contenido anterior
             detailedResultsContainer.innerHTML = '';
             
-            // Crear título
+            // Crear título con botón de ocultar/mostrar
+            const titleContainer = document.createElement('div');
+            titleContainer.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;';
+            
             const title = document.createElement('h3');
             title.textContent = 'Resultados Detallados de las Cartas';
-            title.style.cssText = 'color: #333; margin-bottom: 15px; text-align: center;';
-            detailedResultsContainer.appendChild(title);
+            title.style.cssText = 'color: #333; margin: 0;';
             
-            // Crear tabla de resultados
-            const table = document.createElement('table');
-            table.style.cssText = 'width: 100%; border-collapse: collapse; margin-top: 10px;';
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = 'Ocultar Detalles';
+            toggleButton.style.cssText = 'padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem;';
+            toggleButton.onclick = function() {
+                const content = document.getElementById('detailed-results-content');
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    toggleButton.textContent = 'Ocultar Detalles';
+                } else {
+                    content.style.display = 'none';
+                    toggleButton.textContent = 'Mostrar Detalles';
+                }
+            };
             
-            // Crear encabezado de tabla
-            const thead = document.createElement('thead');
-            const headerRow = document.createElement('tr');
-            headerRow.style.cssText = 'background: #007bff; color: white;';
+            titleContainer.appendChild(title);
+            titleContainer.appendChild(toggleButton);
+            detailedResultsContainer.appendChild(titleContainer);
             
-            const headers = ['Carta', 'Tu Respuesta', 'Respuesta Correcta', 'Estado'];
-            headers.forEach(headerText => {
-                const th = document.createElement('th');
-                th.textContent = headerText;
-                th.style.cssText = 'padding: 10px; text-align: center; border: 1px solid #dee2e6;';
-                headerRow.appendChild(th);
-            });
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
+            // Crear contenedor para el contenido (que se puede ocultar)
+            const contentContainer = document.createElement('div');
+            contentContainer.id = 'detailed-results-content';
+            contentContainer.style.cssText = 'display: block;';
+            detailedResultsContainer.appendChild(contentContainer);
             
-            // Crear cuerpo de tabla
-            const tbody = document.createElement('tbody');
+            // Determinar cuántos mazos hay
+            const totalDecks = cardsMode === 'decks' ? selectedDecks : 1;
+            const cardsPerDeck = 52;
             
             // Leer respuestas guardadas
             const userResponses = window.userCardResponses || [];
             console.log('=== LEYENDO RESPUESTAS PARA RESULTADOS ===');
             console.log('userResponses:', userResponses);
             
-            for (let i = 0; i < cardSequence.length; i++) {
+            // Crear un cuadro para cada mazo
+            for (let deckIndex = 0; deckIndex < totalDecks; deckIndex++) {
+                const deckStartIndex = deckIndex * cardsPerDeck;
+                const deckEndIndex = Math.min(deckStartIndex + cardsPerDeck, cardSequence.length);
+                
+                // Crear contenedor para este mazo
+                const deckContainer = document.createElement('div');
+                deckContainer.style.cssText = 'margin-bottom: 30px; padding: 15px; background: white; border-radius: 8px; border: 1px solid #dee2e6;';
+                
+                // Título del mazo
+                const deckTitle = document.createElement('h4');
+                deckTitle.textContent = `Mazo ${deckIndex + 1}`;
+                deckTitle.style.cssText = 'color: #333; margin-bottom: 15px; text-align: center; font-size: 1.2rem;';
+                deckContainer.appendChild(deckTitle);
+                
+                // Crear tabla de resultados para este mazo
+                const table = document.createElement('table');
+                table.style.cssText = 'width: 100%; border-collapse: collapse; margin-top: 10px;';
+                
+                // Crear encabezado de tabla
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                headerRow.style.cssText = 'background: #007bff; color: white;';
+                
+                const headers = ['Carta', 'Tu Respuesta', 'Respuesta Correcta', 'Estado'];
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.textContent = headerText;
+                    th.style.cssText = 'padding: 10px; text-align: center; border: 1px solid #dee2e6;';
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Crear cuerpo de tabla
+                const tbody = document.createElement('tbody');
+            
+                // Procesar cartas de este mazo
+                for (let i = deckStartIndex; i < deckEndIndex; i++) {
                 const card = cardSequence[i];
                 const userResponse = userResponses.find(r => r.cardIndex === i);
                 
@@ -2569,8 +3086,9 @@
                                      style="
                                          width: 100%; 
                                          height: 100%; 
-                                         object-fit: contain;
+                                         object-fit: cover;
                                          border-radius: 7px;
+                                         object-position: center;
                                      "
                                      onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #666; font-size: 0.8rem;\'>Error</div>'">
                             </div>
@@ -2636,11 +3154,13 @@
                 statusCell.style.cssText = `padding: 8px; text-align: center; border: 1px solid #dee2e6; color: ${statusColor}; font-weight: bold;`;
                 row.appendChild(statusCell);
                 
-                tbody.appendChild(row);
+                    tbody.appendChild(row);
+                }
+                
+                table.appendChild(tbody);
+                deckContainer.appendChild(table);
+                contentContainer.appendChild(deckContainer);
             }
-            
-            table.appendChild(tbody);
-            detailedResultsContainer.appendChild(table);
         }
 
         // Función para mostrar el resultado individual de cada ronda
@@ -2764,28 +3284,95 @@
 
         // Función para inicializar configuración de tiempo en resultados
         function initializeResultTimeConfig() {
-            // Copiar valores actuales a los campos de resultado
-            document.getElementById('result-memorization-timer').value = memorizationTime || '';
-            document.getElementById('result-auto-advance-time').value = autoAdvanceTime || '';
+            console.log('🔧 Inicializando configuración de tiempo para ronda:', currentRound);
+            console.log('🔧 Modo actual:', currentMode);
+            console.log('🔧 Modo inicial guardado:', window.initialTimeMode);
+            
+            // Si es la primera ronda, copiar valores actuales a los campos de resultado
+            if (currentRound === 1) {
+                document.getElementById('result-memorization-timer').value = memorizationTime || '';
+                document.getElementById('result-auto-advance-time').value = autoAdvanceTime || '';
+                
+                // Guardar la configuración inicial para mantenerla en rondas posteriores
+                window.initialMemorizationTime = memorizationTime;
+                window.initialAutoAdvanceTime = autoAdvanceTime;
+                window.initialTimeMode = currentMode;
+                
+                console.log('🔧 Primera ronda - Guardando configuración inicial:', {
+                    memorizationTime: window.initialMemorizationTime,
+                    autoAdvanceTime: window.initialAutoAdvanceTime,
+                    timeMode: window.initialTimeMode
+                });
+                
+                // También aplicar la configuración en la primera ronda
+                if (currentMode === 'memorization') {
+                    document.getElementById('result-memorization-mode').checked = true;
+                    document.getElementById('result-auto-advance-mode').checked = false;
+                    console.log('🔧 Primera ronda - Aplicando modo: memorización');
+                } else if (currentMode === 'auto-advance') {
+                    document.getElementById('result-memorization-mode').checked = false;
+                    document.getElementById('result-auto-advance-mode').checked = true;
+                    console.log('🔧 Primera ronda - Aplicando modo: autoavance');
+                }
+            } else {
+                // Para rondas posteriores, mantener la configuración predeterminada igual que la inicial
+                // pero permitir que el usuario la modifique
+                document.getElementById('result-memorization-timer').value = window.initialMemorizationTime || '';
+                document.getElementById('result-auto-advance-time').value = window.initialAutoAdvanceTime || '';
+                
+                console.log('🔧 Ronda posterior - Restaurando configuración inicial:', {
+                    memorizationTime: window.initialMemorizationTime,
+                    autoAdvanceTime: window.initialAutoAdvanceTime,
+                    timeMode: window.initialTimeMode
+                });
+                
+                // Restaurar el modo inicial - mantener autoavance si estaba seleccionado
+                if (window.initialTimeMode === 'memorization') {
+                    document.getElementById('result-memorization-mode').checked = true;
+                    document.getElementById('result-auto-advance-mode').checked = false;
+                    console.log('🔧 Restaurando modo: memorización');
+                } else if (window.initialTimeMode === 'auto-advance') {
+                    document.getElementById('result-memorization-mode').checked = false;
+                    document.getElementById('result-auto-advance-mode').checked = true;
+                    console.log('🔧 Restaurando modo: autoavance');
+                }
+            }
+            
+            // Limpiar event listeners anteriores para evitar duplicados
+            const resultMemorizationMode = document.getElementById('result-memorization-mode');
+            const resultAutoAdvanceMode = document.getElementById('result-auto-advance-mode');
+            const resultMemorizationTimer = document.getElementById('result-memorization-timer');
+            const resultAutoAdvanceTime = document.getElementById('result-auto-advance-time');
+            
+            // Clonar elementos para remover event listeners
+            const newResultMemorizationMode = resultMemorizationMode.cloneNode(true);
+            const newResultAutoAdvanceMode = resultAutoAdvanceMode.cloneNode(true);
+            const newResultMemorizationTimer = resultMemorizationTimer.cloneNode(true);
+            const newResultAutoAdvanceTime = resultAutoAdvanceTime.cloneNode(true);
+            
+            resultMemorizationMode.parentNode.replaceChild(newResultMemorizationMode, resultMemorizationMode);
+            resultAutoAdvanceMode.parentNode.replaceChild(newResultAutoAdvanceMode, resultAutoAdvanceMode);
+            resultMemorizationTimer.parentNode.replaceChild(newResultMemorizationTimer, resultMemorizationTimer);
+            resultAutoAdvanceTime.parentNode.replaceChild(newResultAutoAdvanceTime, resultAutoAdvanceTime);
             
             // Configurar eventos para los nuevos campos
-            document.getElementById('result-memorization-mode').addEventListener('change', function() {
+            newResultMemorizationMode.addEventListener('change', function() {
                 if (this.checked) {
                     updateResultModeDescription();
                 }
             });
             
-            document.getElementById('result-auto-advance-mode').addEventListener('change', function() {
+            newResultAutoAdvanceMode.addEventListener('change', function() {
                 if (this.checked) {
                     updateResultModeDescription();
                 }
             });
             
-            document.getElementById('result-memorization-timer').addEventListener('input', function() {
+            newResultMemorizationTimer.addEventListener('input', function() {
                 updateResultModeDescription();
             });
             
-            document.getElementById('result-auto-advance-time').addEventListener('input', function() {
+            newResultAutoAdvanceTime.addEventListener('input', function() {
                 updateResultModeDescription();
             });
             
@@ -2837,6 +3424,12 @@
             const memorizationMode = document.getElementById('result-memorization-mode').checked;
             const memorizationTime = parseFloat(document.getElementById('result-memorization-timer').value) || 0;
             const autoAdvanceTime = parseFloat(document.getElementById('result-auto-advance-time').value) || 0;
+            
+            console.log('🔧 Actualizando descripción del modo:', {
+                memorizationMode: memorizationMode,
+                memorizationTime: memorizationTime,
+                autoAdvanceTime: autoAdvanceTime
+            });
             
             if (memorizationMode) {
                 if (memorizationTime > 0) {
@@ -2984,6 +3577,11 @@
             if (window.roundAccuracies) { window.roundAccuracies = []; }
             if (window.roundMemTimes) { window.roundMemTimes = []; }
             
+            // Reiniciar configuración inicial guardada
+            if (window.initialMemorizationTime) { delete window.initialMemorizationTime; }
+            if (window.initialAutoAdvanceTime) { delete window.initialAutoAdvanceTime; }
+            if (window.initialTimeMode) { delete window.initialTimeMode; }
+            
             document.getElementById('cards-input').value = '';
             document.getElementById('decks-input').value = '';
             document.getElementById('specific-cards-mode').checked = true;
@@ -3006,6 +3604,12 @@
             document.getElementById('memorization-phase').classList.add('hidden');
             document.getElementById('input-phase').classList.add('hidden');
             document.getElementById('setup-phase').classList.remove('hidden');
+            
+            // Reiniciar botón de siguiente a su estado normal
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.textContent = 'Siguiente →';
+            nextBtn.onclick = nextCards;
+            nextBtn.disabled = false;
              
             if (timerInterval) clearInterval(timerInterval);
             if (recallTimerInterval) clearInterval(recallTimerInterval);
@@ -3050,6 +3654,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             updateCardsInfo();
             updateDisplayInfo();
+            updateRoundsInfo();
             updateSummary();
             updateProgressDisplay();
             
@@ -3119,10 +3724,12 @@
             // Event listeners para modo de juego
             document.getElementById('symbols-mode').addEventListener('change', function() {
                 updateSummary();
+                updateCardsInfo(); // Actualizar mensaje informativo del modo cartas
             });
             
             document.getElementById('cards-mode').addEventListener('change', function() {
                 updateSummary();
+                updateCardsInfo(); // Actualizar mensaje informativo del modo cartas
             });
         });
     </script>
