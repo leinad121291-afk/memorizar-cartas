@@ -14,7 +14,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, rgba(172, 5, 5, 0.75) 0%, rgba(138, 4, 4, 0.75) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -210,7 +210,7 @@
         }
 
         .button {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, rgba(172, 5, 5, 0.75) 0%, rgba(138, 4, 4, 0.75) 100%);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -245,53 +245,6 @@
             font-size: 1.1rem;
             color: #666;
             margin: 15px 0;
-        }
-
-        /* Fase de preparación */
-        .prep-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .prep-circle {
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), rgba(255,255,255,0) 60%), #000000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 0 10px rgba(255,255,255,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border: 6px solid rgba(255,255,255,0.18);
-            animation: prepPulse 1.6s ease-in-out infinite;
-        }
-        .prep-circle::after {
-            content: '';
-            position: absolute;
-            inset: -14px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, rgba(255,255,255,0.35), rgba(255,255,255,0));
-            filter: blur(8px);
-            opacity: 0.5;
-        }
-        .prep-count {
-            font-size: 6rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 4px 16px rgba(0,0,0,0.35);
-            line-height: 1;
-        }
-        .prep-subtitle {
-            color: #000000;
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-        @keyframes prepPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 0 10px rgba(255,255,255,0.12); }
-            50% { transform: scale(1.03); box-shadow: 0 24px 48px rgba(0,0,0,0.3), inset 0 0 0 12px rgba(255,255,255,0.15); }
         }
 
         .result-message {
@@ -1278,6 +1231,53 @@
                 margin-bottom: 1px !important;
             }
         }
+
+        /* Estilos para la fase de preparación */
+        .prep-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .prep-circle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), rgba(255,255,255,0) 60%), #000000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 0 10px rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 6px solid rgba(255,255,255,0.18);
+            animation: prepPulse 1.6s ease-in-out infinite;
+        }
+        .prep-circle::after {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, rgba(255,255,255,0.35), rgba(255,255,255,0));
+            filter: blur(8px);
+            opacity: 0.5;
+        }
+        .prep-count {
+            font-size: 6rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.35);
+            line-height: 1;
+        }
+        .prep-subtitle {
+            color: #000000;
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        @keyframes prepPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 0 10px rgba(255,255,255,0.12); }
+            50% { transform: scale(1.03); box-shadow: 0 24px 48px rgba(0,0,0,0.3), inset 0 0 0 12px rgba(255,255,255,0.15); }
+        }
     </style>
 </head>
 <body>
@@ -1446,7 +1446,7 @@
                     position: absolute;
                     left: 30px;
                     top: 80px;
-                    background: #e74c3c;
+                    background: rgba(172, 5, 5, 0.75);
                     color: white;
                     padding: 15px;
                     border-radius: 50%;
@@ -1575,7 +1575,7 @@
             <div id="round-progress">
                 <p>Ronda <span id="round-number">1</span> de <span id="total-rounds">10</span></p>
                 <div style="width: 100%; height: 20px; background: #e9ecef; border-radius: 10px; margin: 15px 0; overflow: hidden;">
-                    <div style="height: 100%; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); transition: width 0.3s ease; width: 0%;" id="round-progress-fill"></div>
+                    <div style="height: 100%; background: linear-gradient(135deg, rgba(172, 5, 5, 0.75) 0%, rgba(138, 4, 4, 0.75) 100%); transition: width 0.3s ease; width: 0%;" id="round-progress-fill"></div>
                 </div>
             </div>
             <div>
@@ -2140,7 +2140,18 @@
             // Calcular qué cartas mostrar según el modo de visualización
             const startIndex = currentCardIndex;
             const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-            const endIndex = Math.min(startIndex + cardsPerPage, cardSequence.length);
+            
+            // Si estamos en modo pares y hay un número impar de cartas, 
+            // y estamos en la última página, mostrar solo la última carta
+            let endIndex;
+            if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
+                startIndex === cardSequence.length - 1) {
+                // En la última página con número impar, mostrar solo la última carta
+                endIndex = cardSequence.length;
+            } else {
+                endIndex = Math.min(startIndex + cardsPerPage, cardSequence.length);
+            }
+            
             const cardsToShow = cardSequence.slice(startIndex, endIndex);
             
             cardsToShow.forEach((card, index) => {
@@ -2265,7 +2276,14 @@
         function previousCards() {
             const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
             if (currentCardIndex > 0) {
-                currentCardIndex = Math.max(0, currentCardIndex - cardsPerPage);
+                // Si estamos en la última página con número impar de cartas,
+                // retroceder solo 1 carta, no 2
+                if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
+                    currentCardIndex === cardSequence.length - 1) {
+                    currentCardIndex = Math.max(0, currentCardIndex - 1);
+                } else {
+                    currentCardIndex = Math.max(0, currentCardIndex - cardsPerPage);
+                }
                 displayCards();
             }
         }
@@ -2273,8 +2291,26 @@
         // Función para navegar a la página siguiente
         function nextCards() {
             const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-            if (currentCardIndex + cardsPerPage < cardSequence.length) {
-                currentCardIndex = Math.min(cardSequence.length - cardsPerPage, currentCardIndex + cardsPerPage);
+            
+            // Calcular si estamos en la última página
+            let isLastPage = false;
+            if (displayMode === 'pairs' && cardSequence.length % 2 === 1) {
+                // Con número impar de cartas, la última página empieza en la última carta
+                isLastPage = currentCardIndex >= cardSequence.length - 1;
+            } else {
+                // Con número par de cartas, comportamiento normal
+                isLastPage = currentCardIndex + cardsPerPage >= cardSequence.length;
+            }
+            
+            if (!isLastPage) {
+                // Avanzar normalmente
+                if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
+                    currentCardIndex + cardsPerPage >= cardSequence.length - 1) {
+                    // Si el siguiente paso nos llevaría a la última carta, ir directamente a la última carta
+                    currentCardIndex = cardSequence.length - 1;
+                } else {
+                    currentCardIndex += cardsPerPage;
+                }
                 displayCards();
             } else {
                 // Si estamos en la última página, terminar memorización
@@ -2482,12 +2518,25 @@
                         // Actualizar información y comenzar timer
                         document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
                         const memorizationInfo = document.getElementById('memorization-info');
+                        
+                        // Mostrar información de aleatorización
+                        const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+                        const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+                        console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
+                        if (cardsMode === 'decks') {
+                            console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
+                        }
+                        
+                        // Agregar información sobre aleatorización
                         const randomInfo = cardsMode === 'decks' ? 
                             `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
                             '(cartas seleccionadas aleatoriamente)';
+                        
                         if (currentMode === 'auto-advance') {
                             const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-                            const totalPages = Math.ceil(cardSequence.length / cardsPerPage);
+                            const totalPages = displayMode === 'pairs' ? 
+                                (cardSequence.length % 2 === 1 ? Math.floor(cardSequence.length / 2) + 1 : Math.ceil(cardSequence.length / 2)) :
+                                cardSequence.length;
                             memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
                         } else {
                             memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
@@ -2503,34 +2552,6 @@
                 document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
                 startTimer();
             }
-            
-            // Mostrar información de aleatorización
-            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
-            console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
-            if (cardsMode === 'decks') {
-                console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
-            }
-            
-            // Actualizar información
-            document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
-            const memorizationInfo = document.getElementById('memorization-info');
-            
-            // Agregar información sobre aleatorización
-            const randomInfo = cardsMode === 'decks' ? 
-                `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
-                '(cartas seleccionadas aleatoriamente)';
-            
-            if (currentMode === 'auto-advance') {
-                const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-                const totalPages = Math.ceil(cardSequence.length / cardsPerPage);
-                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
-            } else {
-                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
-            }
-            
-            // Iniciar timer
-            startTimer();
         }
 
         // Función para validar configuración
@@ -2604,8 +2625,27 @@
                     if (currentMode === 'auto-advance') {
                         // Autoavance - pasar a siguiente página
                         const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-                        if (currentCardIndex + cardsPerPage < cardSequence.length) {
-                            nextCards();
+                        
+                        // Calcular si estamos en la última página
+                        let isLastPage = false;
+                        if (displayMode === 'pairs' && cardSequence.length % 2 === 1) {
+                            // Con número impar de cartas, la última página empieza en la última carta
+                            isLastPage = currentCardIndex >= cardSequence.length - 1;
+                        } else {
+                            // Con número par de cartas, comportamiento normal
+                            isLastPage = currentCardIndex + cardsPerPage >= cardSequence.length;
+                        }
+                        
+                        if (!isLastPage) {
+                            // Avanzar usando la misma lógica que nextCards()
+                            if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
+                                currentCardIndex + cardsPerPage >= cardSequence.length - 1) {
+                                // Si el siguiente paso nos llevaría a la última carta, ir directamente a la última carta
+                                currentCardIndex = cardSequence.length - 1;
+                            } else {
+                                currentCardIndex += cardsPerPage;
+                            }
+                            displayCards();
                             timer = autoAdvanceTime;
                             startTimer();
                         } else {
@@ -2957,7 +2997,9 @@
             document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
             const memorizationInfo = document.getElementById('memorization-info');
             if (currentMode === 'auto-advance') {
-                const totalPages = Math.ceil(cardSequence.length / 2);
+                const totalPages = displayMode === 'pairs' ? 
+                    (cardSequence.length % 2 === 1 ? Math.floor(cardSequence.length / 2) + 1 : Math.ceil(cardSequence.length / 2)) :
+                    cardSequence.length;
                 memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar.`;
             } else {
                 memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar.`;
@@ -3598,11 +3640,24 @@
                         memorizationStartTime = Date.now();
                         document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
                         const memorizationInfo = document.getElementById('memorization-info');
+                        
+                        // Mostrar información de aleatorización
+                        const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+                        const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+                        console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
+                        if (cardsMode === 'decks') {
+                            console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
+                        }
+                        
+                        // Agregar información sobre aleatorización
                         const randomInfo = cardsMode === 'decks' ? 
                             `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
                             '(cartas seleccionadas aleatoriamente)';
+                        
                         if (currentMode === 'auto-advance') {
-                            const totalPages = Math.ceil(cardSequence.length / 2);
+                            const totalPages = displayMode === 'pairs' ? 
+                                (cardSequence.length % 2 === 1 ? Math.floor(cardSequence.length / 2) + 1 : Math.ceil(cardSequence.length / 2)) :
+                                cardSequence.length;
                             memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
                         } else {
                             memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
@@ -3618,32 +3673,6 @@
                 document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
                 startTimer();
             }
-            
-            // Mostrar información de aleatorización
-            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
-            console.log(`🎯 Ronda ${currentRound}: ${cardSequence.length} cartas en modo ${modeText}`);
-            if (cardsMode === 'decks') {
-                console.log(`📦 Distribución: ${selectedDecks} baraja(s) mezclada(s) independientemente`);
-            }
-            
-            document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
-            
-            const memorizationInfo = document.getElementById('memorization-info');
-            
-            // Agregar información sobre aleatorización
-            const randomInfo = cardsMode === 'decks' ? 
-                `(${selectedDecks} baraja${selectedDecks > 1 ? 's' : ''} mezclada${selectedDecks > 1 ? 's' : ''} aleatoriamente)` : 
-                '(cartas seleccionadas aleatoriamente)';
-            
-            if (currentMode === 'auto-advance') {
-                const totalPages = Math.ceil(cardSequence.length / 2);
-                memorizationInfo.textContent = `Ronda ${currentRound} - Página 1 de ${totalPages}. Avanzará automáticamente en ${autoAdvanceTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
-            } else {
-                memorizationInfo.textContent = `Ronda ${currentRound} - Memoriza estas cartas. Tienes ${memorizationTime.toFixed(1)} segundos. Usa ← → para navegar. ${randomInfo}`;
-            }
-            
-            startTimer();
         }
 
         // Función para mostrar resultados finales
