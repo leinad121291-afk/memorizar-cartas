@@ -984,7 +984,7 @@
             if (gameMode === 'symbols') {
                 // Modo símbolos - extraer de símbolos Unicode
                 const number = card.replace(/[♠♥♦♣]/g, ''); // Remover símbolos para obtener número
-                const suit = card.replace(/[A-Z0-9]/g, ''); // Remover letras/números para obtener palo
+                const suit = card.match(/[♠♥♦♣]/)[0]; // Extraer símbolo del palo
                 
                 // Mapear símbolos a códigos de palo
                 let suitCode = '';
@@ -1244,6 +1244,7 @@
                      cardSequence.push(shuffledCards[i]);
                  }
              }
+             
          }
 
                  // Configurar modo de juego
