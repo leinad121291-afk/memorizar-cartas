@@ -113,14 +113,14 @@
         .card-display {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 5px;
             margin: 30px 0;
             flex-wrap: wrap;
         }
 
         .poker-card {
-            width: 200px;
-            height: 280px;
+            width: 250px;
+            height: 350px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -647,7 +647,7 @@
         .poker-card {
             width: 200px;
             height: 280px;
-            margin: 2px;
+            margin: 0px;
             display: inline-block;
             flex-shrink: 0;
             box-sizing: border-box;
@@ -657,7 +657,7 @@
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
-            gap: 2px;
+            gap: 0px;
             margin: 20px 0;
             flex-wrap: nowrap !important;
             flex-direction: row !important;
@@ -696,7 +696,7 @@
             .card-display {
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
-                gap: 2px !important;
+                gap: 0px !important;
                 justify-content: center !important;
                 align-items: center !important;
                 min-height: 320px !important;
@@ -706,7 +706,7 @@
             .poker-card {
                 width: 180px !important;
                 height: 260px !important;
-                margin: 2px !important;
+                margin: 0px !important;
                 flex-shrink: 0 !important;
                 display: inline-block !important;
             }
@@ -732,11 +732,11 @@
             .poker-card {
                 width: 125px !important;
                 height: 183px !important;
-                margin: 2px !important;
+                margin: 0px !important;
             }
             
             .card-display {
-                gap: 2px !important;
+                gap: 0px !important;
                 min-height: 240px !important;
                 padding: 0 10px !important;
             }
@@ -753,11 +753,11 @@
             .poker-card {
                 width: 105px !important;
                 height: 155px !important;
-                margin: 2px !important;
+                margin: 0px !important;
             }
             
             .card-display {
-                gap: 2px !important;
+                gap: 0px !important;
                 min-height: 200px !important;
                 padding: 0 10px !important;
             }
@@ -788,7 +788,7 @@
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
-            gap: 20px !important;
+            gap: 5px !important;
             margin: 20px 0 !important;
             flex-wrap: nowrap !important;
             overflow-x: auto !important;
@@ -1232,6 +1232,119 @@
             }
         }
 
+        /* Media queries para el Resumen de Configuración */
+        @media (max-width: 768px) {
+            #config-summary {
+                padding: 15px !important;
+                margin: 15px 0 !important;
+                border-radius: 10px !important;
+            }
+            
+            #config-summary h3 {
+                font-size: 1.2rem !important;
+            }
+            
+            #config-summary .button {
+                padding: 6px 12px !important;
+                font-size: 0.8rem !important;
+            }
+            
+            #config-summary > div:first-child {
+                flex-direction: column !important;
+                gap: 10px !important;
+                align-items: flex-start !important;
+            }
+            
+            #config-summary > div:first-child h3 {
+                margin-bottom: 0 !important;
+            }
+            
+            #config-summary > div:nth-child(2) {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            
+            #config-summary > div > div {
+                padding: 12px !important;
+            }
+            
+            #config-summary h4 {
+                font-size: 0.9rem !important;
+            }
+            
+            #config-summary p {
+                font-size: 1rem !important;
+            }
+            
+            #summary-times p {
+                font-size: 0.9rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #config-summary {
+                padding: 10px !important;
+                margin: 10px 0 !important;
+            }
+            
+            #config-summary h3 {
+                font-size: 1.1rem !important;
+            }
+            
+            #config-summary .button {
+                padding: 5px 10px !important;
+                font-size: 0.75rem !important;
+            }
+            
+            #config-summary > div > div {
+                padding: 10px !important;
+            }
+            
+            #config-summary h4 {
+                font-size: 0.85rem !important;
+            }
+            
+            #config-summary p {
+                font-size: 0.9rem !important;
+            }
+            
+            #summary-times p {
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            #config-summary {
+                padding: 8px !important;
+                margin: 8px 0 !important;
+            }
+            
+            #config-summary h3 {
+                font-size: 1rem !important;
+            }
+            
+            #config-summary .button {
+                padding: 4px 8px !important;
+                font-size: 0.7rem !important;
+            }
+            
+            #config-summary > div > div {
+                padding: 8px !important;
+            }
+            
+            #config-summary h4 {
+                font-size: 0.8rem !important;
+            }
+            
+            #config-summary p {
+                font-size: 0.85rem !important;
+            }
+            
+            #summary-times p {
+                font-size: 0.75rem !important;
+            }
+        }
+
         /* Estilos para la fase de preparación */
         .prep-wrapper {
             display: flex;
@@ -1291,7 +1404,7 @@
             
                          <!-- Cartas a Memorizar -->
              <div class="section">
-                 <h3 class="section-title">1. Configuración de Cartas</h3>
+                 <h3 class="section-title">1. Cartas</h3>
                  
                  <!-- Selección de Modo de Juego -->
                  <div style="margin-bottom: 25px;">
@@ -1340,7 +1453,7 @@
 
             <!-- Configuración de Visualización -->
             <div class="section">
-                <h3 class="section-title">2. Configuración de Visualización</h3>
+                <h3 class="section-title">2. Visualización</h3>
                 <p>Elige cómo quieres ver las cartas durante la memorización:</p>
                 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 15px; border: 2px solid #e9ecef; border-radius: 8px; background: white; min-width: 200px;">
@@ -1358,36 +1471,9 @@
                 <p id="display-info" style="font-size: 0.9rem; color: #666; margin-top: 10px;">Verás las cartas en parejas de 2 por página.</p>
             </div>
 
-            <!-- Configuración de Temporizadores -->
-            <div class="section">
-                <h3 class="section-title">3. Configuración de Temporizadores</h3>
-                
-                <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
-                                        <label for="recall-timer">Tiempo para recall (segundos):</label>
-                <input type="number" id="recall-timer" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;" min="1" max="3600" step="0.1" value="" placeholder="30">
-                <div id="recall-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Configuración de Rondas -->
-            <div class="section">
-                <h3 class="section-title">4. Configuración de Rondas</h3>
-                <p>Elige cuántas rondas quieres jugar:</p>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
-                    <input type="number" id="rounds-input" class="card-input" min="1" max="100" value="" placeholder="10">
-                    <span style="font-size: 1.1rem; color: #333;">rondas</span>
-                </div>
-                <p id="rounds-info">Jugarás 10 rondas en total</p>
-                <p id="rounds-config-info" style="font-size: 0.9rem; color: #1976d2; margin-top: 10px; font-weight: bold;">
-                    💡 La configuración de tiempo se mantendrá predeterminada igual que la inicial en todas las rondas, pero podrás modificarla entre rondas si lo deseas. Si seleccionas autoavance, se mantendrá marcado automáticamente.
-                </p>
-            </div>
-
             <!-- Configuración de Autoavance -->
             <div class="section">
-                <h3 class="section-title">5. Configuración de Tiempo de Memorización</h3>
+                <h3 class="section-title">3. Tiempo de Memorización</h3>
                 
                 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
@@ -1401,6 +1487,7 @@
                         <input type="radio" id="auto-advance-mode" name="time-mode" value="auto-advance">
                         <label for="auto-advance-mode">Autoavance (segundos):</label>
                         <input type="number" id="auto-advance-time" style="font-size: 1rem; padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; text-align: center; width: 80px; margin: 0 10px;" min="0.1" max="60" step="0.1" value="" placeholder="3">
+                        <div id="auto-advance-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
                     </div>
                 </div>
                 
@@ -1409,14 +1496,86 @@
                 </p>
             </div>
 
-            <!-- Resumen de Configuración -->
-            <div style="background: #e3f2fd; border-radius: 10px; padding: 20px; margin: 20px 0; border: 2px solid #bbdefb;" id="config-summary">
-                <h3>Resumen de Configuración</h3>
-                <p id="summary-cards">Cartas: 5</p>
-                <p id="summary-rounds">Rondas: 10</p>
-                <p id="summary-timers">Temporizadores: Memorización 15s, Recall 30s</p>
-                <p id="summary-mode">Modo: Tiempo de memorización</p>
-                <p id="summary-randomization" style="color: #1976d2; font-weight: bold; margin-top: 10px;">🎲 Cada ronda tendrá cartas completamente diferentes y aleatorias</p>
+            <!-- Recall -->
+            <div class="section">
+                <h3 class="section-title">4. Recall</h3>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                        <label for="recall-timer">Tiempo para recall (segundos):</label>
+                        <input type="number" id="recall-timer" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;" min="1" max="3600" step="0.1" value="" placeholder="30">
+                        <div id="recall-time-conversion" style="font-size: 0.9rem; color: #666; margin-top: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración de Rondas -->
+            <div class="section">
+                <h3 class="section-title">5. Rondas</h3>
+                <p>Elige cuántas rondas quieres jugar:</p>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
+                    <input type="number" id="rounds-input" class="card-input" min="1" max="100" value="" placeholder="10">
+                    <span style="font-size: 1.1rem; color: #333;">rondas</span>
+                </div>
+                <p id="rounds-info">Jugarás 10 rondas en total</p>
+                <p id="rounds-config-info" style="font-size: 0.9rem; color: #1976d2; margin-top: 10px; font-weight: bold;">
+                    💡 La configuración de tiempo se mantendrá predeterminada igual que la inicial en todas las rondas, pero podrás modificarla entre rondas si lo deseas. Si seleccionas autoavance, se mantendrá marcado automáticamente.
+                </p>
+            </div>
+
+            <!-- Nuevo Resumen de Configuración -->
+            <div id="config-summary" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 25px; margin: 25px 0; border: 2px solid #dee2e6; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 0 0 20px 0; border-bottom: 2px solid #dee2e6; padding-bottom: 10px;">
+                    <h3 style="margin: 0; color: #495057; font-size: 1.4rem;">
+                        📋 Resumen de Configuración
+                    </h3>
+                    <button class="button" onclick="updateSummary()" style="padding: 8px 16px; font-size: 0.9rem; margin: 0;">
+                        🔄 Actualizar
+                    </button>
+                </div>
+                
+                <!-- Información Principal -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <!-- Cartas/Mazos -->
+                    <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #007bff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="margin: 0 0 8px 0; color: #007bff; font-size: 1rem;">🎴 Cartas</h4>
+                        <p id="summary-cards" style="margin: 0; font-size: 1.1rem; font-weight: bold; color: #333;">Cargando...</p>
+                    </div>
+                    
+                    <!-- Rondas -->
+                    <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #28a745; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="margin: 0 0 8px 0; color: #28a745; font-size: 1rem;">🔄 Rondas</h4>
+                        <p id="summary-rounds" style="margin: 0; font-size: 1.1rem; font-weight: bold; color: #333;">Cargando...</p>
+                    </div>
+                </div>
+                
+                <!-- Modo de Juego -->
+                <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #ffc107; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 8px 0; color: #ffc107; font-size: 1rem;">🎮 Modo de Juego</h4>
+                    <p id="summary-game-mode" style="margin: 0; font-size: 1.1rem; font-weight: bold; color: #333;">Cargando...</p>
+                </div>
+                
+                <!-- Temporizadores -->
+                <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #17a2b8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 8px 0; color: #17a2b8; font-size: 1rem;">⏱️ Temporizadores</h4>
+                    <p id="summary-timers" style="margin: 0; font-size: 1.1rem; font-weight: bold; color: #333;">Cargando...</p>
+                </div>
+                
+                <!-- Visualización -->
+                <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #6f42c1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 8px 0; color: #6f42c1; font-size: 1rem;">👁️ Visualización</h4>
+                    <p id="summary-display" style="margin: 0; font-size: 1.1rem; font-weight: bold; color: #333;">Cargando...</p>
+                </div>
+                
+                <!-- Tiempos Estimados -->
+                <div style="background: white; padding: 15px; border-radius: 10px; border-left: 5px solid #dc3545; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h4 style="margin: 0 0 8px 0; color: #dc3545; font-size: 1rem;">⏰ Tiempos Estimados</h4>
+                    <div id="summary-times" style="color: #333;">
+                        <p style="margin: 5px 0; font-size: 1rem;"><strong>Tiempo por ronda:</strong> <span id="time-per-round">Cargando...</span></p>
+                        <p style="margin: 5px 0; font-size: 1rem;"><strong>Tiempo total:</strong> <span id="time-total">Cargando...</span></p>
+                        <p style="margin: 5px 0; font-size: 0.9rem; color: #666;"><span id="time-breakdown">Cargando...</span></p>
+                    </div>
+                </div>
             </div>
             
             <button class="button" onclick="startGame()">Comenzar Juego</button>
@@ -1661,6 +1820,7 @@
          let recallTimerInterval;
          let memorizationStartTime = 0;
          let actualMemorizationTime = 0;
+         let totalMemorizationTime = 0; // Tiempo total acumulado en modo autoavance
          
          // Variables para autoavance
          let autoAdvanceEnabled = false;
@@ -1753,7 +1913,7 @@
             if (gameMode === 'symbols') {
                 // Modo símbolos - extraer de símbolos Unicode
                 const number = card.replace(/[♠♥♦♣]/g, ''); // Remover símbolos para obtener número
-                const suit = card.replace(/[A-Z0-9]/g, ''); // Remover letras/números para obtener palo
+                const suit = card.match(/[♠♥♦♣]/)[0]; // Extraer símbolo del palo
                 
                 // Mapear símbolos a códigos de palo
                 let suitCode = '';
@@ -2035,41 +2195,36 @@
         function generateCardSequence() {
             cardSequence = [];
             
-            // Verificar integridad del mazo base
-            if (!verifyCardIntegrity()) {
-                console.error('No se puede generar secuencia debido a errores en el mazo base');
-                return;
+            // Obtener el modo de juego seleccionado
+                const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+                
+            // Seleccionar el array de cartas según el modo
+            let cardsArray;
+                if (gameMode === 'symbols') {
+                cardsArray = pokerCards;
+                } else {
+                cardsArray = realCards;
             }
             
             if (cardsMode === 'specific') {
-                // Generar cartas específicas - sin repetición
-                const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-                
-                if (gameMode === 'symbols') {
-                    // Modo símbolos - usar pokerCards
-                    const shuffled = shuffleArray(pokerCards);
-                    cardSequence = shuffled.slice(0, selectedCards);
+                // Modo: número específico de cartas
+                const shuffledCards = [...cardsArray].sort(() => Math.random() - 0.5);
+                for (let i = 0; i < selectedCards; i++) {
+                    cardSequence.push(shuffledCards[i]);
+                    }
                 } else {
-                    // Modo cartas - usar realCards
-                    const shuffled = shuffleArray(realCards);
-                    cardSequence = shuffled.slice(0, selectedCards);
+                // Modo: barajas completas
+                let allCards = [];
+                for (let deck = 0; deck < selectedDecks; deck++) {
+                    allCards = allCards.concat([...cardsArray]);
                 }
-            } else {
-                // Generar barajas completas - cada baraja mezclada independientemente
-                const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
                 
-                if (gameMode === 'symbols') {
-                    // Crear barajas mezcladas independientemente
-                    for (let i = 0; i < selectedDecks; i++) {
-                        const shuffledDeck = shuffleArray(pokerCards);
-                        cardSequence = cardSequence.concat(shuffledDeck);
-                    }
-                } else {
-                    // Crear barajas mezcladas independientemente
-                    for (let i = 0; i < selectedDecks; i++) {
-                        const shuffledDeck = shuffleArray(realCards);
-                        cardSequence = cardSequence.concat(shuffledDeck);
-                    }
+                // Mezclar todas las cartas
+                const shuffledCards = allCards.sort(() => Math.random() - 0.5);
+                
+                // Seleccionar todas las cartas de las barajas
+                for (let i = 0; i < allCards.length; i++) {
+                    cardSequence.push(shuffledCards[i]);
                 }
             }
             
@@ -2123,11 +2278,82 @@
             }
         }
 
+        // Crear carta de poker visual con diseño minimalista
+        function createPokerCard(card) {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'poker-card';
+                
+            // Obtener el modo de juego seleccionado
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+                
+                if (gameMode === 'symbols') {
+                // Modo símbolos - usar símbolos Unicode
+                    const number = card.replace(/[♠♥♦♣]/g, '');
+                const suit = card.match(/[♠♥♦♣]/)[0];
+                    
+                // Determinar color basado en el palo
+                const isRed = suit === '♥' || suit === '♦';
+                const textColor = isRed ? '#dc3545' : '#333';
+                
+                // Crear carta con diseño minimalista
+                    cardElement.innerHTML = `
+                        <div style="
+                            width: 100%; 
+                            height: 100%; 
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                        align-items: center; 
+                        padding: 15px 10px;
+                        background: white;
+                        border-radius: 8px;
+                    ">
+                        <div style="
+                            font-size: 3rem; 
+                            font-weight: bold; 
+                            color: ${textColor};
+                            margin-bottom: 0px;
+                            font-family: 'Arial', sans-serif;
+                        ">${number}</div>
+                        <div style="
+                            font-size: 5rem; 
+                            color: ${textColor};
+                            font-family: 'Arial', sans-serif;
+                            margin-top: -5px;
+                        ">${suit}</div>
+                        </div>
+                    `;
+                } else {
+                // Modo cartas - dibujar cartas realistas con HTML/CSS
+                    const { suit, value } = parseRealCard(card);
+                    
+                // Mapear palos a símbolos Unicode
+                    let suitSymbol = '';
+                    let suitColor = '#333';
+                    switch(suit) {
+                        case 'spades': suitSymbol = '♠'; suitColor = '#333'; break;
+                        case 'hearts': suitSymbol = '♥'; suitColor = '#dc3545'; break;
+                        case 'diamonds': suitSymbol = '♦'; suitColor = '#dc3545'; break;
+                        case 'clubs': suitSymbol = '♣'; suitColor = '#333'; break;
+                    default: suitSymbol = '♠'; suitColor = '#333';
+                }
+                
+                // Generar el patrón de la carta según el valor
+                const cardPattern = generateCardPattern(value, suitSymbol, suitColor);
+                
+                // Crear carta con diseño SVG
+                cardElement.innerHTML = cardPattern;
+            }
+            
+            return cardElement;
+        }
+
         // Función para mostrar cartas en la fase de memorización
         function displayCards() {
             const cardDisplay = document.getElementById('card-display');
             const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
             
+            // Limpiar display
             cardDisplay.innerHTML = '';
             
             // Aplicar clase para modo cartas si es necesario
@@ -2137,77 +2363,23 @@
                 cardDisplay.classList.remove('cards-mode');
             }
             
-            // Calcular qué cartas mostrar según el modo de visualización
-            const startIndex = currentCardIndex;
-            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
+            // Calcular qué cartas mostrar (siempre 2 cartas por página)
+            let cardsToShow = [];
+            let cardsInThisPage = 0;
             
-            // Si estamos en modo pares y hay un número impar de cartas, 
-            // y estamos en la última página, mostrar solo la última carta
-            let endIndex;
-            if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
-                startIndex === cardSequence.length - 1) {
-                // En la última página con número impar, mostrar solo la última carta
-                endIndex = cardSequence.length;
+            if (currentCardIndex + 2 >= cardSequence.length && cardSequence.length % 2 === 1) {
+                cardsInThisPage = 1;
             } else {
-                endIndex = Math.min(startIndex + cardsPerPage, cardSequence.length);
+                cardsInThisPage = 2;
             }
             
-            const cardsToShow = cardSequence.slice(startIndex, endIndex);
-            
-            cardsToShow.forEach((card, index) => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'poker-card';
-                
-                // Usar tamaños centralizados solo si no es modo cartas
-                if (gameMode !== 'cards') {
-                    const cardSizes = getCardSizes('main');
-                    cardElement.style.cssText = `width: ${cardSizes.width}; height: ${cardSizes.height}; margin: 2px; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
-                } else {
-                    // En modo cartas, no aplicar estilos inline para que los estilos CSS tengan prioridad
-                    cardElement.style.cssText = `margin: 0; display: inline-block; flex-shrink: 0; box-sizing: border-box;`;
-                }
-                
-                if (gameMode === 'symbols') {
-                    // Modo símbolos - mostrar símbolos Unicode
-                    const number = card.replace(/[♠♥♦♣]/g, '');
-                    const suit = card.replace(/[A-Z0-9]/g, '');
-                    const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
-                    
-                    cardElement.innerHTML = `
-                        <div style="
-                            width: 100%; 
-                            height: 100%; 
-                            background: white;
-                            border-radius: 12px;
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                            color: ${suitColor};
-                            font-size: ${cardSizes.fontSize};
-                            font-weight: bold;
-                        ">
-                            <div style="font-size: ${cardSizes.numberFontSize}; margin-bottom: ${cardSizes.marginBottom};">${number}</div>
-                            <div style="font-size: ${cardSizes.fontSize};">${suit}</div>
-                        </div>
-                    `;
-                } else {
-                    // Modo cartas - mostrar imágenes reales
-                    const { suit, value } = parseRealCard(card);
-                    
-                    // Mapear palos a símbolos para determinar color
-                    let suitSymbol = '';
-                    let suitColor = '#333';
-                    switch(suit) {
-                        case 'spades': suitSymbol = '♠'; suitColor = '#333'; break;
-                        case 'hearts': suitSymbol = '♥'; suitColor = '#dc3545'; break;
-                        case 'diamonds': suitSymbol = '♦'; suitColor = '#dc3545'; break;
-                        case 'clubs': suitSymbol = '♣'; suitColor = '#333'; break;
-                    }
-                    
-                                    cardElement.innerHTML = generateCardPattern(value, suitSymbol, suitColor);
+            for (let i = 0; i < cardsInThisPage && currentCardIndex + i < cardSequence.length; i++) {
+                cardsToShow.push(cardSequence[currentCardIndex + i]);
             }
             
+            // Crear cartas visuales
+            cardsToShow.forEach(card => {
+                const cardElement = createPokerCard(card);
             cardDisplay.appendChild(cardElement);
         });
         
@@ -2232,18 +2404,21 @@
         }
             
             // Actualizar indicador de progreso
-            document.getElementById('progress').textContent = `Cartas ${startIndex + 1}-${endIndex} de ${cardSequence.length}`;
+            const progress = document.getElementById('progress');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            progress.textContent = `Cartas ${currentCardIndex + 1}-${currentCardIndex + cardsInThisPage} de ${cardSequence.length}`;
             
             // Actualizar botones de navegación
-            document.getElementById('prev-btn').disabled = startIndex === 0;
+            const prevShouldBeDisabled = currentCardIndex === 0;
+            const nextShouldBeDisabled = currentCardIndex + cardsInThisPage >= cardSequence.length;
             
-            // En la última página, el botón siguiente debe estar disponible para terminar memorización
-            const isLastPage = endIndex >= cardSequence.length;
-            const nextBtn = document.getElementById('next-btn');
-            nextBtn.disabled = false; // Siempre habilitado
+            prevBtn.disabled = prevShouldBeDisabled;
+            nextBtn.disabled = nextShouldBeDisabled;
             
             // Cambiar el texto del botón en la última página
-            if (isLastPage) {
+            if (nextShouldBeDisabled) {
                 nextBtn.textContent = 'Terminar Memorización →';
                 nextBtn.onclick = finishMemorization;
             } else {
@@ -2274,47 +2449,17 @@
 
         // Función para navegar a la página anterior
         function previousCards() {
-            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
             if (currentCardIndex > 0) {
-                // Si estamos en la última página con número impar de cartas,
-                // retroceder solo 1 carta, no 2
-                if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
-                    currentCardIndex === cardSequence.length - 1) {
-                    currentCardIndex = Math.max(0, currentCardIndex - 1);
-                } else {
-                    currentCardIndex = Math.max(0, currentCardIndex - cardsPerPage);
-                }
+                currentCardIndex = Math.max(0, currentCardIndex - 2);
                 displayCards();
             }
         }
 
         // Función para navegar a la página siguiente
         function nextCards() {
-            const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-            
-            // Calcular si estamos en la última página
-            let isLastPage = false;
-            if (displayMode === 'pairs' && cardSequence.length % 2 === 1) {
-                // Con número impar de cartas, la última página empieza en la última carta
-                isLastPage = currentCardIndex >= cardSequence.length - 1;
-            } else {
-                // Con número par de cartas, comportamiento normal
-                isLastPage = currentCardIndex + cardsPerPage >= cardSequence.length;
-            }
-            
-            if (!isLastPage) {
-                // Avanzar normalmente
-                if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
-                    currentCardIndex + cardsPerPage >= cardSequence.length - 1) {
-                    // Si el siguiente paso nos llevaría a la última carta, ir directamente a la última carta
-                    currentCardIndex = cardSequence.length - 1;
-                } else {
-                    currentCardIndex += cardsPerPage;
-                }
+            if (currentCardIndex + 2 < cardSequence.length) {
+                currentCardIndex += 2;
                 displayCards();
-            } else {
-                // Si estamos en la última página, terminar memorización
-                finishMemorization();
             }
         }
 
@@ -2396,49 +2541,132 @@
             }
         }
 
-        // Función para actualizar resumen de configuración
-        function updateSummary() {
-            const summaryCards = document.getElementById('summary-cards');
-            const summaryRounds = document.getElementById('summary-rounds');
-            const summaryTimers = document.getElementById('summary-timers');
-            const summaryMode = document.getElementById('summary-mode');
-            const summaryRandomization = document.getElementById('summary-randomization');
-            
-            // Actualizar información de cartas
-            if (cardsMode === 'specific') {
-                summaryCards.textContent = `Cartas: ${selectedCards}`;
+        // Función para formatear tiempo (segundos hasta 59, luego minutos:segundos)
+        function formatTime(seconds) {
+            if (seconds < 60) {
+                return `${seconds}s`;
             } else {
-                summaryCards.textContent = `Cartas: ${selectedDecks} baraja(s) (${selectedCards} cartas)`;
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
             }
+        }
+
+        // Función para actualizar conversión de tiempo
+        function updateTimeConversion(inputId, conversionId) {
+            const input = document.getElementById(inputId);
+            const conversion = document.getElementById(conversionId);
             
-            // Actualizar información de rondas
-            summaryRounds.textContent = `Rondas: ${totalRounds}`;
+            if (input && conversion) {
+                const seconds = parseFloat(input.value) || 0;
+                if (seconds > 0) {
+                    if (seconds >= 60) {
+                        const minutes = Math.floor(seconds / 60);
+                        const remainingSeconds = Math.floor(seconds % 60);
+                        conversion.textContent = `= ${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+                    } else {
+                        conversion.textContent = `= ${seconds}s`;
+                    }
+                } else {
+                    conversion.textContent = '';
+                }
+            }
+        }
+
+        // Nueva función para actualizar resumen de configuración
+        function updateSummary() {
+            // Asegurar que las variables estén actualizadas
+            updateCardsInfo();
+            updateRoundsInfo();
             
-            // Actualizar información de temporizadores
+            // Obtener valores actuales de los inputs
             const memorizationMode = document.getElementById('memorization-mode').checked;
             const memorizationTime = parseFloat(document.getElementById('memorization-timer').value) || 15;
             const recallTime = parseFloat(document.getElementById('recall-timer').value) || 30;
+            const autoAdvanceTime = parseFloat(document.getElementById('auto-advance-time').value) || 3;
+            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+            const pairsMode = document.getElementById('pairs-mode').checked;
             
-            summaryTimers.textContent = `Temporizadores: Memorización ${memorizationTime}s, Recall ${recallTime}s`;
-            
-            // Actualizar información de modo
-            if (memorizationMode) {
-                summaryMode.textContent = 'Modo: Tiempo de memorización';
-            } else {
-                const autoAdvanceTime = parseFloat(document.getElementById('auto-advance-time').value) || 3;
-                summaryMode.textContent = `Modo: Autoavance (${autoAdvanceTime}s por página)`;
+            // 1. ACTUALIZAR CARTAS/MAZOS
+            const summaryCards = document.getElementById('summary-cards');
+            if (summaryCards) {
+                if (cardsMode === 'specific') {
+                    summaryCards.textContent = `${selectedCards} cartas específicas`;
+                } else {
+                    summaryCards.textContent = `${selectedDecks} mazo${selectedDecks > 1 ? 's' : ''} (${selectedCards} cartas)`;
+                }
             }
             
-            // Actualizar información de aleatorización
-            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-            const modeText = gameMode === 'symbols' ? 'símbolos' : 'imágenes reales';
+            // 2. ACTUALIZAR RONDAS
+            const summaryRounds = document.getElementById('summary-rounds');
+            if (summaryRounds) {
+                summaryRounds.textContent = `${totalRounds} ronda${totalRounds > 1 ? 's' : ''}`;
+            }
             
-            if (cardsMode === 'specific') {
-                summaryRandomization.textContent = `🎲 Cada ronda tendrá ${selectedCards} cartas diferentes en modo ${modeText} (sin repeticiones)`;
+            // 3. ACTUALIZAR MODO DE JUEGO
+            const summaryGameMode = document.getElementById('summary-game-mode');
+            if (summaryGameMode) {
+                const modeText = gameMode === 'symbols' ? 'Símbolos' : 'Imágenes reales';
+                summaryGameMode.textContent = modeText;
+            }
+            
+            // 4. ACTUALIZAR TEMPORIZADORES
+            const summaryTimers = document.getElementById('summary-timers');
+            if (summaryTimers) {
+            if (memorizationMode) {
+                    summaryTimers.textContent = `Memorización: ${formatTime(memorizationTime)}, Recall: ${formatTime(recallTime)}`;
             } else {
-                summaryRandomization.textContent = `🎲 Cada ronda tendrá ${selectedDecks} baraja(s) mezclada(s) independientemente en modo ${modeText}`;
+                    summaryTimers.textContent = `Autoavance: ${formatTime(autoAdvanceTime)}/página, Recall: ${formatTime(recallTime)}`;
+                }
+            }
+            
+            // 5. ACTUALIZAR VISUALIZACIÓN
+            const summaryDisplay = document.getElementById('summary-display');
+            if (summaryDisplay) {
+                const displayText = pairsMode ? 'Parejas (2 por página)' : 'Individual (1 por página)';
+                summaryDisplay.textContent = displayText;
+            }
+            
+            // 6. CALCULAR Y ACTUALIZAR TIEMPOS ESTIMADOS
+            let memorizationTimePerRound, totalMemorizationTime, totalGameTime;
+            
+            // Calcular número de páginas por ronda
+            const pagesPerRound = pairsMode ? Math.ceil(selectedCards / 2) : selectedCards;
+            
+            if (memorizationMode) {
+                // Modo memorización: tiempo fijo de memorización + tiempo de recall
+                memorizationTimePerRound = memorizationTime;
+                totalMemorizationTime = memorizationTime * totalRounds;
+                totalGameTime = (memorizationTime + recallTime) * totalRounds;
+            } else {
+                // Modo autoavance: tiempo de autoavance × número de páginas + tiempo de recall
+                memorizationTimePerRound = pagesPerRound * autoAdvanceTime;
+                totalMemorizationTime = memorizationTimePerRound * totalRounds;
+                totalGameTime = (memorizationTimePerRound + recallTime) * totalRounds;
+            }
+            
+            // Actualizar elementos de tiempo
+            const timePerRound = document.getElementById('time-per-round');
+            const timeTotal = document.getElementById('time-total');
+            const timeBreakdown = document.getElementById('time-breakdown');
+            
+            if (timePerRound) {
+                timePerRound.textContent = `${formatTime(memorizationTimePerRound + recallTime)}`;
+            }
+            
+            if (timeTotal) {
+                timeTotal.textContent = `${formatTime(totalGameTime)}`;
+            }
+            
+            if (timeBreakdown) {
+                if (memorizationMode) {
+                    timeBreakdown.textContent = `(${formatTime(memorizationTime)} memorización + ${formatTime(recallTime)} recall por ronda)`;
+                } else {
+                    timeBreakdown.textContent = `(${formatTime(autoAdvanceTime)} × ${pagesPerRound} páginas + ${formatTime(recallTime)} recall por ronda)`;
+                }
             }
         }
+
 
                  // Función para actualizar descripción del modo
          function updateModeDescription() {
@@ -2482,6 +2710,7 @@
             // Configurar variables de juego
             currentCardIndex = 0;
             gameState = 'memorization';
+            totalMemorizationTime = 0; // Inicializar tiempo total acumulado
             
             // Configurar timer según el modo
             const memorizationMode = document.getElementById('memorization-mode').checked;
@@ -2623,28 +2852,9 @@
                 if (timer <= 0) {
                     clearInterval(timerInterval);
                     if (currentMode === 'auto-advance') {
-                        // Autoavance - pasar a siguiente página
-                        const cardsPerPage = displayMode === 'pairs' ? 2 : 1;
-                        
-                        // Calcular si estamos en la última página
-                        let isLastPage = false;
-                        if (displayMode === 'pairs' && cardSequence.length % 2 === 1) {
-                            // Con número impar de cartas, la última página empieza en la última carta
-                            isLastPage = currentCardIndex >= cardSequence.length - 1;
-                        } else {
-                            // Con número par de cartas, comportamiento normal
-                            isLastPage = currentCardIndex + cardsPerPage >= cardSequence.length;
-                        }
-                        
-                        if (!isLastPage) {
-                            // Avanzar usando la misma lógica que nextCards()
-                            if (displayMode === 'pairs' && cardSequence.length % 2 === 1 && 
-                                currentCardIndex + cardsPerPage >= cardSequence.length - 1) {
-                                // Si el siguiente paso nos llevaría a la última carta, ir directamente a la última carta
-                                currentCardIndex = cardSequence.length - 1;
-                            } else {
-                                currentCardIndex += cardsPerPage;
-                            }
+                        // Autoavance - pasar a siguiente página (siempre 2 cartas por página)
+                        if (currentCardIndex + 2 < cardSequence.length) {
+                            currentCardIndex += 2;
                             displayCards();
                             timer = autoAdvanceTime;
                             startTimer();
@@ -2658,7 +2868,14 @@
                     }
                 } else {
                     document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                    // En modo autoavance, mostrar tiempo total acumulado
+                    if (currentMode === 'auto-advance') {
+                        const currentElapsed = (Date.now() - memorizationStartTime) / 1000;
+                        const totalElapsed = totalMemorizationTime + currentElapsed;
+                        document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${totalElapsed.toFixed(1)} segundos`;
+                    } else {
                     document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${elapsedTime} segundos`;
+                    }
                 }
             }, 100);
         }
@@ -2669,6 +2886,11 @@
             
             // Calcular tiempo real de memorización
             actualMemorizationTime = (Date.now() - memorizationStartTime) / 1000;
+            
+            // En modo autoavance, acumular el tiempo total
+            if (currentMode === 'auto-advance') {
+                totalMemorizationTime += actualMemorizationTime;
+            }
             
             // Cambiar a fase de escritura
             gameState = 'input';
@@ -2930,11 +3152,15 @@
             
             // Mostrar mensaje de resultado
             const resultMessage = document.getElementById('result-message');
+            // En modo autoavance, mostrar tiempo total acumulado
+            const displayTime = currentMode === 'auto-advance' ? totalMemorizationTime : actualMemorizationTime;
+            const timeLabel = currentMode === 'auto-advance' ? 'Tiempo total acumulado' : 'Tiempo de memorización';
+            
             if (accuracy === 100) {
-                resultMessage.innerHTML = `¡Perfecto! Todas las cartas correctas (${correctCards}/${totalCards})<br><span style='font-size:1.1rem;color:#1976d2;'>Tiempo de memorización: <b>${actualMemorizationTime.toFixed(1)}</b> segundos</span>`;
+                resultMessage.innerHTML = `¡Perfecto! Todas las cartas correctas (${correctCards}/${totalCards})<br><span style='font-size:1.1rem;color:#1976d2;'>${timeLabel}: <b>${displayTime.toFixed(1)}</b> segundos</span>`;
                 resultMessage.className = 'result-message correct-result';
             } else {
-                resultMessage.innerHTML = `Respuesta parcialmente correcta: ${correctCards}/${totalCards} cartas (${accuracy}%)<br><span style='font-size:1.1rem;color:#1976d2;'>Tiempo de memorización: <b>${actualMemorizationTime.toFixed(1)}</b> segundos</span>`;
+                resultMessage.innerHTML = `Respuesta parcialmente correcta: ${correctCards}/${totalCards} cartas (${accuracy}%)<br><span style='font-size:1.1rem;color:#1976d2;'>${timeLabel}: <b>${displayTime.toFixed(1)}</b> segundos</span>`;
                 resultMessage.className = 'result-message incorrect-result';
             }
             
@@ -2955,16 +3181,22 @@
             // Actualizar estadísticas totales
             updateProgressDisplay();
             
-            // Mostrar resultados detallados si es modo cartas
-            const gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-            if (gameMode === 'cards') {
+            // Mostrar resultados detallados para ambos modos
                 showDetailedCardResults();
-            }
             
             // Configurar botones según si es la última ronda
             if (currentRound >= totalRounds) {
                 document.getElementById('next-round-btn').textContent = 'Ver Resultados Finales';
                 document.getElementById('next-round-btn').onclick = showFinalResults;
+                document.getElementById('next-round-btn').style.display = 'inline-block';
+                document.getElementById('new-game-btn').style.display = 'inline-block';
+                document.getElementById('menu-btn').style.display = 'none';
+            } else {
+                document.getElementById('next-round-btn').textContent = 'Siguiente Ronda';
+                document.getElementById('next-round-btn').onclick = nextRound;
+                document.getElementById('next-round-btn').style.display = 'inline-block';
+                document.getElementById('new-game-btn').style.display = 'inline-block';
+                document.getElementById('menu-btn').style.display = 'none';
             }
             
                                      // Inicializar configuración de tiempo para siguiente ronda
@@ -3146,7 +3378,7 @@
                 if (gameMode === 'symbols') {
                     // Modo símbolos - mostrar símbolos Unicode
                     const number = card.replace(/[♠♥♦♣]/g, '');
-                    const suit = card.replace(/[A-Z0-9]/g, '');
+                    const suit = card.match(/[♠♥♦♣]/)[0];
                     const suitColor = (suit === '♥' || suit === '♦') ? '#dc3545' : '#333';
                     
                     // Detectar si estamos en móvil para ajustar el tamaño
@@ -3613,6 +3845,8 @@
             currentCardIndex = 0;
             gameState = 'memorization';
             
+            // NO reiniciar totalMemorizationTime en modo autoavance para mantener acumulación
+            
             // Configurar timer según el modo
             if (currentMode === 'auto-advance') {
                 timer = autoAdvanceTime;
@@ -3727,6 +3961,7 @@
             roundScores = [];
             totalScore = 0;
             currentRound = 1;
+            totalMemorizationTime = 0; // Resetear tiempo total acumulado
             if (window.roundAccuracies) { window.roundAccuracies = []; }
             if (window.roundMemTimes) { window.roundMemTimes = []; }
             
@@ -3803,87 +4038,142 @@
             }
         }
         
+        // Función para configurar event listeners de manera directa
+        function setupEventListeners() {
+            // Event listeners para actualizar configuración en tiempo real
+            const cardsInput = document.getElementById('cards-input');
+            if (cardsInput) {
+                cardsInput.addEventListener('input', function() {
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const decksInput = document.getElementById('decks-input');
+            if (decksInput) {
+                decksInput.addEventListener('input', function() {
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const roundsInput = document.getElementById('rounds-input');
+            if (roundsInput) {
+                roundsInput.addEventListener('input', function() {
+                    updateRoundsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const memorizationTimer = document.getElementById('memorization-timer');
+            if (memorizationTimer) {
+                memorizationTimer.addEventListener('input', function() {
+                    updateTimeConversion('memorization-timer', 'memorization-time-conversion');
+                    updateSummary();
+                    updateModeDescription();
+                });
+            }
+            
+            const recallTimer = document.getElementById('recall-timer');
+            if (recallTimer) {
+                recallTimer.addEventListener('input', function() {
+                    updateTimeConversion('recall-timer', 'recall-time-conversion');
+                    updateSummary();
+                });
+            }
+            
+            const autoAdvanceTime = document.getElementById('auto-advance-time');
+            if (autoAdvanceTime) {
+                autoAdvanceTime.addEventListener('input', function() {
+                    updateTimeConversion('auto-advance-time', 'auto-advance-time-conversion');
+                    updateSummary();
+                    updateModeDescription();
+                });
+            }
+            
+            const memorizationMode = document.getElementById('memorization-mode');
+            if (memorizationMode) {
+                memorizationMode.addEventListener('change', function() {
+                    updateSummary();
+                    updateModeDescription();
+                });
+            }
+            
+            const autoAdvanceMode = document.getElementById('auto-advance-mode');
+            if (autoAdvanceMode) {
+                autoAdvanceMode.addEventListener('change', function() {
+                    updateSummary();
+                    updateModeDescription();
+                });
+            }
+            
+            const pairsMode = document.getElementById('pairs-mode');
+            if (pairsMode) {
+                pairsMode.addEventListener('change', function() {
+                    updateDisplayInfo();
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const singleMode = document.getElementById('single-mode');
+            if (singleMode) {
+                singleMode.addEventListener('change', function() {
+                    updateDisplayInfo();
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const symbolsMode = document.getElementById('symbols-mode');
+            if (symbolsMode) {
+                symbolsMode.addEventListener('change', function() {
+                    updateSummary();
+                    updateCardsInfo();
+                });
+            }
+            
+            const cardsMode = document.getElementById('cards-mode');
+            if (cardsMode) {
+                cardsMode.addEventListener('change', function() {
+                    updateSummary();
+                    updateCardsInfo();
+                });
+            }
+            
+            const specificCardsMode = document.getElementById('specific-cards-mode');
+            if (specificCardsMode) {
+                specificCardsMode.addEventListener('change', function() {
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+            
+            const fullDecksMode = document.getElementById('full-decks-mode');
+            if (fullDecksMode) {
+                fullDecksMode.addEventListener('change', function() {
+                    updateCardsInfo();
+                    updateSummary();
+                });
+            }
+        }
+
         // Inicialización al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar información inicial
             updateCardsInfo();
             updateDisplayInfo();
             updateRoundsInfo();
             updateSummary();
             updateProgressDisplay();
             
-            // Event listeners para actualizar configuración en tiempo real
-            document.getElementById('specific-cards-mode').addEventListener('change', function() {
-                updateCardsInfo();
-                updateSummary();
-            });
+            // Inicializar conversiones de tiempo
+            updateTimeConversion('memorization-timer', 'memorization-time-conversion');
+            updateTimeConversion('recall-timer', 'recall-time-conversion');
+            updateTimeConversion('auto-advance-time', 'auto-advance-time-conversion');
             
-            document.getElementById('full-decks-mode').addEventListener('change', function() {
-                updateCardsInfo();
-                updateSummary();
-            });
-            
-            document.getElementById('cards-input').addEventListener('input', function() {
-                updateCardsInfo();
-                updateSummary();
-            });
-            
-            document.getElementById('decks-input').addEventListener('input', function() {
-                updateCardsInfo();
-                updateSummary();
-            });
-            
-            document.getElementById('rounds-input').addEventListener('input', function() {
-                updateRoundsInfo();
-                updateSummary();
-            });
-            
-            document.getElementById('memorization-timer').addEventListener('input', function() {
-                updateSummary();
-                updateModeDescription();
-            });
-            
-            document.getElementById('recall-timer').addEventListener('input', function() {
-                updateSummary();
-            });
-            
-            document.getElementById('auto-advance-time').addEventListener('input', function() {
-                updateSummary();
-                updateModeDescription();
-            });
-            
-            document.getElementById('memorization-mode').addEventListener('change', function() {
-                updateSummary();
-                updateModeDescription();
-            });
-            
-            document.getElementById('auto-advance-mode').addEventListener('change', function() {
-                updateSummary();
-                updateModeDescription();
-            });
-            
-            // Event listeners para modo de visualización
-            document.getElementById('pairs-mode').addEventListener('change', function() {
-                updateDisplayInfo();
-                updateCardsInfo();
-                updateSummary();
-            });
-            
-            document.getElementById('single-mode').addEventListener('change', function() {
-                updateDisplayInfo();
-                updateCardsInfo();
-                updateSummary();
-            });
-            
-            // Event listeners para modo de juego
-            document.getElementById('symbols-mode').addEventListener('change', function() {
-                updateSummary();
-                updateCardsInfo(); // Actualizar mensaje informativo del modo cartas
-            });
-            
-            document.getElementById('cards-mode').addEventListener('change', function() {
-                updateSummary();
-                updateCardsInfo(); // Actualizar mensaje informativo del modo cartas
-            });
+            // Configurar event listeners
+            setupEventListeners();
         });
     </script>
 </body>
