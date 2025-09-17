@@ -2432,8 +2432,8 @@
             
             if (cardsMode === 'decks' && selectedDecks > 1) {
                 // Calcular qué mazo estamos mostrando
-                const currentDeck = Math.floor(startIndex / 52) + 1;
-                const isFirstPageOfDeck = (startIndex % 52) === 0;
+                const currentDeck = Math.floor(currentCardIndex / 52) + 1;
+                const isFirstPageOfDeck = (currentCardIndex % 52) === 0;
                 
                 if (isFirstPageOfDeck && currentDeck <= selectedDecks) {
                     currentDeckIndicator.textContent = currentDeck;
@@ -2868,13 +2868,13 @@
                     }
                 } else {
                     document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
-                    // En modo autoavance, mostrar tiempo total acumulado
+                    // Mostrar tiempo total empleado desde el inicio de la memorización
+                    const currentElapsed = (Date.now() - memorizationStartTime) / 1000;
                     if (currentMode === 'auto-advance') {
-                        const currentElapsed = (Date.now() - memorizationStartTime) / 1000;
                         const totalElapsed = totalMemorizationTime + currentElapsed;
                         document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${totalElapsed.toFixed(1)} segundos`;
                     } else {
-                    document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${elapsedTime} segundos`;
+                        document.getElementById('elapsed-time').textContent = `Tiempo empleado: ${currentElapsed.toFixed(1)} segundos`;
                     }
                 }
             }, 100);
