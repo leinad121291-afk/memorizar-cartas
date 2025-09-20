@@ -2214,17 +2214,15 @@
                     }
                 } else {
                 // Modo: barajas completas
-                let allCards = [];
+                // Generar cada mazo por separado para asegurar 52 cartas únicas por mazo
                 for (let deck = 0; deck < selectedDecks; deck++) {
-                    allCards = allCards.concat([...cardsArray]);
-                }
-                
-                // Mezclar todas las cartas
-                const shuffledCards = allCards.sort(() => Math.random() - 0.5);
-                
-                // Seleccionar todas las cartas de las barajas
-                for (let i = 0; i < allCards.length; i++) {
-                    cardSequence.push(shuffledCards[i]);
+                    // Crear una copia del mazo base y mezclarlo
+                    const shuffledDeck = [...cardsArray].sort(() => Math.random() - 0.5);
+                    
+                    // Agregar las 52 cartas únicas del mazo actual
+                    for (let i = 0; i < 52; i++) {
+                        cardSequence.push(shuffledDeck[i]);
+                    }
                 }
             }
             
@@ -2242,6 +2240,8 @@
             // Verificar que cada baraja completa tiene exactamente 52 cartas únicas
             if (cardsMode === 'decks') {
                 let allDecksValid = true;
+                console.log(`🔍 Verificando ${selectedDecks} mazo(s) - cada uno debe tener 52 cartas únicas sin repeticiones`);
+                
                 for (let i = 0; i < selectedDecks; i++) {
                     const startIndex = i * 52;
                     const endIndex = startIndex + 52;
@@ -2249,16 +2249,18 @@
                     const uniqueDeckCards = new Set(deckCards);
                     
                     if (uniqueDeckCards.size !== 52) {
-                        console.error(`❌ ERROR: Baraja ${i + 1} no tiene 52 cartas únicas`);
-                        console.log(`Baraja ${i + 1}:`, deckCards);
+                        console.error(`❌ ERROR: Mazo ${i + 1} no tiene 52 cartas únicas (tiene ${uniqueDeckCards.size})`);
+                        console.log(`Mazo ${i + 1} cartas:`, deckCards);
                         allDecksValid = false;
                     } else {
-                        console.log(`✅ Baraja ${i + 1}: ${uniqueDeckCards.size} cartas únicas`);
+                        console.log(`✅ Mazo ${i + 1}: ${uniqueDeckCards.size} cartas únicas sin repeticiones`);
                     }
                 }
                 
                 if (allDecksValid) {
-                    console.log(`✅ Todas las ${selectedDecks} baraja(s) verificadas correctamente`);
+                    console.log(`✅ Todos los ${selectedDecks} mazo(s) verificados correctamente - cada mazo tiene 52 cartas únicas`);
+                } else {
+                    console.error(`❌ Se encontraron mazos con cartas repetidas`);
                 }
             }
             
