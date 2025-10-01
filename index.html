@@ -1627,12 +1627,12 @@
                 <div style="width: 100%;">
             <div class="card-display" id="card-display"></div>
             <div class="progress-indicator" id="progress">Cartas 1-2 de 5</div>
-            <div style="margin: 20px 0;">
+            <div style="margin: 20px 0;" id="navigation-buttons">
                 <button class="button" id="prev-btn" onclick="previousCards()" disabled>← Anterior</button>
                 <button class="button" id="next-btn" onclick="nextCards()">Siguiente →</button>
             </div>
             <p id="memorization-info">Memoriza estas cartas. Tienes 15 segundos.</p>
-            <div style="margin: 30px 0;">
+            <div style="margin: 30px 0;" id="finish-btn-container">
                 <button class="button" id="finish-memorization-btn" onclick="finishMemorization()">Terminar Memorización</button>
                     </div>
                 </div>
@@ -2417,15 +2417,49 @@
             const nextShouldBeDisabled = currentCardIndex + cardsInThisPage >= cardSequence.length;
             
             prevBtn.disabled = prevShouldBeDisabled;
-            nextBtn.disabled = nextShouldBeDisabled;
             
-            // Cambiar el texto del botón en la última página
-            if (nextShouldBeDisabled) {
-                nextBtn.textContent = 'Terminar Memorización →';
-                nextBtn.onclick = finishMemorization;
+            // Manejar botones en última página durante memorización
+            const finishBtn = document.getElementById('finish-memorization-btn');
+            const finishBtnContainer = document.getElementById('finish-btn-container');
+            const navButtons = document.getElementById('navigation-buttons');
+            
+            if (gameState === 'memorization') {
+                if (nextShouldBeDisabled) {
+                    // Última página: ocultar botón siguiente y mover botón terminar
+                    nextBtn.style.display = 'none';
+                    if (finishBtn && navButtons) {
+                        navButtons.appendChild(finishBtn);
+                        finishBtn.style.display = 'inline-block';
+                    }
+                    if (finishBtnContainer) {
+                        finishBtnContainer.style.display = 'none';
+                    }
+                } else {
+                    // Páginas intermedias: mostrar botón siguiente
+                    nextBtn.style.display = 'inline-block';
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Siguiente →';
+                    nextBtn.onclick = nextCards;
+                    // Restaurar botón terminar a su contenedor original
+                    if (finishBtn && finishBtnContainer) {
+                        finishBtnContainer.appendChild(finishBtn);
+                        finishBtn.style.display = 'inline-block';
+                        finishBtnContainer.style.display = 'block';
+                    }
+                }
             } else {
+                nextBtn.disabled = nextShouldBeDisabled;
+                nextBtn.style.display = 'inline-block';
                 nextBtn.textContent = 'Siguiente →';
                 nextBtn.onclick = nextCards;
+                if (finishBtnContainer) {
+                    finishBtnContainer.style.display = 'block';
+                }
+                // Restaurar botón terminar a su contenedor original fuera de memorización
+                if (finishBtn && finishBtnContainer && finishBtn.parentElement !== finishBtnContainer) {
+                    finishBtnContainer.appendChild(finishBtn);
+                    finishBtn.style.display = 'inline-block';
+                }
             }
             
             // Mostrar indicador de mazo solo en la primera página de cada mazo
@@ -2462,6 +2496,11 @@
             if (currentCardIndex + 2 < cardSequence.length) {
                 currentCardIndex += 2;
                 displayCards();
+            } else {
+                // Si estamos en fase de memorización, terminar
+                if (gameState === 'memorization') {
+                    finishMemorization();
+                }
             }
         }
 
