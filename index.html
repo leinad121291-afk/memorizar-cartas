@@ -1649,8 +1649,8 @@
                  </p>
                  <div id="cards-input-container" class="cards-grid"></div>
             <div>
-                <button class="button" onclick="verifyCardAnswers()" id="verify-btn">Verificar Respuesta</button>
                 <button class="button" onclick="showCardsAgain()" id="show-again-btn">Ver de Nuevo</button>
+                <button class="button" onclick="verifyCardAnswers()" id="verify-btn">Verificar Respuesta</button>
             </div>
         </div>
 
@@ -1738,8 +1738,8 @@
                 </div>
             </div>
             <div>
-                <button class="button" onclick="nextRound()" id="next-round-btn">Siguiente Ronda</button>
                 <button class="button" onclick="resetGame()" id="new-game-btn">Nuevo Juego</button>
+                <button class="button" onclick="nextRound()" id="next-round-btn">Siguiente Ronda</button>
                 <button class="button" onclick="goToMenu()" id="menu-btn" style="display: none;">Menú</button>
             </div>
         </div>
@@ -4198,6 +4198,34 @@
                 });
             }
         }
+
+        // Event listener para navegación con teclado
+        document.addEventListener('keydown', function(event) {
+            // Solo permitir navegación con teclado durante la fase de memorización
+            if (gameState === 'memorization') {
+                if (event.code === 'ArrowLeft' || event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    previousCards();
+                } else if (event.code === 'ArrowRight' || event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    nextCards();
+                } else if (event.key === ' ') { // Barra espaciadora
+                    event.preventDefault();
+                    // Ir a la página 1 (índice 0)
+                    currentCardIndex = 0;
+                    displayCards();
+                    
+                    // Reiniciar timer si estamos en modo autoavance
+                    if (currentMode === 'auto-advance') {
+                        clearInterval(timerInterval);
+                        timer = autoAdvanceTime;
+                        document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                        document.getElementById('elapsed-time').textContent = `Tiempo empleado: 0.0 segundos`;
+                        startTimer();
+                    }
+                }
+            }
+        });
 
         // Inicialización al cargar la página
         document.addEventListener('DOMContentLoaded', function() {

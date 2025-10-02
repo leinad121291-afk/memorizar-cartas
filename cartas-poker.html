@@ -702,12 +702,12 @@
                 <div style="width: 100%;">
             <div class="card-display" id="card-display"></div>
             <div class="progress-indicator" id="progress">Cartas 1-2 de 5</div>
-            <div style="margin: 20px 0;">
+            <div style="margin: 20px 0;" id="navigation-buttons">
                 <button class="button" id="prev-btn" onclick="previousCards()" disabled>← Anterior</button>
                 <button class="button" id="next-btn" onclick="nextCards()">Siguiente →</button>
             </div>
             <p id="memorization-info">Memoriza estas cartas. Tienes 15 segundos.</p>
-            <div style="margin: 30px 0;">
+            <div style="margin: 30px 0;" id="finish-btn-container">
                 <button class="button" id="finish-memorization-btn" onclick="finishMemorization()">Terminar Memorización</button>
                     </div>
                 </div>
@@ -724,8 +724,8 @@
                  </p>
                  <div id="cards-input-container" class="cards-grid"></div>
             <div>
-                <button class="button" onclick="verifyCardAnswers()" id="verify-btn">Verificar Respuesta</button>
                 <button class="button" onclick="showCardsAgain()" id="show-again-btn">Ver de Nuevo</button>
+                <button class="button" onclick="verifyCardAnswers()" id="verify-btn">Verificar Respuesta</button>
             </div>
         </div>
 
@@ -813,8 +813,8 @@
                 </div>
             </div>
             <div>
-                <button class="button" onclick="nextRound()" id="next-round-btn">Siguiente Ronda</button>
                 <button class="button" onclick="resetGame()" id="new-game-btn">Nuevo Juego</button>
+                <button class="button" onclick="nextRound()" id="next-round-btn">Siguiente Ronda</button>
                 <button class="button" onclick="goToMenu()" id="menu-btn" style="display: none;">Menú</button>
             </div>
         </div>
@@ -1617,6 +1617,20 @@
                 } else if (event.code === 'ArrowRight' || event.key === 'ArrowRight') {
                     event.preventDefault();
                     nextCards();
+                } else if (event.key === ' ') { // Barra espaciadora
+                    event.preventDefault();
+                    // Ir a la página 1 (índice 0)
+                    currentCardIndex = 0;
+                    displayCards();
+                    
+                    // Reiniciar timer si estamos en modo autoavance
+                    if (currentMode === 'auto-advance') {
+                        clearInterval(timerInterval);
+                        timer = autoAdvanceTime;
+                        document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
+                        document.getElementById('elapsed-time').textContent = `Tiempo empleado: 0.0 segundos`;
+                        startTimer();
+                    }
                 }
             }
         });
@@ -1765,7 +1779,46 @@
             const nextShouldBeDisabled = currentCardIndex + cardsInThisPage >= cardSequence.length;
             
             prevBtn.disabled = prevShouldBeDisabled;
-            nextBtn.disabled = nextShouldBeDisabled;
+            
+            // Manejar botones en última página durante memorización
+            const finishBtn = document.getElementById('finish-memorization-btn');
+            const finishBtnContainer = document.getElementById('finish-btn-container');
+            const navButtons = document.getElementById('navigation-buttons');
+            
+            if (gameState === 'memorization') {
+                if (nextShouldBeDisabled) {
+                    // Última página: ocultar botón siguiente y mover botón terminar
+                    nextBtn.style.display = 'none';
+                    if (finishBtn && navButtons) {
+                        navButtons.appendChild(finishBtn);
+                        finishBtn.style.display = 'inline-block';
+                    }
+                    if (finishBtnContainer) {
+                        finishBtnContainer.style.display = 'none';
+                    }
+                } else {
+                    // Páginas intermedias: mostrar botón siguiente
+                    nextBtn.style.display = 'inline-block';
+                    nextBtn.disabled = false;
+                    // Restaurar botón terminar a su contenedor original
+                    if (finishBtn && finishBtnContainer) {
+                        finishBtnContainer.appendChild(finishBtn);
+                        finishBtn.style.display = 'inline-block';
+                        finishBtnContainer.style.display = 'block';
+                    }
+                }
+            } else {
+                nextBtn.disabled = nextShouldBeDisabled;
+                nextBtn.style.display = 'inline-block';
+                if (finishBtnContainer) {
+                    finishBtnContainer.style.display = 'block';
+                }
+                // Restaurar botón terminar a su contenedor original fuera de memorización
+                if (finishBtn && finishBtnContainer && finishBtn.parentElement !== finishBtnContainer) {
+                    finishBtnContainer.appendChild(finishBtn);
+                    finishBtn.style.display = 'inline-block';
+                }
+            }
         }
 
         // Crear carta de poker visual con diseño minimalista
@@ -1863,6 +1916,11 @@
                     timer = autoAdvanceTime;
                     document.getElementById('timer').textContent = `Tiempo restante: ${timer.toFixed(1)} segundos`;
                     startTimer();
+                }
+            } else {
+                // Si estamos en fase de memorización, terminar
+                if (gameState === 'memorization') {
+                    finishMemorization();
                 }
             }
         }
